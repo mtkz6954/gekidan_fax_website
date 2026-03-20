@@ -18,7 +18,7 @@ const EXPECTED_MOBILE_NAV_LINKS = [
   'about.html',
   'activity.html',
   'asobiba.html',
-  'https://example.com/ticket',
+  'https://teket.jp/409/66663',
 ];
 
 const loaded = {};
