@@ -39,6 +39,25 @@ test.describe('モバイル表示', () => {
     const detail = page.locator('#detailPanel');
     await expect(detail).toBeVisible();
   });
+
+  test('モンスター図鑑: 詳細表示中も劇団FAXヘッダーが画面上部に固定される', async ({ page }) => {
+    await page.goto('/monster-zukan.html');
+    await page.waitForSelector('.monster-item', { timeout: 5000 });
+    await page.waitForTimeout(800);
+
+    await page.locator('#backBtn').click();
+    await page.waitForTimeout(300);
+
+    await page.locator('.monster-item').nth(10).click();
+    await page.waitForTimeout(500);
+
+    await page.evaluate(() => window.scrollTo(0, 1200));
+    await page.waitForTimeout(200);
+
+    const box = await page.locator('header').boundingBox();
+    expect(box).not.toBeNull();
+    expect(Math.round(box.y)).toBe(0);
+  });
 });
 
 test.describe('デスクトップ表示', () => {

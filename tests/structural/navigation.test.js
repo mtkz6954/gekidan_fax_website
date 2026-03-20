@@ -72,6 +72,11 @@ describe('ナビゲーション整合性', () => {
         .get();
       expect(headerLinks).toContain('index.html');
     });
+
+    it('モバイルでヘッダーが固定されるスタイルを持つ', () => {
+      const html = readFileSync(resolve(ROOT, 'monster-zukan.html'), 'utf-8');
+      expect(html).toMatch(/@media\s*\(max-width:\s*767px\)[\s\S]*header\s*\{[\s\S]*position:\s*(fixed|sticky)/);
+    });
   });
 
   // フッターテスト（monster-zukan はフッター構造が異なるため除外）

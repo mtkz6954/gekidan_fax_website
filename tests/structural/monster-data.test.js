@@ -52,8 +52,8 @@ beforeAll(() => {
 });
 
 describe('MONSTERSデータ整合性', () => {
-  it('160体のモンスターが定義されている', () => {
-    expect(monsters.length).toBe(160);
+  it('190体のモンスターが定義されている', () => {
+    expect(monsters.length).toBe(190);
   });
 
   it('各モンスターに必須プロパティがある', () => {
@@ -65,12 +65,12 @@ describe('MONSTERSデータ整合性', () => {
     }
   });
 
-  it('id が1〜160で重複なし', () => {
+  it('id が1〜190で重複なし', () => {
     const ids = monsters.map((m) => m.id);
     const unique = new Set(ids);
-    expect(unique.size).toBe(160);
+    expect(unique.size).toBe(190);
     expect(Math.min(...ids)).toBe(1);
-    expect(Math.max(...ids)).toBe(160);
+    expect(Math.max(...ids)).toBe(190);
   });
 
   it('type が有効なタイプのみ', () => {

@@ -7,7 +7,12 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Press+Start+2P&display=swap" rel="stylesheet" />
   <style>
-    :root { --accent: #a78bfa; --accent2: #6d28d9; }
+    :root {
+      --accent: #a78bfa;
+      --accent2: #6d28d9;
+      --header-height: 48px;
+      --mobile-header-offset: calc(var(--header-height) + env(safe-area-inset-top, 0px));
+    }
     body { font-family: 'Noto Sans JP', sans-serif; background: #0b0118; overflow: hidden; }
     .pixel { font-family: 'Press Start 2P', monospace; }
 
@@ -238,22 +243,38 @@
 
     /* ========== モバイルビュー切り替え ========== */
     @media (max-width: 767px) {
-      body { overflow: auto; }
+      body {
+        overflow: auto;
+        padding-top: var(--mobile-header-offset);
+      }
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 80;
+        height: var(--mobile-header-offset);
+        padding-top: env(safe-area-inset-top, 0px);
+      }
       #emptyState { display: none !important; }
 
       /* レイアウト：縦積み・全画面 */
-      #mainLayout { display: block !important; height: auto !important; }
+      #mainLayout {
+        display: block !important;
+        height: auto !important;
+        min-height: calc(100vh - var(--mobile-header-offset));
+      }
 
       /* 左パネル（一覧）：モバイルでは全幅 */
       #monsterList {
         width: 100% !important;
-        height: calc(100vh - 48px);
+        height: calc(100vh - var(--mobile-header-offset));
         display: block;
       }
 
       /* 詳細パネル：YouTube Shorts風 1画面完結 */
       #detailPanel {
-        position: fixed; inset: 0; top: 48px;
+        position: fixed; inset: 0; top: var(--mobile-header-offset);
         z-index: 50; overflow: hidden;
         display: flex; flex-direction: column;
         background: radial-gradient(ellipse at 30% 20%, #1e0a3c 0%, #0b0118 60%);
