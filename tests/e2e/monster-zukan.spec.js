@@ -16,7 +16,7 @@ test.describe('ファニーモンスター図鑑', () => {
   test('モンスター一覧にアイテムが表示されている', async ({ page }) => {
     const items = page.locator('.monster-item');
     const count = await items.count();
-    expect(count).toBe(160);
+    expect(count).toBe(190);
   });
 
   test('一覧のアイテムをクリックすると詳細が切り替わる', async ({ page }) => {
