@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>劇団FAX | 次回公演『キルギスのやつ』</title>
+  <meta name="description" content="劇団FAX - 2016年京都にて旗揚げ。次回公演『キルギスのやつ』7月17日〜19日、神奈川県立青少年センタースタジオHIKARIにて。" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: { sans: ['"Noto Sans JP"','sans-serif'] } } } }
+  </script>
+  <style>
+    body { font-family: 'Noto Sans JP', sans-serif; }
+    @keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:.35} }
+    .anim-pulse { animation: pulse-dot 2s ease-in-out infinite; }
+  </style>
+</head>
+
+<body class="min-h-screen bg-white text-slate-800 antialiased">
+
+<!-- ────────────────────────────────────
+     Header
+──────────────────────────────────── -->
+<header class="sticky top-0 z-40 border-b border-slate-100 bg-white/90 backdrop-blur-md">
+  <div class="mx-auto flex h-14 max-w-5xl items-center justify-between px-5 md:h-16 md:px-8">
+    <!-- logo -->
+    <a href="index.html" class="flex items-center gap-2.5 group">
+      <img src="images/FAX.png" alt="劇団FAX" class="h-8 w-auto md:h-9" />
+    </a>
+    <!-- nav -->
+    <nav class="hidden items-center gap-7 text-[13px] font-bold text-slate-500 md:flex">
+      <a href="index.html" class="text-slate-900">トップ</a>
+      <a href="about.html" class="hover:text-sky-600 transition-colors">劇団について</a>
+      <a href="activity.html" class="hover:text-sky-600 transition-colors">活動内容</a>
+    </nav>
+    <!-- cta -->
+    <a href="https://example.com/ticket" class="rounded-full bg-orange-400 px-4 py-1.5 text-[11px] font-black text-white transition-all hover:-translate-y-0.5 hover:bg-orange-500 hover:shadow-md md:px-5 md:py-2 md:text-xs">チケット購入</a>
+  </div>
+</header>
+
+<main class="pb-16 md:pb-0">
+
+<!-- ────────────────────────────────────
+     Hero
+──────────────────────────────────── -->
+<section class="bg-white">
+
+  <!-- キービジュアル：全幅画像 -->
+  <div class="relative w-full overflow-hidden" style="max-height:480px;">
+    <img src="images/kilgis.png" alt="キルギスの風景"
+         class="w-full object-cover"
+         style="height:clamp(220px,40vw,480px); object-position:center 40%;" />
+    <!-- 下向きグラデーション：画像→白へ滑らかにつなぐ -->
+    <div class="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
+    <!-- 次回公演バッジ（画像左下） -->
+    <div class="absolute bottom-5 left-5 md:left-10 inline-flex items-center gap-2 rounded-full border border-orange-200 bg-white/90 px-3 py-1 text-xs font-bold text-orange-600 shadow-sm backdrop-blur-sm">
+      <span class="h-1.5 w-1.5 rounded-full bg-orange-400 anim-pulse"></span>次回公演
+    </div>
+  </div>
+
+  <!-- コンテンツエリア -->
+  <div class="mx-auto max-w-5xl px-5 pb-14 pt-4 md:px-8 md:pb-20 md:pt-6">
+
+    <!-- 2-col -->
+    <div class="grid gap-10 md:grid-cols-[1fr_340px] md:items-start">
+
+      <!-- left: text -->
+      <div>
+        <p class="text-[13px] font-bold text-sky-500">劇団FAX</p>
+        <h1 class="mt-2 text-[2.5rem] font-black leading-[1.15] tracking-tight text-slate-900 md:text-[3.25rem]">
+          『キルギスのやつ』
+        </h1>
+        <p class="mt-5 max-w-xl text-[15px] leading-8 text-slate-500">
+          キルギス共和国を題材にした、演劇をつかった多文化・多分野交流イベント。多様な背景を持つ人々が緩やかに出会い、つながることを目指しています。
+        </p>
+
+        <!-- dates -->
+        <div class="mt-7 flex flex-wrap gap-2 text-[13px] font-bold text-slate-600">
+          <span class="rounded-full bg-sky-50 px-3.5 py-1.5 border border-sky-100">7/17(木) 19:00</span>
+          <span class="rounded-full bg-sky-50 px-3.5 py-1.5 border border-sky-100">7/18(金) 12:00 / 19:00</span>
+          <span class="rounded-full bg-sky-50 px-3.5 py-1.5 border border-sky-100">7/19(土) 12:00</span>
+        </div>
+
+        <!-- cta -->
+        <div class="mt-8 flex flex-wrap items-center gap-3">
+          <a href="https://example.com/ticket"
+             class="inline-flex items-center gap-1.5 rounded-full bg-orange-400 px-7 py-3 text-sm font-black text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-orange-500 hover:shadow-md">
+            チケットを購入する
+          </a>
+          <a href="about.html"
+             class="rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-bold text-slate-500 transition-colors hover:border-sky-200 hover:text-sky-600">
+            劇団について →
+          </a>
+        </div>
+      </div>
+
+      <!-- right: info card -->
+      <aside class="rounded-2xl bg-white p-5 ring-1 ring-slate-200/80 shadow-lg shadow-slate-200/40 md:mt-2">
+        <div class="space-y-4 text-sm text-slate-600">
+          <div>
+            <div class="text-[10px] font-bold text-sky-500 uppercase tracking-wider mb-1">会場</div>
+            <div class="font-bold text-slate-800">神奈川県立青少年センター<br>スタジオHIKARI</div>
+            <div class="mt-1 text-xs text-slate-400">JR桜木町駅 徒歩8分</div>
+          </div>
+          <hr class="border-slate-100" />
+          <div>
+            <div class="text-[10px] font-bold text-orange-500 uppercase tracking-wider mb-1">チケット</div>
+            <div class="font-bold text-slate-800">前売り 2,000円 ／ 当日 3,000円</div>
+          </div>
+          <hr class="border-slate-100" />
+          <div>
+            <div class="text-[10px] font-bold text-sky-500 uppercase tracking-wider mb-1">主催</div>
+            <div class="font-bold text-slate-800">劇団FAX</div>
+            <div class="mt-0.5 text-xs text-slate-400">マグカルシアター公募事業</div>
+          </div>
+        </div>
+        <a href="https://example.com/ticket"
+           class="mt-5 flex w-full items-center justify-center rounded-xl bg-orange-400 py-2.5 text-sm font-black text-white transition-colors hover:bg-orange-500">
+          チケット購入 →
+        </a>
+      </aside>
+
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────
+     公演について
+──────────────────────────────────── -->
+<section class="mx-auto max-w-5xl px-5 py-10 md:px-8 md:py-14">
+  <h2 class="text-lg font-black text-slate-900 md:text-xl">公演について</h2>
+  <div class="mt-5 grid gap-5 md:grid-cols-[1fr_1fr]">
+    <div class="rounded-2xl border border-slate-100 p-6 space-y-4">
+      <p class="text-[15px] leading-8 text-slate-600">
+        <span class="font-bold text-slate-800">劇団FAX「未知との遭遇」シリーズ最新作『キルギスのやつ』</span>は、演劇の上演を軸に、トークイベント・展示・音楽演奏・物販・交流を組み合わせた複合型の文化交流イベントです。
+      </p>
+      <p class="text-[15px] leading-8 text-slate-600">
+        主宰の玉井秀和は、2025年11月から2026年4月にかけて中央アジア・キルギス共和国に長期滞在。遊牧文化、伝統芸能、民話、死生観、食文化――現地の人々の暮らしに深く入り込むフィールドワークを行いました。
+      </p>
+      <p class="text-[15px] leading-8 text-slate-600">
+        本作では、その体験で得た素材をもとに、ドキュメンタリーとフィクションを交差させた新作演劇を上演。加えて、現地の生活道具や衣服、映像・音を用いた展示、研究者やアーティストを交えたトークイベント、さらにはキルギスの工芸品や食材の販売など、五感を通じて異文化に触れられるプログラムを展開します。
+      </p>
+      <p class="text-[15px] leading-8 text-slate-600">
+        欧米ではなく、アジアの広がりの中から日本を見つめ直すこと。異文化を鏡にして、自分たちの文化的な立ち位置を問い直すこと。それが本企画の核にあるテーマです。
+      </p>
+      <p class="text-[15px] leading-8 text-slate-700 font-medium">
+        舞台を観るだけでなく、触れて、味わって、語り合える場へ――ぜひ足をお運びください。
+      </p>
+    </div>
+    <div class="rounded-2xl border border-slate-100 p-6">
+      <div class="text-xs font-bold text-orange-500 uppercase tracking-wider">会場アクセス</div>
+      <h3 class="mt-2 text-base font-black text-slate-900">神奈川県立青少年センター スタジオHIKARI</h3>
+      <div class="mt-3 space-y-1.5 text-sm text-slate-500 leading-7">
+        <p>〒220-0044 神奈川県横浜市西区紅葉ケ丘9-1</p>
+        <p>JR「桜木町駅」より徒歩8分</p>
+        <p>みなとみらい線「日本大通り駅」より徒歩10分</p>
+      </div>
+      <div class="mt-4 flex h-24 items-center justify-center rounded-xl bg-slate-50 text-xs text-slate-400">
+        Google Map（公開時に埋め込み）
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────
+     チケット帯
+──────────────────────────────────── -->
+<section class="mx-auto max-w-5xl px-5 md:px-8">
+  <div class="rounded-2xl bg-gradient-to-r from-orange-400 to-orange-500 px-7 py-6 text-white md:px-10 md:py-8">
+    <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <div>
+        <div class="text-xl font-black md:text-2xl">チケット購入</div>
+        <p class="mt-1 text-sm text-orange-100">前売り 2,000円 ／ 当日 3,000円</p>
+      </div>
+      <a href="https://example.com/ticket"
+         class="inline-flex items-center justify-center rounded-full bg-white px-7 py-3 text-sm font-black text-orange-500 transition-all hover:-translate-y-0.5 hover:shadow-md">
+        購入フォームへ →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────
+     お知らせ
+──────────────────────────────────── -->
+<section class="mx-auto max-w-5xl px-5 py-12 md:px-8 md:py-16">
+  <h2 class="text-lg font-black text-slate-900 md:text-xl">お知らせ</h2>
+  <div class="mt-5 divide-y divide-slate-100 border-t border-slate-100">
+    <a href="#" class="group flex items-center gap-4 py-4 transition-colors md:hover:bg-sky-50/30">
+      <time class="shrink-0 w-20 text-center text-xs font-bold text-slate-400">2026.03.12</time>
+      <span class="min-w-0 flex-1 text-[15px] font-bold text-slate-700 truncate group-hover:text-sky-600 transition-colors">次回公演『キルギスのやつ』情報を公開しました</span>
+      <span class="hidden shrink-0 text-slate-300 group-hover:text-sky-500 md:block">→</span>
+    </a>
+    <a href="#" class="group flex items-center gap-4 py-4 transition-colors md:hover:bg-sky-50/30">
+      <time class="shrink-0 w-20 text-center text-xs font-bold text-slate-400">2026.02.20</time>
+      <span class="min-w-0 flex-1 text-[15px] font-bold text-slate-700 truncate group-hover:text-sky-600 transition-colors">劇団紹介ページを更新しました</span>
+      <span class="hidden shrink-0 text-slate-300 group-hover:text-sky-500 md:block">→</span>
+    </a>
+    <a href="#" class="group flex items-center gap-4 py-4 transition-colors md:hover:bg-sky-50/30">
+      <time class="shrink-0 w-20 text-center text-xs font-bold text-slate-400">2026.01.28</time>
+      <span class="min-w-0 flex-1 text-[15px] font-bold text-slate-700 truncate group-hover:text-sky-600 transition-colors">チケット情報掲載のお知らせ</span>
+      <span class="hidden shrink-0 text-slate-300 group-hover:text-sky-500 md:block">→</span>
+    </a>
+  </div>
+</section>
+
+<!-- ────────────────────────────────────
+     お問い合わせ
+──────────────────────────────────── -->
+<section class="mx-auto max-w-5xl px-5 pb-12 md:px-8 md:pb-16">
+  <div class="rounded-2xl bg-sky-500 px-7 py-7 text-white md:px-10 md:py-9">
+    <div class="text-[10px] font-bold uppercase tracking-[.25em] text-sky-200">Contact</div>
+    <h2 class="mt-1.5 text-xl font-black md:text-2xl">お問い合わせ</h2>
+    <p class="mt-3 max-w-md text-sm leading-7 text-sky-100">出演に関するご相談、公演詳細、取材依頼など、お気軽にお問い合わせください。</p>
+    <div class="mt-4 flex flex-wrap items-center gap-3">
+      <a href="https://mail.google.com/mail/?view=cm&to=canisendafax@gmail.com" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-lg bg-white/15 px-4 py-2 text-sm font-bold backdrop-blur-sm hover:bg-white/25 transition-colors">✉️ Gmailで送る</a>
+      <a href="mailto:canisendafax@gmail.com" class="inline-flex items-center gap-2 rounded-lg bg-white/15 px-4 py-2 text-sm font-bold backdrop-blur-sm hover:bg-white/25 transition-colors">📧 その他のメールアプリ</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ────────────────────────────────────
+     Footer
+──────────────────────────────────── -->
+<footer class="border-t border-slate-100">
+  <div class="mx-auto flex max-w-5xl flex-col gap-6 px-5 py-8 text-xs text-slate-400 md:flex-row md:items-center md:justify-between md:px-8">
+    <div class="flex items-center gap-2">
+      <img src="images/FAX.png" alt="劇団FAX" class="h-6 w-auto" />
+    </div>
+    <nav class="flex gap-5">
+      <a href="index.html" class="hover:text-sky-600 transition-colors">トップ</a>
+      <a href="about.html" class="hover:text-sky-600 transition-colors">劇団について</a>
+      <a href="activity.html" class="hover:text-sky-600 transition-colors">活動内容</a>
+    </nav>
+    <span>&copy; 2026 劇団FAX</span>
+  </div>
+</footer>
+
+<!-- ────────────────────────────────────
+     Mobile Nav
+──────────────────────────────────── -->
+<nav class="fixed inset-x-0 bottom-0 z-50 border-t border-slate-100 bg-white/95 backdrop-blur-md md:hidden">
+  <div class="mx-auto grid max-w-xs grid-cols-4">
+    <a href="index.html" class="flex flex-col items-center gap-0.5 py-2 text-[10px] font-bold text-sky-600"><span class="text-sm">🎭</span>トップ</a>
+    <a href="about.html" class="flex flex-col items-center gap-0.5 py-2 text-[10px] font-bold text-slate-400"><span class="text-sm">📖</span>劇団</a>
+    <a href="activity.html" class="flex flex-col items-center gap-0.5 py-2 text-[10px] font-bold text-slate-400"><span class="text-sm">✨</span>活動</a>
+    <a href="https://example.com/ticket" class="flex flex-col items-center gap-0.5 py-2 text-[10px] font-bold text-orange-500"><span class="text-sm">🎫</span>チケット</a>
+  </div>
+</nav>
+
+</body>
+</html>

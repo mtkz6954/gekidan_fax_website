@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>劇団について | 劇団FAX</title>
+  <meta name="description" content="劇団FAX - 主催・玉井秀和が2016年に京都で旗揚げした演劇集団。劇団紹介・メンバー・受賞歴。" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: { sans: ['"Noto Sans JP"','sans-serif'] } } } }
+  </script>
+  <style>body { font-family: 'Noto Sans JP', sans-serif; } .scrollbar-hide::-webkit-scrollbar{display:none;}</style>
+</head>
+
+<body class="min-h-screen bg-white text-slate-800 antialiased">
+
+<!-- Header -->
+<header class="sticky top-0 z-40 border-b border-slate-100 bg-white/90 backdrop-blur-md">
+  <div class="mx-auto flex h-14 max-w-5xl items-center justify-between px-5 md:h-16 md:px-8">
+    <a href="index.html" class="flex items-center gap-2.5 group">
+      <img src="images/FAX.png" alt="劇団FAX" class="h-8 w-auto md:h-9" />
+    </a>
+    <nav class="hidden items-center gap-7 text-[13px] font-bold text-slate-500 md:flex">
+      <a href="index.html" class="hover:text-sky-600 transition-colors">トップ</a>
+      <a href="about.html" class="text-slate-900">劇団について</a>
+      <a href="activity.html" class="hover:text-sky-600 transition-colors">活動内容</a>
+    </nav>
+    <a href="https://example.com/ticket" class="rounded-full bg-orange-400 px-4 py-1.5 text-[11px] font-black text-white transition-all hover:-translate-y-0.5 hover:bg-orange-500 hover:shadow-md md:px-5 md:py-2 md:text-xs">チケット購入</a>
+  </div>
+</header>
+
+<main class="pb-16 md:pb-0">
+
+<!-- Page Header -->
+<section class="border-b border-slate-100 bg-gradient-to-b from-sky-50/40 to-white">
+  <div class="mx-auto max-w-5xl px-5 pb-10 pt-10 md:px-8 md:pb-12 md:pt-16">
+    <p class="text-xs font-bold text-sky-500 uppercase tracking-wider">About</p>
+    <h1 class="mt-2 text-3xl font-black text-slate-900 md:text-4xl">劇団FAXとは</h1>
+  </div>
+</section>
+
+<!-- イメージ写真 -->
+<section class="mx-auto max-w-5xl px-5 pt-10 md:px-8 md:pt-14">
+  <div class="grid grid-cols-3 gap-2 md:gap-3">
+    <div class="col-span-2 overflow-hidden rounded-2xl">
+      <img src="images/LINE_ALBUM_ゲネ()写です_260320_1.jpg" alt="劇団FAXの公演風景" class="w-full h-40 md:h-72 object-cover hover:scale-105 transition-transform duration-500" />
+    </div>
+    <div class="flex flex-col gap-2 md:gap-3">
+      <div class="flex-1 overflow-hidden rounded-2xl">
+        <img src="images/LINE_ALBUM_ゲネ写_260320_2.jpg" alt="舞台シーン" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+      </div>
+      <div class="flex-1 overflow-hidden rounded-2xl">
+        <img src="images/kansyasai.JPG" alt="春の大感謝祭" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 劇団紹介 -->
+<section class="mx-auto max-w-5xl px-5 py-10 md:px-8 md:py-14">
+  <div class="max-w-2xl">
+    <p class="text-[15px] leading-[2] text-slate-600">主催・玉井秀和が2016年に京都で旗揚げした演劇集団。</p>
+    <p class="mt-4 text-[15px] leading-[2] text-slate-600">公演によって脚本の担当が異なるためその作品スタイルは、見世物小屋風からエンタメ会話劇まで多岐に渡るが、主に脚本を担当するのは主催の玉井と、脚本の高矢。</p>
+    <p class="mt-4 text-[15px] leading-[2] text-slate-600">民俗/寓話的に夢と現を行き来する少年少女の物語が特徴の玉井脚本。緻密な会話に引き込まれ次が気になるサスペンスをベースに、スリルと笑いが交錯する長編作品を得意とする高矢脚本。</p>
+    <p class="mt-4 text-[15px] leading-[2] text-slate-700 font-medium">公演によってメンバーの様々な顔が楽しめる新時代演劇集団。</p>
+  </div>
+  <!-- ポップなフォトストリップ -->
+  <div class="mt-10 flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory scrollbar-hide" style="-ms-overflow-style:none;scrollbar-width:none;">
+    <div class="shrink-0 snap-center w-52 md:w-64 overflow-hidden rounded-xl rotate-[-2deg] shadow-lg ring-4 ring-white hover:rotate-0 transition-transform duration-300">
+      <img src="images/LINE_ALBUM_ゲネ写_260320_1.jpg" alt="公演風景" class="w-full h-36 md:h-44 object-cover" />
+    </div>
+    <div class="shrink-0 snap-center w-52 md:w-64 overflow-hidden rounded-xl rotate-[1.5deg] shadow-lg ring-4 ring-white hover:rotate-0 transition-transform duration-300">
+      <img src="images/SANSO_ゲネ写.jpg" alt="SANSO" class="w-full h-36 md:h-44 object-cover" />
+    </div>
+    <div class="shrink-0 snap-center w-52 md:w-64 overflow-hidden rounded-xl rotate-[-1deg] shadow-lg ring-4 ring-white hover:rotate-0 transition-transform duration-300">
+      <img src="images/LINE_ALBUM_ゲネ写_260320_3.jpg" alt="舞台シーン" class="w-full h-36 md:h-44 object-cover" />
+    </div>
+    <div class="shrink-0 snap-center w-52 md:w-64 overflow-hidden rounded-xl rotate-[2deg] shadow-lg ring-4 ring-white hover:rotate-0 transition-transform duration-300">
+      <img src="images/LINE_ALBUM_モラルゲネ写真_260320_1.jpg" alt="MORAL" class="w-full h-36 md:h-44 object-cover" />
+    </div>
+  </div>
+</section>
+
+<!-- 創作理念 -->
+<section class="border-t border-slate-100">
+  <div class="mx-auto max-w-5xl px-5 py-12 md:px-8 md:py-16">
+    <h2 class="text-lg font-black text-slate-900 md:text-xl">創作の理念</h2>
+    <div class="mt-6 max-w-2xl space-y-4 text-[15px] leading-[2] text-slate-600">
+      <p>劇団FAXの創作の中心にあるのは、日本人の精神性を現代において掘り起こし、その表現を通じて<span class="font-bold text-slate-800">「縁」</span>を醸成することです。ここでいう「縁」とは、人と人だけでなく、場や時間、出来事を共有することで生まれる関係性のことを指しています。</p>
+      <p>死生観や共同体意識、自然との交わりといった日本的精神の根幹を探るため、京都大学総合生存学館博士課程の研究活動として国内外でフィールドワークを実施。異文化との比較や共鳴を通じて、日本の輪郭を見直しています。研究テーマである「集落の祭りによる現代演劇の再解釈」は、調査と制作が交わりながら進み、そこから得られる視点や方法が作品全体を形づくっています。</p>
+      <p>創作は演劇上演にとどまらず、展示やワークショップ、トークイベント、交流企画など多様な手段で展開。あらゆる場を通じて「縁」を生み育てることを目指しています。</p>
+    </div>
+
+    <!-- フィールドワーク写真 -->
+    <div class="mt-10 grid grid-cols-2 gap-3 md:gap-4">
+      <div class="overflow-hidden rounded-2xl bg-sky-50 p-1.5 md:p-2 shadow-sm">
+        <img src="images/スクリーンショット 2026-03-20 143650.png" alt="フィールドワーク - アフリカ" class="w-full h-40 md:h-56 object-cover rounded-xl" />
+        <p class="mt-2 px-1 pb-1 text-[11px] font-bold text-sky-600 text-center">フィールドワーク in アフリカ</p>
+      </div>
+      <div class="overflow-hidden rounded-2xl bg-orange-50 p-1.5 md:p-2 shadow-sm">
+        <img src="images/スクリーンショット 2026-03-20 143703.png" alt="国際交流・フィールドワーク" class="w-full h-40 md:h-56 object-cover rounded-xl" />
+        <p class="mt-2 px-1 pb-1 text-[11px] font-bold text-orange-500 text-center">国際交流 & リサーチ</p>
+      </div>
+    </div>
+
+    <h3 class="mt-12 text-base font-black text-slate-900 md:text-lg">今後のビジョン</h3>
+    <div class="mt-4 max-w-2xl space-y-4 text-[15px] leading-[2] text-slate-600">
+      <p>今後は、日本人の精神性を描く創作を軸に、国際的な芸術イベントの企画・プロデュースへと活動を広げていきます。海外で培ったネットワークを活かし、過疎地域の田んぼや畑での農作業と舞台芸術を組み合わせた季節ごとの企画を構想中。田植えや収穫の時期に合わせて上演・展示・ワークショップを行い、土地と人、文化を結ぶ「縁」を醸成します。</p>
+      <p>5年後には、芸術・農業・国際交流を融合させた独自の芸術祭の本格開催を目標に掲げています。地域と世界をつなぐ拠点として、縁が持続的に広がっていく環境をつくることが、劇団FAXの次なる挑戦です。</p>
+    </div>
+
+    <!-- ビジョン関連写真 -->
+    <div class="mt-10 grid grid-cols-3 gap-2 md:gap-3">
+      <div class="overflow-hidden rounded-xl shadow-md">
+        <img src="images/スクリーンショット 2026-03-20 143718.png" alt="祭り・パフォーマンス" class="w-full h-28 md:h-44 object-cover hover:scale-110 transition-transform duration-500" />
+      </div>
+      <div class="overflow-hidden rounded-xl shadow-md">
+        <img src="images/スクリーンショット 2026-03-20 143740.png" alt="野外パフォーマンス" class="w-full h-28 md:h-44 object-cover hover:scale-110 transition-transform duration-500" />
+      </div>
+      <div class="overflow-hidden rounded-xl shadow-md">
+        <img src="images/LINE_ALBUM_ゲネ写_260320_2.jpg" alt="舞台演出" class="w-full h-28 md:h-44 object-cover hover:scale-110 transition-transform duration-500" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 受賞歴 -->
+<section class="border-t border-slate-100">
+  <div class="mx-auto max-w-5xl px-5 py-12 md:px-8 md:py-16">
+    <h2 class="text-lg font-black text-slate-900 md:text-xl">受賞歴・経歴</h2>
+    <div class="mt-6 grid gap-6 md:grid-cols-2">
+      <!-- 玉井 -->
+      <div>
+        <div class="text-sm font-black text-sky-600">玉井秀和</div>
+        <div class="mt-4 space-y-3">
+          <div class="flex gap-3 text-sm">
+            <span class="shrink-0 w-10 font-bold text-slate-400">2025</span>
+            <span class="text-slate-600">BIPAM・KEX共同インキュベーションプログラム「shifting point」選出アーティスト</span>
+          </div>
+          <div class="flex gap-3 text-sm">
+            <span class="shrink-0 w-10 font-bold text-slate-400">2025</span>
+            <span class="text-slate-600">日本演出者協会「日本の戯曲研修セミナーin大阪2025」登壇パネラー</span>
+          </div>
+          <div class="flex gap-3 text-sm">
+            <span class="shrink-0 w-10 font-bold text-slate-400">2020</span>
+            <span class="text-slate-600">「如月小春プロジェクト2020」登壇パネラー</span>
+          </div>
+          <div class="flex gap-3 text-sm">
+            <span class="shrink-0 w-10 font-bold text-slate-400">2020</span>
+            <span class="text-slate-600">『まばたき』京都学生演劇祭 <span class="inline-flex rounded bg-sky-50 px-1.5 py-0.5 text-xs font-bold text-sky-600">E9賞</span></span>
+          </div>
+        </div>
+      </div>
+      <!-- 高矢 -->
+      <div>
+        <div class="text-sm font-black text-orange-500">高矢航志</div>
+        <div class="mt-4 space-y-3">
+          <div class="flex gap-3 text-sm">
+            <span class="shrink-0 w-10 font-bold text-slate-400">2023</span>
+            <span class="text-slate-600">『追想せる住人』関西演劇祭 <span class="inline-flex rounded bg-orange-50 px-1.5 py-0.5 text-xs font-bold text-orange-600">脚本賞</span></span>
+          </div>
+          <div class="flex gap-3 text-sm">
+            <span class="shrink-0 w-10 font-bold text-slate-400">2021</span>
+            <span class="text-slate-600">第40回シナリオS1グランプリ佳作受賞</span>
+          </div>
+          <div class="flex gap-3 text-sm">
+            <span class="shrink-0 w-10 font-bold text-slate-400">2021</span>
+            <span class="text-slate-600">第46回創作テレビドラマ大賞ファイナリスト</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- メンバー -->
+<section class="border-t border-slate-100">
+  <div class="mx-auto max-w-5xl px-5 py-12 md:px-8 md:py-16">
+    <h2 class="text-lg font-black text-slate-900 md:text-xl">メンバー</h2>
+    <div class="mt-6 grid gap-6 md:grid-cols-[200px_1fr] md:items-start md:gap-10">
+      <!-- 写真 -->
+      <div class="flex flex-col items-start gap-3">
+        <img src="images/Tamai.png" alt="玉井秀和" class="w-40 rounded-2xl object-cover md:w-full" />
+        <div>
+          <p class="text-[10px] font-bold uppercase tracking-wider text-orange-500">主催</p>
+          <h3 class="mt-0.5 text-xl font-black text-slate-900">玉井秀和</h3>
+          <p class="text-xs text-slate-400">Hidekazu Tamai</p>
+        </div>
+      </div>
+      <!-- プロフィール文 -->
+      <div class="space-y-4 text-[15px] leading-[2] text-slate-600">
+        <p>1994年東京生まれ。京都大学法学部入学を機に、演劇活動を開始。2016年に自身の作品を上演する団体「劇団FAX」を旗揚げ。以降、代表として年間4〜6本の公演を企画・制作し、脚本・演出を手がける。</p>
+        <p>作品は民俗・寓話的モチーフと現代的感覚を交差させ、夢と現実を行き来する物語世界を特徴とする。京都・東京を拠点に、活動を行っている。現在、京都大学総合生存学館・博士後期課程在籍。</p>
+        <p>KEX×BIPAM「Shifting Point」採択によりタイで文化交流を行い、2025〜26年には中央アジア・キルギスでの長期フィールドワークを予定。フリーランスの舞台監督としても活動し、演劇を通じて人と人、土地と土地を結ぶ「縁」の創出を目指している。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- Footer -->
+<footer class="border-t border-slate-100">
+  <div class="mx-auto flex max-w-5xl flex-col gap-6 px-5 py-8 text-xs text-slate-400 md:flex-row md:items-center md:justify-between md:px-8">
+    <div class="flex items-center gap-2">
+      <img src="images/FAX.png" alt="劇団FAX" class="h-6 w-auto" />
+    </div>
+    <nav class="flex gap-5">
+      <a href="index.html" class="hover:text-sky-600 transition-colors">トップ</a>
+      <a href="about.html" class="hover:text-sky-600 transition-colors">劇団について</a>
+      <a href="activity.html" class="hover:text-sky-600 transition-colors">活動内容</a>
+    </nav>
+    <span>&copy; 2026 劇団FAX</span>
+  </div>
+</footer>
+
+<!-- Mobile Nav -->
+<nav class="fixed inset-x-0 bottom-0 z-50 border-t border-slate-100 bg-white/95 backdrop-blur-md md:hidden">
+  <div class="mx-auto grid max-w-xs grid-cols-4">
+    <a href="index.html" class="flex flex-col items-center gap-0.5 py-2 text-[10px] font-bold text-slate-400"><span class="text-sm">🎭</span>トップ</a>
+    <a href="about.html" class="flex flex-col items-center gap-0.5 py-2 text-[10px] font-bold text-sky-600"><span class="text-sm">📖</span>劇団</a>
+    <a href="activity.html" class="flex flex-col items-center gap-0.5 py-2 text-[10px] font-bold text-slate-400"><span class="text-sm">✨</span>活動</a>
+    <a href="https://example.com/ticket" class="flex flex-col items-center gap-0.5 py-2 text-[10px] font-bold text-orange-500"><span class="text-sm">🎫</span>チケット</a>
+  </div>
+</nav>
+
+</body>
+</html>

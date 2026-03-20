@@ -1,0 +1,326 @@
+export default function GekidanFAXHomepage() {
+  const mobileNav = [
+    { label: "公演", href: "#next" },
+    { label: "劇団", href: "#about" },
+    { label: "活動", href: "#activity" },
+    { label: "人", href: "#members" },
+    { label: "知らせ", href: "#news" },
+  ];
+
+  const news = [
+    {
+      date: "2026.03.12",
+      title: "次回公演『キルギスのやつ』情報を公開しました",
+      body: "7月17日から19日まで、神奈川県立青少年センタースタジオHIKARIにて上演します。前売り・当日料金も掲載しました。",
+    },
+    {
+      date: "2026.02.20",
+      title: "劇団紹介ページを更新しました",
+      body: "主催・玉井秀和の紹介を中心に、劇団FAXの入口がわかりやすい構成に整理しました。",
+    },
+    {
+      date: "2026.01.28",
+      title: "チケット情報掲載のお知らせ",
+      body: "前売り2000円、当日3000円でご案内しています。",
+    },
+  ];
+
+  const members = [{ role: "主催", name: "玉井秀和" }];
+
+  const card = "rounded-3xl border border-sky-100 bg-white shadow-sm shadow-slate-200/60";
+  const sectionTitle = "text-2xl md:text-3xl font-black tracking-tight text-slate-900";
+  const sectionLead = "mt-3 text-slate-600 leading-7";
+
+  return (
+    <div className="min-h-screen bg-[linear-gradient(180deg,#f7fcff_0%,#ffffff_20%,#fffaf3_100%)] text-slate-800">
+      <header className="sticky top-0 z-40 border-b border-sky-100/80 bg-white/90 backdrop-blur">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-8 md:py-4">
+          <div className="flex items-center gap-3 md:gap-4">
+            <div className="flex h-12 w-16 items-center justify-center rounded-2xl border border-slate-200 bg-white text-sm font-black tracking-[0.18em] text-slate-900 md:h-14 md:w-20">
+              FAX
+            </div>
+            <div>
+              <div className="text-[10px] font-bold uppercase tracking-[0.22em] text-sky-500 md:text-xs">
+                Theater Company
+              </div>
+              <div className="text-lg font-black text-slate-900 md:text-xl">劇団FAX</div>
+            </div>
+          </div>
+          <nav className="hidden gap-6 text-sm font-bold text-slate-600 md:flex">
+            <a href="#next" className="hover:text-sky-600">次回公演</a>
+            <a href="#about" className="hover:text-sky-600">劇団について</a>
+            <a href="#activity" className="hover:text-sky-600">活動内容</a>
+            <a href="#members" className="hover:text-sky-600">メンバー</a>
+            <a href="#news" className="hover:text-sky-600">お知らせ</a>
+          </nav>
+          <a href="#next" className="rounded-2xl bg-sky-500 px-3 py-2 text-xs font-black text-white md:hidden">
+            公演へ
+          </a>
+        </div>
+      </header>
+
+      <main className="pb-24 md:pb-0">
+        <section className="mx-auto grid max-w-7xl gap-6 px-4 pb-10 pt-6 md:grid-cols-[1.15fr_0.85fr] md:gap-8 md:px-8 md:pb-20 md:pt-16">
+          <div className="flex flex-col justify-center">
+            <div className="mb-3 inline-flex w-fit items-center rounded-full border border-orange-200 bg-orange-50 px-3 py-1 text-xs font-bold text-orange-700 md:mb-4 md:px-4 md:text-sm">
+              一番見やすくしたい情報は、次回公演
+            </div>
+            <h1 className="max-w-3xl text-3xl font-black leading-tight tracking-tight text-slate-900 md:text-6xl">
+              劇団FAX 公演
+              <span className="block text-sky-600">『キルギスのやつ』</span>
+            </h1>
+            <p className="mt-4 max-w-2xl text-sm leading-7 text-slate-600 md:mt-6 md:text-lg md:leading-8">
+              神奈川県のマグカルシアター公募事業として実施する、キルギス共和国を題材にした演劇を使った多文化・多分野交流イベントです。公演情報を最短で確認できるように整理しつつ、劇団の輪郭も自然に伝わるトップページにしています。
+            </p>
+            <div className="mt-5 flex flex-wrap gap-2 text-xs font-bold text-slate-700 md:mt-6 md:gap-3 md:text-sm">
+              <span className="rounded-full border border-sky-100 bg-white px-3 py-2">7/17 19:00</span>
+              <span className="rounded-full border border-sky-100 bg-white px-3 py-2">7/18 12:00・19:00</span>
+              <span className="rounded-full border border-sky-100 bg-white px-3 py-2">7/19 12:00</span>
+              <span className="rounded-full border border-orange-100 bg-orange-50 px-3 py-2">前売 2000円 / 当日 3000円</span>
+            </div>
+            <div className="mt-6 flex flex-wrap gap-3 md:mt-8">
+              <a href="#next" className="rounded-2xl bg-sky-500 px-4 py-3 text-sm font-black text-white shadow-sm hover:-translate-y-0.5 md:px-5">
+                次回公演を見る
+              </a>
+              <a href="#about" className="rounded-2xl border border-slate-200 bg-white px-5 py-3 text-sm font-black text-slate-700 hover:border-sky-200 hover:text-sky-700">
+                劇団について
+              </a>
+            </div>
+          </div>
+
+          <div className={`${card} overflow-hidden md:ml-auto`}>
+            <div className="bg-gradient-to-br from-sky-100 via-white to-orange-50 p-5 md:p-8">
+              <div className="mb-4 flex items-center justify-between">
+                <span className="rounded-full bg-white px-3 py-1 text-xs font-black text-sky-700 ring-1 ring-sky-100">NEXT STAGE</span>
+                <span className="text-xs font-medium text-slate-500">トップ固定表示</span>
+              </div>
+              <div className="rounded-[28px] bg-white p-5 shadow-sm">
+                <div className="text-sm font-black text-orange-600">次回公演</div>
+                <div className="mt-2 text-xl font-black text-slate-900 md:text-2xl">キルギスのやつ</div>
+                <div className="mt-4 space-y-2 text-sm text-slate-600">
+                  <div>日程：7/17 19:00 / 7/18 12:00・19:00 / 7/19 12:00</div>
+                  <div>会場：神奈川県立青少年センタースタジオHIKARI</div>
+                  <div>チケット：前売り 2000円 / 当日 3000円</div>
+                </div>
+                <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+                  <a href="#ticket" className="inline-flex items-center justify-center rounded-2xl bg-orange-400 px-4 py-2 text-sm font-black text-white">
+                    チケット購入
+                  </a>
+                  <a href="#about" className="inline-flex items-center justify-center rounded-2xl border border-slate-200 px-4 py-2 text-sm font-black text-slate-700">
+                    劇団紹介を見る
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="next" className="mx-auto max-w-7xl px-4 py-6 md:px-8 md:py-12">
+          <div className="grid gap-6 md:grid-cols-[1.1fr_0.9fr]">
+            <article className={`${card} p-7`}>
+              <div className="text-sm font-black text-sky-600">次回公演情報</div>
+              <h2 className="mt-3 text-3xl font-black text-slate-900">キルギスのやつ</h2>
+              <p className="mt-4 leading-8 text-slate-600">
+                今回の企画は、神奈川県のマグカルシアターという公募事業として実施する、キルギス共和国を題材にした、演劇をつかった多文化・多分野交流イベントです。ストイックに舞台作品だけを作り上げる事を目指すのではなくて、多様な背景を持つ人々が緩やかに出会い、つながることを目指しています。
+              </p>
+              <div className="mt-5 grid gap-3 text-sm text-slate-600 md:grid-cols-3">
+                <div className="rounded-2xl bg-slate-50 p-4">
+                  日程
+                  <br />
+                  <span className="font-bold text-slate-900">7/17 19:00<br />7/18 12:00・19:00<br />7/19 12:00</span>
+                </div>
+                <div className="rounded-2xl bg-slate-50 p-4">
+                  会場
+                  <br />
+                  <span className="font-bold text-slate-900">神奈川県立青少年センタースタジオHIKARI</span>
+                </div>
+                <div className="rounded-2xl bg-slate-50 p-4">
+                  チケット
+                  <br />
+                  <span className="font-bold text-slate-900">前売り 2000円<br />当日 3000円</span>
+                </div>
+              </div>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <a href="#ticket" className="inline-flex items-center justify-center rounded-2xl bg-orange-400 px-5 py-3 text-sm font-black text-white shadow-sm hover:-translate-y-0.5">
+                  チケット購入
+                </a>
+                <a href="#about" className="inline-flex items-center justify-center rounded-2xl border border-slate-200 bg-white px-5 py-3 text-sm font-black text-slate-700">
+                  劇団紹介を見る
+                </a>
+              </div>
+            </article>
+
+            <article className={`${card} p-7`}>
+              <div className="text-sm font-black text-orange-600">会場情報</div>
+              <div className="mt-3 rounded-[28px] bg-[linear-gradient(135deg,#dff6ff_0%,#ffffff_55%,#fff0df_100%)] p-6 text-sm leading-7 text-slate-600">
+                <div className="font-black text-slate-900">神奈川県立青少年センタースタジオHIKARI</div>
+                <p className="mt-3">公演情報のすぐ隣に会場情報を置くことで、初見の人が必要な情報を迷わず確認できる構成にしています。</p>
+                <div className="mt-4 rounded-2xl bg-white/80 p-4 text-xs font-bold text-slate-700">アクセス詳細やGoogleマップ導線は公開時にここへ追加できます。</div>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section id="about" className="mx-auto max-w-7xl px-4 py-6 md:px-8 md:py-12">
+          <div className="mb-6">
+            <h2 className={sectionTitle}>1. どんな劇団なのか</h2>
+            <p className={sectionLead}>団体の紹介を短く、でも弱く見えないように整理したエリアです。</p>
+          </div>
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className={`${card} p-6 md:col-span-2`}>
+              <h3 className="text-xl font-black text-slate-900">劇団FAXとは</h3>
+              <p className="mt-3 leading-7 text-slate-600">主催・玉井秀和が2016年に京都で旗揚げした演劇集団。</p>
+              <p className="mt-3 leading-7 text-slate-600">公演によって脚本の担当が異なるためその作品スタイルは、見世物小屋風からエンタメ会話劇まで多岐に渡るが、主に脚本を担当するのは主催の玉井と、脚本の高矢。</p>
+              <p className="mt-3 leading-7 text-slate-600">民俗/寓話的に夢と現を行き来する少年少女の物語が特徴の玉井脚本。緻密な会話に引き込まれ次が気になるサスペンスをベースに、スリルと笑いが交錯する長編作品を得意とする高矢脚本。</p>
+              <p className="mt-3 leading-7 text-slate-600">公演によってメンバーの様々な顔が楽しめる新時代演劇集団。</p>
+            </div>
+
+            <div className={`${card} p-6 md:col-span-2`}>
+              <h3 className="text-xl font-black text-slate-900">受賞歴</h3>
+              <div className="mt-4 grid gap-4 md:grid-cols-2">
+                <div className="rounded-2xl bg-slate-50 p-5">
+                  <div className="text-sm font-black text-orange-600">玉井秀和</div>
+                  <ul className="mt-3 space-y-2 text-sm leading-7 text-slate-600">
+                    <li>2025　BIPAM・KEX共同インキュベーションプログラム「shifting point」選出アーティスト</li>
+                    <li>2025　日本演出者協会「日本の戯曲研修セミナーin大阪2025」登壇パネラー</li>
+                    <li>2020　「如月小春プロジェクト2020」登壇パネラー</li>
+                    <li>2020　『まばたき』京都学生演劇祭【E9賞】受賞</li>
+                  </ul>
+                </div>
+                <div className="rounded-2xl bg-slate-50 p-5">
+                  <div className="text-sm font-black text-orange-600">高矢航志</div>
+                  <ul className="mt-3 space-y-2 text-sm leading-7 text-slate-600">
+                    <li>2023　『追想せる住人』関西演劇祭【脚本賞】受賞</li>
+                    <li>2021　第40回シナリオS1グランプリ佳作受賞</li>
+                    <li>2021　第46回創作テレビドラマ大賞ファイナリスト</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="activity" className="mx-auto max-w-7xl px-4 py-6 md:px-8 md:py-12">
+          <div className="mb-6">
+            <h2 className={sectionTitle}>2. どんな事をやってるのか</h2>
+            <p className={sectionLead}>今回は、舞台公演そのものに加えて、多文化・多分野の交流が伝わる見せ方に変えています。</p>
+          </div>
+          <div className="grid gap-4 md:grid-cols-3">
+            <div className={`${card} p-6`}>
+              <h3 className="text-xl font-black text-slate-900">多文化交流</h3>
+              <p className="mt-3 leading-7 text-slate-600">キルギス共和国を題材に、異なる背景を持つ人々が緩やかに出会える場を目指す企画です。</p>
+            </div>
+            <div className={`${card} p-6`}>
+              <h3 className="text-xl font-black text-slate-900">演劇を使った企画</h3>
+              <p className="mt-3 leading-7 text-slate-600">作品上演だけに閉じず、演劇という手法を通じて交流そのものをデザインする構成にしています。</p>
+            </div>
+            <div className={`${card} p-6`}>
+              <h3 className="text-xl font-black text-slate-900">マグカルシアター事業</h3>
+              <p className="mt-3 leading-7 text-slate-600">神奈川県の公募事業として実施する企画であることが伝わるよう、外部から見た信頼感も意識しています。</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="members" className="mx-auto max-w-7xl px-4 py-6 md:px-8 md:py-12">
+          <div className="mb-6">
+            <h2 className={sectionTitle}>3. どんな人がやってるのか</h2>
+            <p className={sectionLead}>今回は一人だけをしっかり見せる構成に整理しました。</p>
+          </div>
+          <div className="max-w-xl grid gap-4 md:grid-cols-1">
+            {members.map((member) => (
+              <article key={member.name} className={`${card} p-6 md:p-7`}>
+                <div className="flex items-start gap-4">
+                  <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-sky-50 text-sm font-black text-sky-700">
+                    PROFILE
+                  </div>
+                  <div>
+                    <div className="text-sm font-black text-orange-600">{member.role}</div>
+                    <h3 className="mt-1 text-2xl font-black text-slate-900">{member.name}</h3>
+                  </div>
+                </div>
+                <p className="mt-5 leading-7 text-slate-600">1994年東京生まれ。私立武蔵高等学校を卒業後、京都大学法学部に入学。大学入学と同時に京都大学公認サークル劇団ケッペキにて演劇活動を始める。主に演出を行うが、演出というよりはチームマネジメントに興味がありグループ作りに勤しんでいる。大学3年の時に、自らの団体、劇団FAXをたちあげ年間4-6本の公演をプロデュースしている。フリーランスの舞台監督としても活動中。</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section id="ticket" className="mx-auto max-w-7xl px-4 py-6 md:px-8 md:py-12">
+          <div className="mb-6">
+            <h2 className={sectionTitle}>チケット購入</h2>
+            <p className={sectionLead}>ここから購入フォームへ進む導線を想定しています。公開時は外部フォームや予約ページのURLをここに接続します。</p>
+          </div>
+          <div className="grid gap-4 md:grid-cols-[1fr_auto] md:items-center">
+            <div className={`${card} p-6`}>
+              <div className="text-sm font-black text-sky-600">料金</div>
+              <p className="mt-3 text-base leading-8 text-slate-600">前売り 2000円 / 当日 3000円</p>
+            </div>
+            <a href="https://example.com/ticket" className="inline-flex items-center justify-center rounded-2xl bg-orange-400 px-6 py-4 text-sm font-black text-white shadow-sm hover:-translate-y-0.5">
+              チケット購入フォームへ
+            </a>
+          </div>
+        </section>
+
+        <section id="news" className="mx-auto max-w-7xl px-4 py-6 md:px-8 md:py-12">
+          <div className="mb-6">
+            <h2 className={sectionTitle}>お知らせ</h2>
+            <p className={sectionLead}>静的ページでも更新しやすい、最小限の一覧構成です。</p>
+          </div>
+          <div className="space-y-4">
+            {news.map((item) => (
+              <article key={item.title} className={`${card} p-5 md:p-6`}>
+                <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+                  <div>
+                    <div className="text-sm font-black text-sky-600">{item.date}</div>
+                    <h3 className="mt-1 text-xl font-black text-slate-900">{item.title}</h3>
+                    <p className="mt-2 leading-7 text-slate-600">{item.body}</p>
+                  </div>
+                  <div className="shrink-0">
+                    <button className="rounded-2xl bg-slate-100 px-4 py-2 text-sm font-black text-slate-700">詳細</button>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="mx-auto max-w-7xl px-4 pb-8 pt-6 md:px-8 md:pb-24">
+          <div className="grid gap-5 md:grid-cols-[1.1fr_0.9fr]">
+            <div className="rounded-[32px] bg-sky-500 p-8 text-white shadow-lg shadow-sky-100">
+              <div className="text-sm font-black uppercase tracking-[0.25em] text-sky-100">Contact</div>
+              <h2 className="mt-3 text-3xl font-black">お問い合わせ</h2>
+              <p className="mt-4 max-w-xl leading-8 text-sky-50">
+                出演依頼、参加相談、公演についての問い合わせをここに集約します。公開時はメールアドレスやSNSへの導線をここへ追加する想定です。
+              </p>
+              <div className="mt-6 inline-flex rounded-2xl bg-white px-5 py-3 text-sm font-black text-sky-700">メール / SNSリンク掲載予定</div>
+            </div>
+            <div className={`${card} p-8`}>
+              <div className="text-sm font-black text-orange-600">ご来場前の確認</div>
+              <ul className="mt-4 space-y-3 text-sm leading-7 text-slate-600">
+                <li>・会場：神奈川県立青少年センタースタジオHIKARI</li>
+                <li>・日程：7/17 19:00 / 7/18 12:00・19:00 / 7/19 12:00</li>
+                <li>・料金：前売り 2000円 / 当日 3000円</li>
+                <li>・予約導線：チケット購入フォームへ接続予定</li>
+                <li>・更新情報：お知らせ欄で追記可能</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <nav className="fixed inset-x-0 bottom-0 z-50 border-t border-sky-100 bg-white/95 px-2 py-2 backdrop-blur md:hidden">
+          <div className="mx-auto grid max-w-md grid-cols-5 gap-2">
+            {mobileNav.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                className="flex flex-col items-center justify-center rounded-2xl px-2 py-2 text-[11px] font-black text-slate-600 active:bg-sky-50 active:text-sky-700"
+              >
+                <span className="mb-1 h-1.5 w-1.5 rounded-full bg-sky-400" />
+                {item.label}
+              </a>
+            ))}
+          </div>
+        </nav>
+      </main>
+    </div>
+  );
+}
