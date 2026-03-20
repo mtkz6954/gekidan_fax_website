@@ -58,6 +58,29 @@ test.describe('モバイル表示', () => {
     expect(box).not.toBeNull();
     expect(Math.round(box.y)).toBe(0);
   });
+
+  test('モンスター図鑑: モバイルでは ZUKAN DATA が内部スクロールなしで収まる', async ({ page }) => {
+    await page.goto('/monster-zukan.html');
+    await page.waitForSelector('.monster-item', { timeout: 5000 });
+    await page.waitForTimeout(800);
+
+    await page.evaluate(() => {
+      const longestIndex = MONSTERS.reduce((bestIndex, monster, index, list) => (
+        monster.desc.length > list[bestIndex].desc.length ? index : bestIndex
+      ), 0);
+      selectMonster(longestIndex);
+    });
+    await page.waitForTimeout(500);
+
+    const metrics = await page.locator('#mobileTextArea .glass-card').evaluate((el) => ({
+      bottom: el.getBoundingClientRect().bottom,
+      clientHeight: el.clientHeight,
+      scrollHeight: el.scrollHeight,
+    }));
+
+    expect(metrics.scrollHeight).toBeLessThanOrEqual(metrics.clientHeight);
+    expect(metrics.bottom).toBeLessThanOrEqual(812);
+  });
 });
 
 test.describe('デスクトップ表示', () => {
