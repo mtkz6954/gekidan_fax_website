@@ -68,13 +68,13 @@ test.describe('ファニーモンスター図鑑', () => {
   });
 
   test('タイプバッジが表示される', async ({ page }) => {
-    const badge = page.locator('#detailType');
+    const badge = page.locator('#detailTypePc');
     await expect(badge).toBeVisible();
     await expect(badge).not.toBeEmpty();
   });
 
   test('説明文が表示される', async ({ page }) => {
-    const desc = page.locator('#detailDesc');
+    const desc = page.locator('#detailDescPc');
     await expect(desc).not.toBeEmpty();
   });
 });

@@ -151,7 +151,7 @@
       33%     { transform: translateY(-12px) rotate(1deg); }
       66%     { transform: translateY(-6px) rotate(-0.5deg); }
     }
-    #detailImg {
+    #detailImg, #detailImgPc {
       position: relative; z-index: 1;
       mix-blend-mode: multiply;
       animation: float 4s ease-in-out infinite;
@@ -250,74 +250,136 @@
         height: calc(100vh - 48px);
         display: block;
       }
-      /* 詳細パネル：デフォルト非表示 */
+
+      /* 詳細パネル：YouTube Shorts風 1画面完結 */
       #detailPanel {
         position: fixed; inset: 0; top: 48px;
-        z-index: 50; overflow-y: auto;
+        z-index: 50; overflow: hidden;
+        display: flex; flex-direction: column;
         background: radial-gradient(ellipse at 30% 20%, #1e0a3c 0%, #0b0118 60%);
         transform: translateX(100%);
         transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
       }
-      /* 詳細パネル表示時 */
-      #detailPanel.mobile-open {
-        transform: translateX(0);
+      #detailPanel.mobile-open { transform: translateX(0); }
+
+      /* detailContent：flex列で画面いっぱい */
+      #detailContent {
+        flex: 1; display: flex !important; flex-direction: column;
+        padding: 0; max-width: none; overflow: hidden;
       }
-      /* 戻るボタン表示 */
-      #backBtn { display: flex !important; }
+
+      /* モバイルトップバー */
+      #mobileTopBar {
+        display: flex !important;
+        align-items: center; justify-content: space-between;
+        padding: 8px 14px; flex-shrink: 0;
+        border-bottom: 1px solid rgba(139,92,246,0.15);
+      }
+
+      /* 画像エリア：上45% */
+      #mobileImgArea {
+        display: flex !important;
+        align-items: center; justify-content: center;
+        flex: 0 0 42%; overflow: hidden;
+        position: relative;
+      }
+      #mobileImgArea .shockwave-wrap {
+        position: relative; display: flex; align-items: center; justify-content: center;
+        width: 100%; height: 100%;
+      }
+      #mobileImgArea {
+        background: #ffffff;
+        border-radius: 20px;
+        margin: 10px 14px;
+        animation: glow-breathe 3s ease-in-out infinite;
+        position: relative;
+      }
+      #mobileImgArea::before {
+        content: ''; position: absolute; inset: -1px; border-radius: 20px;
+        background: linear-gradient(135deg, rgba(139,92,246,0.5), rgba(59,130,246,0.3), rgba(236,72,153,0.2));
+        z-index: 0;
+      }
+      #mobileImgArea #detailImg {
+        max-height: 90%; max-width: 90%; object-fit: contain; position: relative; z-index: 1;
+      }
+
+      /* テキストエリア：残り */
+      #mobileTextArea {
+        display: flex !important; flex-direction: column;
+        flex: 1; padding: 10px 14px; overflow: hidden; gap: 6px;
+      }
+      #mobileTextArea #detailName { font-size: 1.25rem; margin: 0; }
+      #mobileTextArea #detailDesc { font-size: 11px; line-height: 1.6; }
+      #mobileTextArea #detailQuote { font-size: 12px; }
+
+      /* PC専用要素を非表示 */
+      #mobileTopBar ~ .pc-only,
+      .nav-btn,
+      #swipeNavPrev .swipe-nav-pc-only,
+      #swipeNavNext .swipe-nav-pc-only { display: none !important; }
     }
 
     /* 戻るボタン（PCでは非表示） */
     #backBtn {
       display: none;
-      align-items: center; gap: 8px;
-      padding: 8px 16px;
+      align-items: center; gap: 6px;
       background: rgba(109,40,217,0.2);
       border: 1px solid rgba(139,92,246,0.4);
-      border-radius: 10px; cursor: pointer;
+      border-radius: 8px; cursor: pointer;
+      padding: 5px 10px;
       transition: all 0.2s ease;
-      color: #a78bfa; font-size: 11px;
+      color: #a78bfa; font-size: 10px;
     }
     #backBtn:hover { background: rgba(109,40,217,0.4); }
 
-    /* モバイルPREV/NEXTは横スワイプ感 */
+    /* モバイルトップバー・各エリア：PCでは非表示 */
+    #mobileTopBar, #mobileImgArea, #mobileTextArea { display: none; }
+
+    /* モバイルPREV/NEXTはボタン非表示 */
     @media (max-width: 767px) {
-      .nav-btn { padding: 10px 20px; font-size: 8px; }
+      #backBtn { display: flex !important; }
+      .nav-btn { display: none !important; }
     }
 
     /* スワイプナビゲーター（モバイル専用） */
-    .swipe-nav {
-      display: none;
-    }
+    .swipe-nav { display: none; }
+
     @media (max-width: 767px) {
       .swipe-nav {
-        display: flex;
-        align-items: center; justify-content: space-between;
-        padding: 10px 16px;
-        background: rgba(109,40,217,0.3);
-        border: 1px solid rgba(139,92,246,0.35);
-        border-radius: 12px;
+        display: flex; flex-shrink: 0;
+        align-items: center; gap: 10px;
+        padding: 8px 14px;
+        background: rgba(15,5,40,0.85);
+        border-top: 1px solid rgba(139,92,246,0.2);
         cursor: pointer;
-        transition: opacity 0.3s, transform 0.3s;
+        transition: background 0.2s;
         opacity: 0; pointer-events: none;
-        transform: translateY(6px);
       }
-      .swipe-nav.visible {
-        opacity: 1; pointer-events: auto;
-        transform: translateY(0);
-      }
-      .swipe-nav .swipe-arrow {
-        font-size: 18px; animation: swipe-pulse 1.4s ease-in-out infinite;
+      .swipe-nav.visible { opacity: 1; pointer-events: auto; }
+      #swipeNavNext { border-top: 1px solid rgba(139,92,246,0.2); border-bottom: none; }
+      #swipeNavPrev { border-top: none; border-bottom: 1px solid rgba(139,92,246,0.2); }
+
+      /* サムネイル */
+      .swipe-thumb {
+        width: 44px; height: 44px; flex-shrink: 0;
+        border-radius: 8px; object-fit: cover;
+        filter: brightness(0.45);
+        border: 1px solid rgba(139,92,246,0.3);
       }
       .swipe-nav .swipe-label {
-        font-size: 9px; color: #c4b5fd; letter-spacing: 0.05em;
+        font-size: 9px; color: #a78bfa; letter-spacing: 0.05em; font-family: 'Press Start 2P', monospace;
       }
       .swipe-nav .swipe-name {
-        font-size: 11px; font-weight: bold; color: #fff;
-        max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        font-size: 12px; font-weight: bold; color: #fff;
+        overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      }
+      .swipe-nav .swipe-arrow {
+        margin-left: auto; font-size: 16px; color: #7c3aed;
+        animation: swipe-pulse 1.4s ease-in-out infinite;
       }
       @keyframes swipe-pulse {
         0%,100% { transform: translateY(0); }
-        50%      { transform: translateY(-4px); }
+        50%      { transform: translateY(-3px); }
       }
     }
   </style>
@@ -344,7 +406,7 @@
   <div class="list-panel w-72 shrink-0 overflow-y-auto" id="monsterList">
     <div class="px-3 py-3 border-b border-purple-900/50">
       <p class="pixel text-[8px] text-purple-500 mb-1">MONSTERS</p>
-      <p class="text-xs text-purple-400"><span class="font-bold text-purple-300">30</span> 体確認済み</p>
+      <p class="text-xs text-purple-400"><span class="font-bold text-purple-300">190</span> 体確認済み</p>
     </div>
   </div>
 
@@ -360,61 +422,89 @@
     <!-- 詳細 -->
     <div id="detailContent" class="hidden p-5 md:p-10 max-w-2xl mx-auto">
 
-      <!-- モバイル戻るボタン -->
-      <div class="flex items-center justify-between mb-5">
-        <button id="backBtn" onclick="showMobileList()" class="pixel text-[9px]">
-          ← 一覧に戻る
-        </button>
+      <!-- ===== モバイル専用：前のモンスターナビ ===== -->
+      <div id="swipeNavPrev" class="swipe-nav" onclick="navigatePrev()">
+        <img class="swipe-thumb" id="swipeThumbPrev" src="" alt="">
+        <div style="min-width:0">
+          <div class="swipe-label">↓ 前のモンスター</div>
+          <div class="swipe-name" id="swipeNavPrevName"></div>
+        </div>
+        <span class="swipe-arrow" style="transform:rotate(180deg);display:inline-block;">↑</span>
       </div>
 
-      <!-- 前のモンスターへ（最上部スワイプ誘導） -->
-      <div id="swipeNavPrev" class="swipe-nav mb-4" onclick="navigatePrev()">
-        <span class="swipe-arrow" style="transform:rotate(180deg); display:inline-block;">↓</span>
-        <div class="text-right">
-          <div class="swipe-label">下スワイプで前へ</div>
-          <div class="swipe-name" id="swipeNavPrevName"></div>
+      <!-- ===== モバイル専用：トップバー ===== -->
+      <div id="mobileTopBar">
+        <button id="backBtn" onclick="showMobileList()">← 一覧に戻る</button>
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span class="zukan-no text-xs" id="detailNoMobile"></span>
+          <span class="type-badge" id="detailTypeMobile"></span>
         </div>
       </div>
 
-      <!-- 番号・タイプ -->
-      <div class="flex items-center justify-between mb-4">
-        <span class="zukan-no text-sm" id="detailNo">No.001</span>
-        <span class="type-badge" id="detailType"></span>
+      <!-- ===== モバイル専用：画像エリア ===== -->
+      <div id="mobileImgArea">
+        <div class="shockwave-wrap">
+          <div class="shockwave" id="sw1m"></div>
+          <div class="shockwave" id="sw2m"></div>
+          <img id="detailImg" src="" alt="" class="max-h-64 w-auto object-contain" />
+        </div>
       </div>
 
-      <!-- 名前 -->
-      <h1 class="text-3xl md:text-4xl font-black text-white mb-6" id="detailName"></h1>
+      <!-- ===== モバイル専用：テキストエリア ===== -->
+      <div id="mobileTextArea">
+        <h1 class="font-black text-white" id="detailName"></h1>
+        <div style="overflow:hidden;flex:1;display:flex;flex-direction:column;gap:6px;">
+          <div class="glass-card p-3" style="flex-shrink:0;">
+            <p class="pixel text-slate-300" style="font-size:8px;margin-bottom:4px;letter-spacing:.05em;">// ZUKAN DATA</p>
+            <p class="text-slate-200" id="detailDesc" style="font-size:11px;line-height:1.65;"></p>
+          </div>
+          <div class="speech-bubble px-4 pt-6 pb-3" style="flex-shrink:0;">
+            <p class="text-purple-200 font-bold" id="detailQuote" style="font-size:12px;"></p>
+          </div>
+        </div>
+      </div>
 
-      <!-- 画像 -->
-      <div class="img-container p-4 mb-8 flex items-center justify-center" style="min-height:280px;">
-        <!-- 衝撃波 -->
+      <!-- ===== PC専用：以下モバイルでは非表示 ===== -->
+
+      <!-- 番号・タイプ -->
+      <div class="pc-only flex items-center justify-between mb-4 hidden md:flex">
+        <span class="zukan-no text-sm" id="detailNoPc">No.001</span>
+        <span class="type-badge" id="detailTypePc"></span>
+      </div>
+
+      <!-- 名前（PC） -->
+      <h1 class="pc-only hidden md:block text-3xl md:text-4xl font-black text-white mb-6" id="detailNamePc"></h1>
+
+      <!-- 画像（PC） -->
+      <div class="pc-only hidden md:flex img-container p-4 mb-8 items-center justify-center" style="min-height:280px;">
         <div class="shockwave" id="sw1"></div>
         <div class="shockwave" id="sw2"></div>
         <div class="shockwave" id="sw3"></div>
-        <img id="detailImg" src="" alt="" class="max-h-64 w-auto object-contain" />
+        <img id="detailImgPc" src="" alt="" class="max-h-64 w-auto object-contain" />
       </div>
 
-      <!-- 説明文 -->
-      <div class="glass-card p-5 mb-4">
+      <!-- 説明文（PC） -->
+      <div class="pc-only hidden md:block glass-card p-5 mb-4">
         <p class="pixel text-[9px] text-purple-500 mb-3 tracking-widest">// ZUKAN DATA</p>
-        <p class="text-sm text-slate-200 leading-7" id="detailDesc"></p>
+        <p class="text-sm text-slate-200 leading-7" id="detailDescPc"></p>
       </div>
 
-      <!-- セリフ -->
-      <div class="speech-bubble px-5 pt-8 pb-4 mb-8">
-        <p class="text-base text-purple-200 font-bold" id="detailQuote"></p>
+      <!-- セリフ（PC） -->
+      <div class="pc-only hidden md:block speech-bubble px-5 pt-8 pb-4 mb-8">
+        <p class="text-base text-purple-200 font-bold" id="detailQuotePc"></p>
       </div>
 
-      <!-- PREV / NEXT -->
-      <div class="flex justify-between">
+      <!-- PREV / NEXT（PC） -->
+      <div class="pc-only hidden md:flex justify-between">
         <button id="prevBtn" onclick="navigatePrev()" class="nav-btn pixel text-[9px] text-purple-400">← PREV</button>
         <button id="nextBtn" onclick="navigateNext()" class="nav-btn pixel text-[9px] text-purple-400">NEXT →</button>
       </div>
 
-      <!-- 次のモンスターへ（最下部スワイプ誘導） -->
-      <div id="swipeNavNext" class="swipe-nav mt-4" onclick="navigateNext()">
-        <div>
-          <div class="swipe-label">上スワイプで次へ</div>
+      <!-- ===== モバイル専用：次のモンスターナビ ===== -->
+      <div id="swipeNavNext" class="swipe-nav" onclick="navigateNext()">
+        <img class="swipe-thumb" id="swipeThumbNext" src="" alt="">
+        <div style="min-width:0">
+          <div class="swipe-label">↑ 次のモンスター</div>
           <div class="swipe-name" id="swipeNavNextName"></div>
         </div>
         <span class="swipe-arrow">↑</span>
@@ -678,11 +768,12 @@ function typewriterEffect(el, text) {
 
 // ===== 衝撃波 =====
 function triggerShockwave() {
-  ['sw1','sw2','sw3'].forEach(id => {
+  ['sw1','sw2','sw3','sw1m','sw2m'].forEach(id => {
     const el = document.getElementById(id);
+    if (!el) return;
     el.className = 'shockwave';
     void el.offsetWidth;
-    el.className = `shockwave ring${id.slice(-1)}`;
+    el.className = `shockwave ring${id.replace(/\D/g,'')[0]}`;
   });
 }
 
@@ -696,15 +787,15 @@ function triggerFlash() {
 
 // ===== 説明文アニメーション =====
 function animateDesc(text) {
-  const el = document.getElementById('detailDesc');
-  // 句点で区切って段落的に扱う
   const sentences = text.match(/[^。]+。?/g) || [text];
-  el.innerHTML = sentences.map(s =>
-    `<span class="desc-line">${s}</span>`
-  ).join('');
-  const lines = el.querySelectorAll('.desc-line');
-  lines.forEach((line, i) => {
-    setTimeout(() => line.classList.add('visible'), 300 + i * 120);
+  const html = sentences.map(s => `<span class="desc-line">${s}</span>`).join('');
+  ['detailDesc', 'detailDescPc'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.innerHTML = html;
+    el.querySelectorAll('.desc-line').forEach((line, i) => {
+      setTimeout(() => line.classList.add('visible'), 300 + i * 120);
+    });
   });
 }
 
@@ -727,62 +818,70 @@ function selectMonster(index) {
   const detail = document.getElementById('detailContent');
   detail.classList.remove('hidden');
 
-  // 番号（即時）
-  document.getElementById('detailNo').textContent = `No.${String(m.id).padStart(3,'0')}`;
+  // 番号・タイプバッジ（mobile + PC）
+  const noStr = `No.${String(m.id).padStart(3,'0')}`;
+  ['detailNoMobile','detailNoPc'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = noStr;
+  });
+  ['detailTypeMobile','detailTypePc'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.className = 'type-badge';
+    void el.offsetWidth;
+    el.textContent = m.type + 'タイプ';
+    el.style.background = m.typeBg;
+    el.style.color = m.typeColor;
+    el.style.border = `1px solid ${m.typeColor}55`;
+    el.classList.add('badge-enter');
+  });
 
-  // タイプバッジ（バウンス）
-  const typeEl = document.getElementById('detailType');
-  typeEl.className = 'type-badge';
-  void typeEl.offsetWidth;
-  typeEl.textContent = m.type + 'タイプ';
-  typeEl.style.background = m.typeBg;
-  typeEl.style.color = m.typeColor;
-  typeEl.style.border = `1px solid ${m.typeColor}55`;
-  typeEl.classList.add('badge-enter');
-
-  // 名前タイプライター（少し遅延）
-  setTimeout(() => typewriterEffect(document.getElementById('detailName'), m.name), 80);
-
-  // 画像（バウンス登場）
-  const img = document.getElementById('detailImg');
-  img.style.animation = 'none';
-  img.style.opacity = '0';
-  img.src = IMG_BASE + m.file;
-  img.alt = m.name;
+  // 名前タイプライター（mobile + PC）
   setTimeout(() => {
-    img.classList.remove('img-entering');
-    void img.offsetWidth;
-    img.classList.add('img-entering');
-    img.style.opacity = '';
-    // 登場後は浮遊アニメに戻す
+    ['detailName','detailNamePc'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) typewriterEffect(el, m.name);
+    });
+  }, 80);
+
+  // 画像（mobile + PC）
+  ['detailImg','detailImgPc'].forEach(id => {
+    const img = document.getElementById(id);
+    if (!img) return;
+    img.style.animation = 'none';
+    img.style.opacity = '0';
+    img.src = IMG_BASE + m.file;
+    img.alt = m.name;
     setTimeout(() => {
       img.classList.remove('img-entering');
-      img.style.animation = '';
-    }, 500);
-    triggerShockwave();
-  }, 100);
+      void img.offsetWidth;
+      img.classList.add('img-entering');
+      img.style.opacity = '';
+      setTimeout(() => { img.classList.remove('img-entering'); img.style.animation = ''; }, 500);
+    }, 100);
+  });
+  setTimeout(triggerShockwave, 100);
 
   // 説明文（時間差フェード）
   animateDesc(m.desc);
 
-  // セリフ
-  const quoteEl = document.getElementById('detailQuote');
-  quoteEl.textContent = m.quote;
-  quoteEl.classList.remove('visible');
-  setTimeout(() => quoteEl.classList.add('visible'), 600);
+  // セリフ（mobile + PC）
+  ['detailQuote','detailQuotePc'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = m.quote;
+    el.classList.remove('visible');
+    setTimeout(() => el.classList.add('visible'), 600);
+  });
 
   // スクロール
   const activeItem = document.querySelector('.monster-item.active');
   if (activeItem) activeItem.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
 
-  // モバイル：詳細パネルをスライドイン
+  // モバイル：詳細パネルをスライドイン＋ナビゲーター更新
   if (isMobile()) {
     showMobileDetail();
-    // パネル先頭に戻してナビゲーター更新
-    setTimeout(() => {
-      document.getElementById('detailPanel').scrollTop = 0;
-      updateSwipeNav();
-    }, 350);
+    setTimeout(updateSwipeNav, 100);
   }
 
   setTimeout(() => { isAnimating = false; }, 400);
@@ -815,41 +914,35 @@ function updateSwipeNav() {
   if (window.innerWidth >= 768) return;
   const prev = currentIndex > 0 ? MONSTERS[currentIndex - 1] : null;
   const next = currentIndex < MONSTERS.length - 1 ? MONSTERS[currentIndex + 1] : null;
-  const prevEl = document.getElementById('swipeNavPrev');
-  const nextEl = document.getElementById('swipeNavNext');
+  // 前
   document.getElementById('swipeNavPrevName').textContent = prev ? `No.${String(prev.id).padStart(3,'0')} ${prev.name}` : '';
+  document.getElementById('swipeThumbPrev').src = prev ? IMG_BASE + prev.file : '';
+  document.getElementById('swipeNavPrev').classList.toggle('visible', !!prev);
+  // 次
   document.getElementById('swipeNavNextName').textContent = next ? `No.${String(next.id).padStart(3,'0')} ${next.name}` : '';
-  // スクロール位置で表示切替
-  const panel = document.getElementById('detailPanel');
-  const atTop    = panel.scrollTop <= 4;
-  const atBottom = panel.scrollTop + panel.clientHeight >= panel.scrollHeight - 4;
-  prevEl.classList.toggle('visible', atTop && !!prev);
-  nextEl.classList.toggle('visible', atBottom && !!next);
+  document.getElementById('swipeThumbNext').src = next ? IMG_BASE + next.file : '';
+  document.getElementById('swipeNavNext').classList.toggle('visible', !!next);
 }
 
 // ===== モバイルスワイプ（YouTube Shorts風）=====
-// パネル最下部で上スワイプ → 次、最上部で下スワイプ → 前
+// 内部スクロールなし・画面全体で縦スワイプを検知
 (function() {
   const panel = document.getElementById('detailPanel');
-  let startY = 0, startX = 0, atTop = false, atBottom = false;
-  const THRESHOLD = 80;
+  let startY = 0, startX = 0;
+  const THRESHOLD = 60;
 
   panel.addEventListener('touchstart', e => {
     startY = e.touches[0].clientY;
     startX = e.touches[0].clientX;
-    atTop    = panel.scrollTop <= 0;
-    atBottom = panel.scrollTop + panel.clientHeight >= panel.scrollHeight - 2;
   }, { passive: true });
 
   panel.addEventListener('touchend', e => {
     const dy = e.changedTouches[0].clientY - startY;
     const dx = e.changedTouches[0].clientX - startX;
     if (Math.abs(dy) < Math.abs(dx)) return; // 横スワイプは無視
-    if (dy < -THRESHOLD && atBottom) navigateNext(); // 最下部で上スワイプ → 次
-    else if (dy > THRESHOLD && atTop)  navigatePrev(); // 最上部で下スワイプ → 前
+    if (dy < -THRESHOLD) navigateNext(); // 上スワイプ → 次
+    else if (dy > THRESHOLD) navigatePrev(); // 下スワイプ → 前
   }, { passive: true });
-
-  panel.addEventListener('scroll', updateSwipeNav, { passive: true });
 })();
 
 selectMonster(0);
