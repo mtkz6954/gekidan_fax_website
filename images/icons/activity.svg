@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none">
+  <!-- 星・活動アイコン -->
+  <defs>
+    <linearGradient id="g3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#f97316"/>
+    </linearGradient>
+  </defs>
+  <path d="M20 6 L23.5 15 L33 15.5 L25.5 22 L28 31.5 L20 26 L12 31.5 L14.5 22 L7 15.5 L16.5 15 Z" fill="url(#g3)"/>
+  <circle cx="11" cy="9" r="2" fill="#fbbf24" opacity="0.6"/>
+  <circle cx="31" cy="11" r="1.5" fill="#f97316" opacity="0.5"/>
+  <circle cx="33" cy="28" r="1" fill="#fbbf24" opacity="0.4"/>
+</svg>

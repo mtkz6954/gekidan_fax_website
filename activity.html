@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="effects.css" />
   <script>
     tailwind.config = { theme: { extend: { fontFamily: { sans: ['"Noto Sans JP"','sans-serif'] } } } }
   </script>
@@ -26,29 +27,31 @@
 <body class="min-h-screen bg-white text-slate-800 antialiased">
 
 <!-- Header -->
-<header class="sticky top-0 z-40 border-b border-slate-100 bg-white/90 backdrop-blur-md">
+<header class="sticky top-0 z-40 border-b border-slate-100 bg-white/90 backdrop-blur-md transition-shadow duration-300">
   <div class="mx-auto flex h-14 max-w-5xl items-center justify-between px-5 md:h-16 md:px-8">
     <a href="index.html" class="flex items-center gap-2.5 group">
-      <img src="images/FAX.png" alt="劇団FAX" class="h-8 w-auto md:h-9" />
+      <img src="images/FAX.png" alt="劇団FAX" class="h-8 w-auto md:h-9 transition-transform duration-300 group-hover:scale-110" />
     </a>
     <nav class="hidden items-center gap-7 text-[13px] font-bold text-slate-500 md:flex">
-      <a href="index.html" class="hover:text-sky-600 transition-colors">トップ</a>
-      <a href="about.html" class="hover:text-sky-600 transition-colors">劇団について</a>
-      <a href="activity.html" class="text-slate-900">活動内容</a>
-      <a href="monster-zukan.html" class="hover:text-purple-600 transition-colors">👾 図鑑</a>
+      <a href="index.html" class="hover:text-sky-600 transition-colors nav-link-effect">トップ</a>
+      <a href="about.html" class="hover:text-sky-600 transition-colors nav-link-effect">劇団について</a>
+      <a href="activity.html" class="text-slate-900 nav-link-effect">活動内容</a>
+      <a href="monster-zukan.html" class="hover:text-purple-600 transition-colors nav-link-effect">👾 図鑑</a>
     </nav>
-    <a href="https://example.com/ticket" class="rounded-full bg-orange-400 px-4 py-1.5 text-[11px] font-black text-white transition-all hover:-translate-y-0.5 hover:bg-orange-500 hover:shadow-md md:px-5 md:py-2 md:text-xs">チケット購入</a>
+    <a href="https://example.com/ticket" class="glow-btn magnetic-btn ripple-btn rounded-full bg-orange-400 px-4 py-1.5 text-[11px] font-black text-white transition-all hover:-translate-y-0.5 hover:bg-orange-500 md:px-5 md:py-2 md:text-xs">チケット購入</a>
   </div>
 </header>
 
 <main class="pb-16 md:pb-0">
 
 <!-- Page Header -->
-<section class="border-b border-slate-100 bg-gradient-to-b from-orange-50/30 to-white">
-  <div class="mx-auto max-w-5xl px-5 pb-10 pt-10 md:px-8 md:pb-12 md:pt-16">
-    <p class="text-xs font-bold text-orange-500 uppercase tracking-wider">Activity</p>
-    <h1 class="mt-2 text-3xl font-black text-slate-900 md:text-4xl">活動内容</h1>
-    <p class="mt-3 max-w-md text-[15px] leading-8 text-slate-500">舞台公演にとどまらない、演劇を通じた交流と創造の場。</p>
+<section class="border-b border-slate-100 animated-gradient-subtle relative overflow-hidden">
+  <div class="blob-1 bg-orange-200 -top-10 right-20"></div>
+  <div class="blob-2 bg-purple-200 top-20 -left-10"></div>
+  <div class="mx-auto max-w-5xl px-5 pb-10 pt-10 md:px-8 md:pb-12 md:pt-16 relative z-10">
+    <p class="text-xs font-bold text-orange-500 uppercase tracking-wider" data-animate="fade-up">Activity</p>
+    <h1 class="mt-2 text-3xl font-black text-slate-900 md:text-4xl" data-animate="fade-up">活動内容</h1>
+    <p class="mt-3 max-w-md text-[15px] leading-8 text-slate-500" data-animate="fade-up">舞台公演にとどまらない、演劇を通じた交流と創造の場。</p>
   </div>
 </section>
 
@@ -56,7 +59,7 @@
 <section class="mx-auto max-w-5xl px-5 py-12 md:px-8 md:py-16">
   <div class="flex items-end justify-between">
     <div>
-      <h2 class="text-lg font-black text-slate-900 md:text-xl">活動ハイライト</h2>
+      <h2 class="text-lg font-black text-slate-900 md:text-xl fancy-heading">活動ハイライト</h2>
       <p class="mt-1 text-sm text-slate-400">劇団FAXの創作を貫く、3つの柱。</p>
     </div>
     <!-- カウンター & 矢印（デスクトップ） -->
@@ -78,24 +81,22 @@
 
         <!-- 1. 「未知との遭遇」シリーズ -->
         <div class="w-full shrink-0 px-1">
-          <div class="rounded-2xl border border-slate-100 p-6 md:p-8">
-            <div class="flex items-start gap-4">
-              <div class="shrink-0 flex h-11 w-11 items-center justify-center rounded-xl bg-sky-50 text-xl">🌍</div>
-              <div class="flex-1 min-w-0">
-                <div class="flex flex-wrap items-center gap-2">
-                  <h3 class="text-base font-black text-slate-900 md:text-lg">「未知との遭遇」シリーズ</h3>
-                  <span class="rounded-full bg-sky-50 px-2.5 py-0.5 text-[10px] font-bold text-sky-600">フィールドワーク × 演劇</span>
-                </div>
-                <p class="mt-3 text-[15px] leading-8 text-slate-600">
-                  海外でのフィールドワークで得た体験を、ドキュメンタリーとフィクションを交差させて舞台化するシリーズ。第一弾ではアフリカ・ボツワナを題材に、現地で撮影した写真や映像を背景に投影しながら、体験をほぼそのまま舞台上に再現。過激なシーンは「見立て」で行うなど、演劇的工夫とリアルの間を行き来する作品を上演しました。
-                </p>
-                <p class="mt-2 text-[15px] leading-8 text-slate-600">
-                  最新作『キルギスのやつ』では、中央アジア・キルギス共和国での約5ヶ月間の滞在で触れた遊牧文化・伝統芸能・民話・死生観・食文化を素材に、演劇上演に加えて展示・トークイベント・物販を組み合わせた複合型の文化交流イベントとして展開します。
-                </p>
-                <div class="mt-4 flex flex-wrap gap-2">
-                  <span class="rounded-full border border-slate-200 px-3 py-1 text-xs font-bold text-slate-500">『ボツワナ・てんとう』2024</span>
-                  <span class="rounded-full border border-orange-200 bg-orange-50/50 px-3 py-1 text-xs font-bold text-orange-600">『キルギスのやつ』2026 NEW</span>
-                </div>
+          <div class="rounded-2xl border border-slate-100 overflow-hidden relative">
+            <img src="images/スクリーンショット 2026-03-20 143650.png" alt="" class="absolute inset-0 w-full h-full object-cover opacity-10 pointer-events-none" />
+            <div class="relative p-6 md:p-8">
+              <div class="flex flex-wrap items-center gap-2">
+                <h3 class="text-base font-black text-slate-900 md:text-lg">「未知との遭遇」シリーズ</h3>
+                <span class="rounded-full bg-sky-50 px-2.5 py-0.5 text-[10px] font-bold text-sky-600">フィールドワーク × 演劇</span>
+              </div>
+              <p class="mt-3 text-[15px] leading-8 text-slate-600">
+                海外でのフィールドワークで得た体験を、ドキュメンタリーとフィクションを交差させて舞台化するシリーズ。第一弾ではアフリカ・ボツワナを題材に、現地で撮影した写真や映像を背景に投影しながら、体験をほぼそのまま舞台上に再現。過激なシーンは「見立て」で行うなど、演劇的工夫とリアルの間を行き来する作品を上演しました。
+              </p>
+              <p class="mt-2 text-[15px] leading-8 text-slate-600">
+                最新作『キルギスのやつ』では、中央アジア・キルギス共和国での約5ヶ月間の滞在で触れた遊牧文化・伝統芸能・民話・死生観・食文化を素材に、演劇上演に加えて展示・トークイベント・物販を組み合わせた複合型の文化交流イベントとして展開します。
+              </p>
+              <div class="mt-4 flex flex-wrap gap-2">
+                <span class="rounded-full border border-slate-200 px-3 py-1 text-xs font-bold text-slate-500">『ボツワナ・てんとう』2024</span>
+                <span class="rounded-full border border-orange-200 bg-orange-50/50 px-3 py-1 text-xs font-bold text-orange-600">『キルギスのやつ』2026 NEW</span>
               </div>
             </div>
           </div>
@@ -103,36 +104,34 @@
 
         <!-- 2. 受賞作品 -->
         <div class="w-full shrink-0 px-1">
-          <div class="rounded-2xl border border-slate-100 p-6 md:p-8">
-            <div class="flex items-start gap-4">
-              <div class="shrink-0 flex h-11 w-11 items-center justify-center rounded-xl bg-orange-50 text-xl">🏆</div>
-              <div class="flex-1 min-w-0">
-                <div class="flex flex-wrap items-center gap-2">
-                  <h3 class="text-base font-black text-slate-900 md:text-lg">受賞作品・代表作</h3>
-                  <span class="rounded-full bg-orange-50 px-2.5 py-0.5 text-[10px] font-bold text-orange-600">E9賞・脚本賞 受賞</span>
+          <div class="rounded-2xl border border-slate-100 overflow-hidden relative">
+            <img src="images/SANSO_ゲネ写.jpg" alt="" class="absolute inset-0 w-full h-full object-cover opacity-[0.07] pointer-events-none" />
+            <div class="relative p-6 md:p-8">
+              <div class="flex flex-wrap items-center gap-2">
+                <h3 class="text-base font-black text-slate-900 md:text-lg">受賞作品・代表作</h3>
+                <span class="rounded-full bg-orange-50 px-2.5 py-0.5 text-[10px] font-bold text-orange-600">E9賞・脚本賞 受賞</span>
+              </div>
+              <div class="mt-4 space-y-4">
+                <div class="rounded-xl bg-white/70 backdrop-blur-sm p-4">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span class="text-[15px] font-bold text-slate-800">『まばたき』</span>
+                    <span class="rounded bg-sky-50 px-2 py-0.5 text-[10px] font-bold text-sky-600">京都学生演劇祭2020 E9賞</span>
+                  </div>
+                  <p class="mt-2 text-sm leading-7 text-slate-500">古今東西の小説・戯曲・詩からの引用を織り交ぜ、古代ギリシャ悲劇『オイディプス』を土台に、現代を生きる価値観を描いた作品。</p>
                 </div>
-                <div class="mt-4 space-y-4">
-                  <div class="rounded-xl bg-slate-50/70 p-4">
-                    <div class="flex flex-wrap items-center gap-2">
-                      <span class="text-[15px] font-bold text-slate-800">『まばたき』</span>
-                      <span class="rounded bg-sky-50 px-2 py-0.5 text-[10px] font-bold text-sky-600">京都学生演劇祭2020 E9賞</span>
-                    </div>
-                    <p class="mt-2 text-sm leading-7 text-slate-500">古今東西の小説・戯曲・詩からの引用を織り交ぜ、古代ギリシャ悲劇『オイディプス』を土台に、現代を生きる価値観を描いた作品。</p>
+                <div class="rounded-xl bg-white/70 backdrop-blur-sm p-4">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span class="text-[15px] font-bold text-slate-800">『追想せる住人』</span>
+                    <span class="rounded bg-orange-50 px-2 py-0.5 text-[10px] font-bold text-orange-600">関西演劇祭2023 脚本賞</span>
                   </div>
-                  <div class="rounded-xl bg-slate-50/70 p-4">
-                    <div class="flex flex-wrap items-center gap-2">
-                      <span class="text-[15px] font-bold text-slate-800">『追想せる住人』</span>
-                      <span class="rounded bg-orange-50 px-2 py-0.5 text-[10px] font-bold text-orange-600">関西演劇祭2023 脚本賞</span>
-                    </div>
-                    <p class="mt-2 text-sm leading-7 text-slate-500">緻密な会話に引き込まれ次が気になるサスペンスをベースに、スリルと笑いが交錯する長編作品。脚本の高矢航志による代表作。</p>
+                  <p class="mt-2 text-sm leading-7 text-slate-500">緻密な会話に引き込まれ次が気になるサスペンスをベースに、スリルと笑いが交錯する長編作品。脚本の高矢航志による代表作。</p>
+                </div>
+                <div class="rounded-xl bg-white/70 backdrop-blur-sm p-4">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span class="text-[15px] font-bold text-slate-800">『豊穣』</span>
+                    <span class="rounded bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-500">京都学生演劇祭2022 エキシビション</span>
                   </div>
-                  <div class="rounded-xl bg-slate-50/70 p-4">
-                    <div class="flex flex-wrap items-center gap-2">
-                      <span class="text-[15px] font-bold text-slate-800">『豊穣』</span>
-                      <span class="rounded bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-500">京都学生演劇祭2022 エキシビション</span>
-                    </div>
-                    <p class="mt-2 text-sm leading-7 text-slate-500">テント芝居という形式で「実在する場所」と「存在しないかもしれない場所」の境界を溶かす試み。夜の公園で音響も照明も用いず、幽霊の話を上演。作品終盤、幽霊が闇に消えるシーンで突風が吹き、客席にざわめきが生じた伝説的な回。</p>
-                  </div>
+                  <p class="mt-2 text-sm leading-7 text-slate-500">テント芝居という形式で「実在する場所」と「存在しないかもしれない場所」の境界を溶かす試み。夜の公園で音響も照明も用いず、幽霊の話を上演。作品終盤、幽霊が闇に消えるシーンで突風が吹き、客席にざわめきが生じた伝説的な回。</p>
                 </div>
               </div>
             </div>
@@ -141,25 +140,23 @@
 
         <!-- 3. 春の大感謝祭 -->
         <div class="w-full shrink-0 px-1">
-          <div class="rounded-2xl border border-slate-100 p-6 md:p-8">
-            <div class="flex items-start gap-4">
-              <div class="shrink-0 flex h-11 w-11 items-center justify-center rounded-xl bg-sky-50 text-xl">🎪</div>
-              <div class="flex-1 min-w-0">
-                <div class="flex flex-wrap items-center gap-2">
-                  <h3 class="text-base font-black text-slate-900 md:text-lg">春の大感謝祭</h3>
-                  <span class="rounded-full bg-sky-50 px-2.5 py-0.5 text-[10px] font-bold text-sky-600">複合型イベント</span>
-                </div>
-                <p class="mt-3 text-[15px] leading-8 text-slate-600">
-                  演劇を超えた「お祭り」。関西で活躍する複数の劇団が一堂に会し短編演劇を披露するほか、物産展、絵画展、AI脚本の即興上演、さらには虫を食べる会（※お客様は食べません）まで――1ステージ5時間に及ぶ、何でもありのイベントです。
-                </p>
-                <p class="mt-2 text-[15px] leading-8 text-slate-600">
-                  出演者とお客さんの垣根を超え、演劇上演を通じて「縁」を創出し、コミュニティとしての力を醸成しようという試み。日常に飽きて非日常を求める人におすすめの、唯一無二の体験を提供しています。
-                </p>
-                <div class="mt-4 flex flex-wrap gap-2">
-                  <span class="rounded-full border border-slate-200 px-3 py-1 text-xs font-bold text-slate-500">第1回 2017</span>
-                  <span class="rounded-full border border-slate-200 px-3 py-1 text-xs font-bold text-slate-500">第2回 2019</span>
-                  <span class="rounded-full border border-slate-200 px-3 py-1 text-xs font-bold text-slate-500">第3回 2023</span>
-                </div>
+          <div class="rounded-2xl border border-slate-100 overflow-hidden relative">
+            <img src="images/kansyasai.JPG" alt="" class="absolute inset-0 w-full h-full object-cover opacity-10 pointer-events-none" />
+            <div class="relative p-6 md:p-8">
+              <div class="flex flex-wrap items-center gap-2">
+                <h3 class="text-base font-black text-slate-900 md:text-lg">春の大感謝祭</h3>
+                <span class="rounded-full bg-sky-50 px-2.5 py-0.5 text-[10px] font-bold text-sky-600">複合型イベント</span>
+              </div>
+              <p class="mt-3 text-[15px] leading-8 text-slate-600">
+                演劇を超えた「お祭り」。関西で活躍する複数の劇団が一堂に会し短編演劇を披露するほか、物産展、絵画展、AI脚本の即興上演、さらには虫を食べる会（※お客様は食べません）まで――1ステージ5時間に及ぶ、何でもありのイベントです。
+              </p>
+              <p class="mt-2 text-[15px] leading-8 text-slate-600">
+                出演者とお客さんの垣根を超え、演劇上演を通じて「縁」を創出し、コミュニティとしての力を醸成しようという試み。日常に飽きて非日常を求める人におすすめの、唯一無二の体験を提供しています。
+              </p>
+              <div class="mt-4 flex flex-wrap gap-2">
+                <span class="rounded-full border border-slate-200 px-3 py-1 text-xs font-bold text-slate-500">第1回 2017</span>
+                <span class="rounded-full border border-slate-200 px-3 py-1 text-xs font-bold text-slate-500">第2回 2019</span>
+                <span class="rounded-full border border-slate-200 px-3 py-1 text-xs font-bold text-slate-500">第3回 2023</span>
               </div>
             </div>
           </div>
@@ -246,8 +243,8 @@
 <section class="border-t border-slate-100 bg-gradient-to-b from-slate-50/60 to-white overflow-hidden">
   <div class="mx-auto max-w-5xl px-5 py-12 md:px-8 md:py-16">
     <p class="text-xs font-bold text-sky-500 uppercase tracking-wider">Gallery</p>
-    <h2 class="mt-1 text-lg font-black text-slate-900 md:text-xl">舞台の記録</h2>
-    <div class="mt-8 grid grid-cols-6 grid-rows-2 gap-2 md:gap-3" style="height:280px; md:height:400px;">
+    <h2 class="mt-1 text-lg font-black text-slate-900 md:text-xl fancy-heading">舞台の記録</h2>
+    <div class="mt-8 grid grid-cols-6 grid-rows-2 gap-2 md:gap-3" data-stagger style="height:280px; md:height:400px;">
       <div class="col-span-3 row-span-2 overflow-hidden rounded-2xl shadow-lg">
         <img src="images/LINE_ALBUM_ゲネ()写です_260320_1.jpg" alt="カラフルな舞台" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
       </div>
@@ -273,7 +270,7 @@
 <!-- 過去公演一覧 -->
 <section class="border-t border-slate-100">
   <div class="mx-auto max-w-5xl px-5 py-12 md:px-8 md:py-16">
-    <h2 class="text-lg font-black text-slate-900 md:text-xl">過去公演一覧</h2>
+    <h2 class="text-lg font-black text-slate-900 md:text-xl fancy-heading">過去公演一覧</h2>
     <p class="mt-1 text-sm text-slate-400">2017年の旗揚げから31公演の軌跡。</p>
 
     <!-- 2025 -->
@@ -282,7 +279,7 @@
         <h3 class="text-sm font-black text-sky-600">2025</h3>
       </div>
       <div class="space-y-2">
-        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 transition-colors">
+        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 hover:shadow-sm hover:-translate-y-0.5 transition-all duration-200">
           <span class="shrink-0 w-8 text-xs font-bold text-slate-300 pt-0.5">#31</span>
           <img src="images/過去公演/にんげんっていいな.png" alt="『にんげんっていいな』" class="w-14 h-14 object-cover rounded-lg shrink-0" />
           <div class="flex-1 min-w-0">
@@ -300,7 +297,7 @@
         <h3 class="text-sm font-black text-sky-600">2024</h3>
       </div>
       <div class="space-y-2">
-        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 transition-colors">
+        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 hover:shadow-sm hover:-translate-y-0.5 transition-all duration-200">
           <span class="shrink-0 w-8 text-xs font-bold text-slate-300 pt-0.5">#30</span>
           <img src="images/過去公演/すきとおる冒涜.jpg" alt="『すきとおる冒涜』" class="w-14 h-14 object-cover rounded-lg shrink-0" />
           <div class="flex-1 min-w-0">
@@ -308,7 +305,7 @@
             <p class="mt-0.5 text-xs text-slate-400">作：高矢航志　演出：松本梨花　遊空間がざびぃ</p>
           </div>
         </div>
-        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 transition-colors">
+        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 hover:shadow-sm hover:-translate-y-0.5 transition-all duration-200">
           <span class="shrink-0 w-8 text-xs font-bold text-slate-300 pt-0.5">#29</span>
           <img src="images/過去公演/ボツワナてんとう.jpg" alt="『ボツワナ・てんとう』" class="w-14 h-14 object-cover rounded-lg shrink-0" />
           <div class="flex-1 min-w-0">
@@ -326,7 +323,7 @@
         <h3 class="text-sm font-black text-sky-600">2023</h3>
       </div>
       <div class="space-y-2">
-        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 transition-colors">
+        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 hover:shadow-sm hover:-translate-y-0.5 transition-all duration-200">
           <span class="shrink-0 w-8 text-xs font-bold text-slate-300 pt-0.5">#28</span>
           <img src="images/過去公演/追想せる住人.jpg" alt="『追想せる住人』" class="w-14 h-14 object-cover rounded-lg" />
           <div class="flex-1 min-w-0">
@@ -338,14 +335,14 @@
             <span class="block mt-0.5 text-[11px] font-medium text-sky-500/70">東京 2023.3.19 & 3.21 ／ 京都 2023.4.22 - 4.23</span>
           </div>
         </div>
-        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 transition-colors">
+        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 hover:shadow-sm hover:-translate-y-0.5 transition-all duration-200">
           <span class="shrink-0 w-8 text-xs font-bold text-slate-300 pt-0.5">#27</span>
           <div class="flex-1 min-w-0">
             <div class="text-[15px] font-bold text-slate-800">『てんとう』</div>
             <p class="mt-0.5 text-xs text-slate-400">作・演出：玉井秀和　養正市営住宅6号棟跡地 野外特設舞台／京都学生演劇祭2023エキシビション参加作品</p>
           </div>
         </div>
-        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 transition-colors">
+        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 hover:shadow-sm hover:-translate-y-0.5 transition-all duration-200">
           <span class="shrink-0 w-8 text-xs font-bold text-slate-300 pt-0.5">#26</span>
           <img src="images/過去公演/春の大感謝祭3.jpg" alt="『春の大感謝祭3』" class="w-14 h-14 object-cover rounded-lg shrink-0" />
           <div class="flex-1 min-w-0">
@@ -362,21 +359,21 @@
         <h3 class="text-sm font-black text-sky-600">2022</h3>
       </div>
       <div class="space-y-2">
-        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 transition-colors">
+        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 hover:shadow-sm hover:-translate-y-0.5 transition-all duration-200">
           <span class="shrink-0 w-8 text-xs font-bold text-slate-300 pt-0.5">#25</span>
           <div class="flex-1 min-w-0">
             <div class="text-[15px] font-bold text-slate-800">『恋と蒲団』</div>
             <p class="mt-0.5 text-xs text-slate-400">作：唐十郎　演出：玉井秀和　ローム・スクエア 特設エリア「石ころの庭」／OKAZAKI PARK STAGE 2022／ステージ インキュベーション キョウト参加作品</p>
           </div>
         </div>
-        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 transition-colors">
+        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 hover:shadow-sm hover:-translate-y-0.5 transition-all duration-200">
           <span class="shrink-0 w-8 text-xs font-bold text-slate-300 pt-0.5">#24</span>
           <div class="flex-1 min-w-0">
             <div class="text-[15px] font-bold text-slate-800">『豊穣』</div>
             <p class="mt-0.5 text-xs text-slate-400">作・演出：玉井秀和　養正児童公園「希望の広場」野外特設舞台／京都学生演劇祭2022エキシビション参加作品</p>
           </div>
         </div>
-        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 transition-colors">
+        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 hover:shadow-sm hover:-translate-y-0.5 transition-all duration-200">
           <span class="shrink-0 w-8 text-xs font-bold text-slate-300 pt-0.5">#23</span>
           <div class="flex-1 min-w-0">
             <div class="text-[15px] font-bold text-slate-800">『ふつうに愛』</div>
@@ -392,14 +389,14 @@
         <h3 class="text-sm font-black text-sky-600">2021</h3>
       </div>
       <div class="space-y-2">
-        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 transition-colors">
+        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 hover:shadow-sm hover:-translate-y-0.5 transition-all duration-200">
           <span class="shrink-0 w-8 text-xs font-bold text-slate-300 pt-0.5">#22</span>
           <div class="flex-1 min-w-0">
             <div class="text-[15px] font-bold text-slate-800">『ASHITA』</div>
             <p class="mt-0.5 text-xs text-slate-400">作：玉井秀和　演出：有働岬　養正児童公園「希望の広場」野外特設舞台／京都学生演劇祭2021エキシビション参加作品</p>
           </div>
         </div>
-        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 transition-colors">
+        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 hover:shadow-sm hover:-translate-y-0.5 transition-all duration-200">
           <span class="shrink-0 w-8 text-xs font-bold text-slate-300 pt-0.5">#21</span>
           <img src="images/過去公演/潮騒.jpg" alt="『潮騒』" class="w-14 h-14 object-cover rounded-lg" />
           <div class="flex-1 min-w-0">
@@ -408,7 +405,7 @@
             <span class="block mt-0.5 text-[11px] font-medium text-sky-500/70">2021.8.26 - 8.29</span>
           </div>
         </div>
-        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 transition-colors">
+        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 hover:shadow-sm hover:-translate-y-0.5 transition-all duration-200">
           <span class="shrink-0 w-8 text-xs font-bold text-slate-300 pt-0.5">#20</span>
           <img src="images/過去公演/悪いのは誰だ.jpg" alt="『悪いのは誰だ』" class="w-14 h-14 object-cover rounded-lg shrink-0" />
           <div class="flex-1 min-w-0">
@@ -416,7 +413,7 @@
             <p class="mt-0.5 text-xs text-slate-400">作：小佐部明広　演出：松本和馬　人間座スタジオ／オンライン360度配信公演</p>
           </div>
         </div>
-        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 transition-colors">
+        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 hover:shadow-sm hover:-translate-y-0.5 transition-all duration-200">
           <span class="shrink-0 w-8 text-xs font-bold text-slate-300 pt-0.5">#19</span>
           <img src="images/過去公演/サフランライス.jpg" alt="『サフランライス』" class="w-14 h-14 object-cover rounded-lg" />
           <div class="flex-1 min-w-0">
@@ -424,7 +421,7 @@
             <p class="mt-0.5 text-xs text-slate-400">作・演出：玉井秀和　京都大学文学部東棟学生控室</p>
           </div>
         </div>
-        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 transition-colors">
+        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 hover:shadow-sm hover:-translate-y-0.5 transition-all duration-200">
           <span class="shrink-0 w-8 text-xs font-bold text-slate-300 pt-0.5">#18</span>
           <div class="flex-1 min-w-0">
             <div class="text-[15px] font-bold text-slate-800">『藪の中』</div>
@@ -440,7 +437,7 @@
         <h3 class="text-sm font-black text-sky-600">2020</h3>
       </div>
       <div class="space-y-2">
-        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 transition-colors">
+        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 hover:shadow-sm hover:-translate-y-0.5 transition-all duration-200">
           <span class="shrink-0 w-8 text-xs font-bold text-slate-300 pt-0.5">#17</span>
           <img src="images/過去公演/SANSO.jpeg" alt="『SANSO』" class="w-14 h-14 object-cover rounded-lg shrink-0" />
           <div class="flex-1 min-w-0">
@@ -449,7 +446,7 @@
             <span class="block mt-0.5 text-[11px] font-medium text-sky-500/70">2020.10.2 - 10.4</span>
           </div>
         </div>
-        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 transition-colors">
+        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 hover:shadow-sm hover:-translate-y-0.5 transition-all duration-200">
           <span class="shrink-0 w-8 text-xs font-bold text-slate-300 pt-0.5">#16</span>
           <img src="images/過去公演/まばたき.jpg" alt="『まばたき』" class="w-14 h-14 object-cover rounded-lg" />
           <div class="flex-1 min-w-0">
@@ -461,7 +458,7 @@
             <a href="脚本/『まばたき』 物販.pdf" target="_blank" class="inline-flex items-center gap-1 mt-1.5 rounded-md bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-500 hover:bg-sky-50 hover:text-sky-600 transition-colors">📄 脚本</a>
           </div>
         </div>
-        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 transition-colors">
+        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 hover:shadow-sm hover:-translate-y-0.5 transition-all duration-200">
           <span class="shrink-0 w-8 text-xs font-bold text-slate-300 pt-0.5">#15</span>
           <img src="images/過去公演/イスメネ.jpg" alt="『イスメネ』" class="w-14 h-14 object-cover rounded-lg" />
           <div class="flex-1 min-w-0">
@@ -470,7 +467,7 @@
             <span class="block mt-0.5 text-[11px] font-medium text-sky-500/70">2020.2.22 - 2.24</span>
           </div>
         </div>
-        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 transition-colors">
+        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 hover:shadow-sm hover:-translate-y-0.5 transition-all duration-200">
           <span class="shrink-0 w-8 text-xs font-bold text-slate-300 pt-0.5">#14</span>
           <div class="flex-1 min-w-0">
             <div class="text-[15px] font-bold text-slate-800">『MORAL』</div>
@@ -486,7 +483,7 @@
         <h3 class="text-sm font-black text-sky-600">2019</h3>
       </div>
       <div class="space-y-2">
-        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 transition-colors">
+        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 hover:shadow-sm hover:-translate-y-0.5 transition-all duration-200">
           <span class="shrink-0 w-8 text-xs font-bold text-slate-300 pt-0.5">#13</span>
           <img src="images/過去公演/灯し火と星霜.jpg" alt="『灯火と星霜』" class="w-14 h-14 object-cover rounded-lg" />
           <div class="flex-1 min-w-0">
@@ -495,14 +492,14 @@
             <span class="block mt-0.5 text-[11px] font-medium text-sky-500/70">2019.10.11 - 10.13</span>
           </div>
         </div>
-        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 transition-colors">
+        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 hover:shadow-sm hover:-translate-y-0.5 transition-all duration-200">
           <span class="shrink-0 w-8 text-xs font-bold text-slate-300 pt-0.5">#12</span>
           <div class="flex-1 min-w-0">
             <div class="text-[15px] font-bold text-slate-800">『サフランライス2』</div>
             <p class="mt-0.5 text-xs text-slate-400">作・演出：玉井秀和　京都大学文学部東棟学生控室</p>
           </div>
         </div>
-        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 transition-colors">
+        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 hover:shadow-sm hover:-translate-y-0.5 transition-all duration-200">
           <span class="shrink-0 w-8 text-xs font-bold text-slate-300 pt-0.5">#11</span>
           <img src="images/過去公演/まばたき.jpg" alt="『まばたき』" class="w-14 h-14 object-cover rounded-lg" />
           <div class="flex-1 min-w-0">
@@ -511,7 +508,7 @@
             <a href="脚本/『まばたき』 物販.pdf" target="_blank" class="inline-flex items-center gap-1 mt-1.5 rounded-md bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-500 hover:bg-sky-50 hover:text-sky-600 transition-colors">📄 脚本</a>
           </div>
         </div>
-        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 transition-colors">
+        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 hover:shadow-sm hover:-translate-y-0.5 transition-all duration-200">
           <span class="shrink-0 w-8 text-xs font-bold text-slate-300 pt-0.5">#10</span>
           <img src="images/過去公演/春の大感謝祭2.jpg" alt="『春の大感謝祭2』" class="w-14 h-14 object-cover rounded-lg" />
           <div class="flex-1 min-w-0">
@@ -529,7 +526,7 @@
         <h3 class="text-sm font-black text-sky-600">2018</h3>
       </div>
       <div class="space-y-2">
-        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 transition-colors">
+        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 hover:shadow-sm hover:-translate-y-0.5 transition-all duration-200">
           <span class="shrink-0 w-8 text-xs font-bold text-slate-300 pt-0.5">#9</span>
           <img src="images/過去公演/DOG.JPG" alt="『DOG』" class="w-14 h-14 object-cover rounded-lg" />
           <div class="flex-1 min-w-0">
@@ -539,7 +536,7 @@
             <a href="脚本/『ＤＯＧ』第１稿　物販.pdf" target="_blank" class="inline-flex items-center gap-1 mt-1.5 rounded-md bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-500 hover:bg-sky-50 hover:text-sky-600 transition-colors">📄 脚本</a>
           </div>
         </div>
-        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 transition-colors">
+        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 hover:shadow-sm hover:-translate-y-0.5 transition-all duration-200">
           <span class="shrink-0 w-8 text-xs font-bold text-slate-300 pt-0.5">#8</span>
           <img src="images/過去公演/だからやだっていったじゃない.JPG" alt="『だから、やだっていったじゃない』" class="w-14 h-14 object-cover rounded-lg" />
           <div class="flex-1 min-w-0">
@@ -549,7 +546,7 @@
             <a href="脚本/『だから、やだっていったじゃない』.pdf" target="_blank" class="inline-flex items-center gap-1 mt-1.5 rounded-md bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-500 hover:bg-sky-50 hover:text-sky-600 transition-colors">📄 脚本</a>
           </div>
         </div>
-        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 transition-colors">
+        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 hover:shadow-sm hover:-translate-y-0.5 transition-all duration-200">
           <span class="shrink-0 w-8 text-xs font-bold text-slate-300 pt-0.5">#7</span>
           <img src="images/過去公演/泥酔した都.jpg" alt="『泥酔した都』" class="w-14 h-14 object-cover rounded-lg" />
           <div class="flex-1 min-w-0">
@@ -568,7 +565,7 @@
         <h3 class="text-sm font-black text-sky-600">2017</h3>
       </div>
       <div class="space-y-2">
-        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 transition-colors">
+        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 hover:shadow-sm hover:-translate-y-0.5 transition-all duration-200">
           <span class="shrink-0 w-8 text-xs font-bold text-slate-300 pt-0.5">#6</span>
           <img src="images/過去公演/サフランライス.jpg" alt="『サフランライス』" class="w-14 h-14 object-cover rounded-lg" />
           <div class="flex-1 min-w-0">
@@ -577,7 +574,7 @@
             <span class="block mt-0.5 text-[11px] font-medium text-sky-500/70">2017.12.23 - 12.24</span>
           </div>
         </div>
-        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 transition-colors">
+        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 hover:shadow-sm hover:-translate-y-0.5 transition-all duration-200">
           <span class="shrink-0 w-8 text-xs font-bold text-slate-300 pt-0.5">#5</span>
           <img src="images/過去公演/寒い冬が来る.JPG" alt="『寒い冬が来る』" class="w-14 h-14 object-cover rounded-lg" />
           <div class="flex-1 min-w-0">
@@ -586,7 +583,7 @@
             <a href="脚本/『寒い冬が来る』.pdf" target="_blank" class="inline-flex items-center gap-1 mt-1.5 rounded-md bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-500 hover:bg-sky-50 hover:text-sky-600 transition-colors">📄 脚本</a>
           </div>
         </div>
-        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 transition-colors">
+        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 hover:shadow-sm hover:-translate-y-0.5 transition-all duration-200">
           <span class="shrink-0 w-8 text-xs font-bold text-slate-300 pt-0.5">#4</span>
           <img src="images/過去公演/銀梅花.JPG" alt="『銀梅花』" class="w-14 h-14 object-cover rounded-lg" />
           <div class="flex-1 min-w-0">
@@ -594,7 +591,7 @@
             <p class="mt-0.5 text-xs text-slate-400">作・演出：玉井秀和　スタジオヴァリエ</p>
           </div>
         </div>
-        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 transition-colors">
+        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 hover:shadow-sm hover:-translate-y-0.5 transition-all duration-200">
           <span class="shrink-0 w-8 text-xs font-bold text-slate-300 pt-0.5">#3</span>
           <img src="images/過去公演/贋作・蟹工船.jpg" alt="『贋作・蟹工船』" class="w-14 h-14 object-cover rounded-lg" />
           <div class="flex-1 min-w-0">
@@ -604,7 +601,7 @@
             <a href="脚本/『贋作・蟹工船』物販.pdf" target="_blank" class="inline-flex items-center gap-1 mt-1.5 rounded-md bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-500 hover:bg-sky-50 hover:text-sky-600 transition-colors">📄 脚本</a>
           </div>
         </div>
-        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 transition-colors">
+        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 hover:shadow-sm hover:-translate-y-0.5 transition-all duration-200">
           <span class="shrink-0 w-8 text-xs font-bold text-slate-300 pt-0.5">#2</span>
           <img src="images/過去公演/春の大感謝祭.JPG" alt="『春の大感謝祭』" class="w-14 h-14 object-cover rounded-lg" />
           <div class="flex-1 min-w-0">
@@ -612,7 +609,7 @@
             <p class="mt-0.5 text-xs text-slate-400">作・演出：玉井秀和　スタジオヴァリエ</p>
           </div>
         </div>
-        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 transition-colors">
+        <div class="flex items-start gap-3 rounded-xl border border-slate-50 px-4 py-3 hover:bg-slate-50/50 hover:shadow-sm hover:-translate-y-0.5 transition-all duration-200">
           <span class="shrink-0 w-8 text-xs font-bold text-slate-300 pt-0.5">#1</span>
           <img src="images/過去公演/正月のあのおと.JPG" alt="『正月のあの音』" class="w-14 h-14 object-cover rounded-lg" />
           <div class="flex-1 min-w-0">
@@ -636,9 +633,9 @@
       <img src="images/FAX.png" alt="劇団FAX" class="h-6 w-auto" />
     </div>
     <nav class="flex gap-5">
-      <a href="index.html" class="hover:text-sky-600 transition-colors">トップ</a>
-      <a href="about.html" class="hover:text-sky-600 transition-colors">劇団について</a>
-      <a href="activity.html" class="hover:text-sky-600 transition-colors">活動内容</a>
+      <a href="index.html" class="hover:text-sky-600 transition-colors nav-link-effect">トップ</a>
+      <a href="about.html" class="hover:text-sky-600 transition-colors nav-link-effect">劇団について</a>
+      <a href="activity.html" class="hover:text-sky-600 transition-colors nav-link-effect">活動内容</a>
     </nav>
     <span>&copy; 2026 劇団FAX</span>
   </div>
@@ -647,11 +644,11 @@
 <!-- Mobile Nav -->
 <nav class="fixed inset-x-0 bottom-0 z-50 border-t border-slate-100 bg-white/95 backdrop-blur-md md:hidden">
   <div class="mx-auto grid max-w-sm grid-cols-5">
-    <a href="index.html" class="flex flex-col items-center gap-0.5 py-2 text-[10px] font-bold text-slate-400"><span class="text-sm">🎭</span>トップ</a>
-    <a href="about.html" class="flex flex-col items-center gap-0.5 py-2 text-[10px] font-bold text-slate-400"><span class="text-sm">📖</span>劇団</a>
-    <a href="activity.html" class="flex flex-col items-center gap-0.5 py-2 text-[10px] font-bold text-sky-600"><span class="text-sm">✨</span>活動</a>
-    <a href="monster-zukan.html" class="flex flex-col items-center gap-0.5 py-2 text-[10px] font-bold text-purple-500"><span class="text-sm">👾</span>図鑑</a>
-    <a href="https://example.com/ticket" class="flex flex-col items-center gap-0.5 py-2 text-[10px] font-bold text-orange-500"><span class="text-sm">🎫</span>チケット</a>
+    <a href="index.html" class="flex flex-col items-center gap-1 py-2.5 text-[10px] font-bold text-slate-400"><img src="images/icons/top.svg" alt="" class="h-6 w-6">トップ</a>
+    <a href="about.html" class="flex flex-col items-center gap-1 py-2.5 text-[10px] font-bold text-slate-400"><img src="images/icons/about.svg" alt="" class="h-6 w-6">劇団</a>
+    <a href="activity.html" class="flex flex-col items-center gap-1 py-2.5 text-[10px] font-bold text-sky-600"><img src="images/icons/activity.svg" alt="" class="h-6 w-6">活動</a>
+    <a href="monster-zukan.html" class="flex flex-col items-center gap-1 py-2.5 text-[10px] font-bold text-purple-500"><img src="images/icons/zukan.svg" alt="" class="h-6 w-6">図鑑</a>
+    <a href="https://example.com/ticket" class="flex flex-col items-center gap-1 py-2.5 text-[10px] font-bold text-orange-500"><img src="images/icons/ticket.svg" alt="" class="h-6 w-6">チケット</a>
   </div>
 </nav>
 
@@ -683,5 +680,6 @@
 })();
 </script>
 
+<script src="effects.js"></script>
 </body>
 </html>

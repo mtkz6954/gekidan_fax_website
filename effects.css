@@ -1,0 +1,221 @@
+/* ============================================
+   劇団FAX — エフェクトましまし CSS
+   ============================================ */
+
+/* --- Scroll Animations --- */
+[data-animate] {
+  opacity: 0;
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+[data-animate="fade-up"] { transform: translateY(40px); }
+[data-animate="fade-down"] { transform: translateY(-40px); }
+[data-animate="fade-left"] { transform: translateX(60px); }
+[data-animate="fade-right"] { transform: translateX(-60px); }
+[data-animate="zoom-in"] { transform: scale(0.85); }
+[data-animate="fade"] { transform: none; }
+[data-animate].is-visible {
+  opacity: 1 !important;
+  transform: none !important;
+}
+/* Stagger children */
+[data-stagger] > * { opacity: 0; transform: translateY(24px); transition: opacity 0.5s ease, transform 0.5s ease; }
+[data-stagger].is-visible > *:nth-child(1) { transition-delay: 0s; }
+[data-stagger].is-visible > *:nth-child(2) { transition-delay: 0.1s; }
+[data-stagger].is-visible > *:nth-child(3) { transition-delay: 0.2s; }
+[data-stagger].is-visible > *:nth-child(4) { transition-delay: 0.25s; }
+[data-stagger].is-visible > *:nth-child(5) { transition-delay: 0.3s; }
+[data-stagger].is-visible > *:nth-child(6) { transition-delay: 0.35s; }
+[data-stagger].is-visible > *:nth-child(7) { transition-delay: 0.4s; }
+[data-stagger].is-visible > *:nth-child(8) { transition-delay: 0.45s; }
+[data-stagger].is-visible > * { opacity: 1; transform: none; }
+
+/* --- Animated Gradient Backgrounds --- */
+@keyframes gradient-shift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animated-gradient {
+  background: linear-gradient(-45deg, #0ea5e9, #f97316, #8b5cf6, #06b6d4);
+  background-size: 400% 400%;
+  animation: gradient-shift 8s ease infinite;
+}
+.animated-gradient-subtle {
+  background: linear-gradient(-45deg, #f0f9ff, #fff7ed, #faf5ff, #ecfeff);
+  background-size: 400% 400%;
+  animation: gradient-shift 12s ease infinite;
+}
+
+/* --- Glowing CTA Button --- */
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 5px rgba(251, 146, 60, 0.4), 0 0 20px rgba(251, 146, 60, 0.1); }
+  50%      { box-shadow: 0 0 15px rgba(251, 146, 60, 0.6), 0 0 40px rgba(251, 146, 60, 0.2); }
+}
+.glow-btn {
+  animation: glow-pulse 2.5s ease-in-out infinite;
+}
+.glow-btn:hover {
+  animation: none;
+  box-shadow: 0 0 20px rgba(251, 146, 60, 0.5), 0 0 50px rgba(251, 146, 60, 0.2);
+}
+
+@keyframes glow-blue {
+  0%, 100% { box-shadow: 0 0 5px rgba(14, 165, 233, 0.3), 0 0 20px rgba(14, 165, 233, 0.1); }
+  50%      { box-shadow: 0 0 15px rgba(14, 165, 233, 0.5), 0 0 40px rgba(14, 165, 233, 0.15); }
+}
+.glow-btn-blue {
+  animation: glow-blue 2.5s ease-in-out infinite;
+}
+
+/* --- 3D Tilt Card --- */
+.tilt-card {
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  transform-style: preserve-3d;
+}
+.tilt-card:hover {
+  transform: perspective(800px) rotateY(-3deg) rotateX(2deg) translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08), 0 8px 16px rgba(0,0,0,0.04);
+}
+
+/* --- Animated Underline for Headers --- */
+.fancy-heading {
+  position: relative;
+  display: inline-block;
+}
+.fancy-heading::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #0ea5e9, #f97316);
+  transition: width 0.6s ease;
+}
+.fancy-heading.is-visible::after {
+  width: 100%;
+}
+
+/* --- Floating Decorative Blobs --- */
+@keyframes float-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(30px, -20px) scale(1.05); }
+  66%      { transform: translate(-20px, 15px) scale(0.95); }
+}
+@keyframes float-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(-25px, 20px) scale(0.95); }
+  66%      { transform: translate(15px, -25px) scale(1.05); }
+}
+.blob-1 {
+  position: absolute;
+  width: 200px; height: 200px;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.3;
+  animation: float-1 10s ease-in-out infinite;
+  pointer-events: none;
+}
+.blob-2 {
+  position: absolute;
+  width: 180px; height: 180px;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.25;
+  animation: float-2 12s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* --- Parallax Scroll --- */
+.parallax-container {
+  overflow: hidden;
+  position: relative;
+}
+.parallax-img {
+  will-change: transform;
+  transition: transform 0.1s linear;
+}
+
+/* --- Fancy Counter Badge --- */
+@keyframes count-pop {
+  0%   { transform: scale(0.5); opacity: 0; }
+  60%  { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+.counter-pop { animation: count-pop 0.5s ease forwards; }
+
+/* --- Text Reveal --- */
+@keyframes text-reveal {
+  0%   { clip-path: inset(0 100% 0 0); }
+  100% { clip-path: inset(0 0 0 0); }
+}
+.text-reveal.is-visible {
+  animation: text-reveal 0.8s ease forwards;
+}
+
+/* --- Ticker / Marquee --- */
+@keyframes ticker {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.ticker-strip {
+  display: flex;
+  width: max-content;
+  animation: ticker 20s linear infinite;
+}
+.ticker-strip:hover { animation-play-state: paused; }
+
+/* --- Responsive Enhancements --- */
+@media (max-width: 640px) {
+  .hero-title { font-size: 2rem !important; }
+  .info-card-responsive { margin-top: 1.5rem; }
+}
+@media (min-width: 641px) and (max-width: 1023px) {
+  .tablet-2col { grid-template-columns: 1fr 1fr !important; }
+}
+@media (min-width: 1024px) {
+  .lg-hover-lift:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+}
+
+/* --- Smooth Page Transition --- */
+@keyframes page-enter {
+  0%   { opacity: 0; transform: translateY(12px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+main { animation: page-enter 0.6s ease forwards; }
+
+/* --- Scrollbar styling --- */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* --- Shimmer/shine effect on badges --- */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.shimmer-badge {
+  background: linear-gradient(90deg, transparent 30%, rgba(255,255,255,0.4) 50%, transparent 70%);
+  background-size: 200% 100%;
+  animation: shimmer 3s ease infinite;
+}
+
+/* --- Hover line grow on nav --- */
+.nav-link-effect {
+  position: relative;
+}
+.nav-link-effect::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: #0ea5e9;
+  transition: width 0.3s ease, left 0.3s ease;
+  border-radius: 1px;
+}
+.nav-link-effect:hover::after {
+  width: 100%;
+  left: 0;
+}
