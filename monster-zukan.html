@@ -323,10 +323,13 @@
     <!-- 詳細 -->
     <div id="detailContent" class="hidden p-5 md:p-10 max-w-2xl mx-auto">
 
-      <!-- モバイル戻るボタン -->
-      <button id="backBtn" onclick="showMobileList()" class="mb-5 pixel text-[9px]">
-        ← 一覧に戻る
-      </button>
+      <!-- モバイル戻るボタン＋スワイプヒント -->
+      <div class="flex items-center justify-between mb-5">
+        <button id="backBtn" onclick="showMobileList()" class="pixel text-[9px]">
+          ← 一覧に戻る
+        </button>
+        <span id="swipeHint" class="md:hidden pixel text-[8px] text-purple-500 opacity-60 animate-bounce">↑↓ スワイプで切替</span>
+      </div>
 
       <!-- 番号・タイプ -->
       <div class="flex items-center justify-between mb-4">
@@ -745,6 +748,37 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowUp')   { e.preventDefault(); navigatePrev(); }
   if (e.key === 'ArrowDown') { e.preventDefault(); navigateNext(); }
 });
+
+// ===== モバイルスワイプ（YouTube Shorts風）=====
+(function() {
+  const panel = document.getElementById('detailPanel');
+  let startY = 0, startX = 0, dragging = false;
+  const THRESHOLD = 60;
+
+  panel.addEventListener('touchstart', e => {
+    startY = e.touches[0].clientY;
+    startX = e.touches[0].clientX;
+    dragging = true;
+  }, { passive: true });
+
+  panel.addEventListener('touchmove', e => {
+    if (!dragging) return;
+    const dy = e.touches[0].clientY - startY;
+    const dx = e.touches[0].clientX - startX;
+    // 縦スワイプ優先のとき横スクロールを止める
+    if (Math.abs(dy) > Math.abs(dx)) e.preventDefault();
+  }, { passive: false });
+
+  panel.addEventListener('touchend', e => {
+    if (!dragging) return;
+    dragging = false;
+    const dy = e.changedTouches[0].clientY - startY;
+    const dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dy) < Math.abs(dx)) return; // 横スワイプは無視
+    if (dy < -THRESHOLD) navigateNext();
+    else if (dy > THRESHOLD) navigatePrev();
+  }, { passive: true });
+})();
 
 selectMonster(0);
 </script>
