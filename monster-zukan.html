@@ -287,9 +287,20 @@
         position: relative; display: flex; align-items: center; justify-content: center;
         width: 100%; height: 100%;
       }
+      #mobileImgArea {
+        background: #ffffff;
+        border-radius: 20px;
+        margin: 10px 14px;
+        animation: glow-breathe 3s ease-in-out infinite;
+        position: relative;
+      }
+      #mobileImgArea::before {
+        content: ''; position: absolute; inset: -1px; border-radius: 20px;
+        background: linear-gradient(135deg, rgba(139,92,246,0.5), rgba(59,130,246,0.3), rgba(236,72,153,0.2));
+        z-index: 0;
+      }
       #mobileImgArea #detailImg {
-        max-height: 90%; max-width: 90%; object-fit: contain;
-        mix-blend-mode: normal;
+        max-height: 90%; max-width: 90%; object-fit: contain; position: relative; z-index: 1;
       }
 
       /* テキストエリア：残り */
