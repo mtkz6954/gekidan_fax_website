@@ -283,6 +283,43 @@
     @media (max-width: 767px) {
       .nav-btn { padding: 10px 20px; font-size: 8px; }
     }
+
+    /* スワイプナビゲーター（モバイル専用） */
+    .swipe-nav {
+      display: none;
+    }
+    @media (max-width: 767px) {
+      .swipe-nav {
+        display: flex;
+        align-items: center; justify-content: space-between;
+        padding: 10px 16px;
+        background: rgba(109,40,217,0.3);
+        border: 1px solid rgba(139,92,246,0.35);
+        border-radius: 12px;
+        cursor: pointer;
+        transition: opacity 0.3s, transform 0.3s;
+        opacity: 0; pointer-events: none;
+        transform: translateY(6px);
+      }
+      .swipe-nav.visible {
+        opacity: 1; pointer-events: auto;
+        transform: translateY(0);
+      }
+      .swipe-nav .swipe-arrow {
+        font-size: 18px; animation: swipe-pulse 1.4s ease-in-out infinite;
+      }
+      .swipe-nav .swipe-label {
+        font-size: 9px; color: #c4b5fd; letter-spacing: 0.05em;
+      }
+      .swipe-nav .swipe-name {
+        font-size: 11px; font-weight: bold; color: #fff;
+        max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+      }
+      @keyframes swipe-pulse {
+        0%,100% { transform: translateY(0); }
+        50%      { transform: translateY(-4px); }
+      }
+    }
   </style>
 </head>
 <body class="scanlines min-h-screen text-white">
@@ -323,12 +360,20 @@
     <!-- 詳細 -->
     <div id="detailContent" class="hidden p-5 md:p-10 max-w-2xl mx-auto">
 
-      <!-- モバイル戻るボタン＋スワイプヒント -->
+      <!-- モバイル戻るボタン -->
       <div class="flex items-center justify-between mb-5">
         <button id="backBtn" onclick="showMobileList()" class="pixel text-[9px]">
           ← 一覧に戻る
         </button>
-        <span id="swipeHint" class="md:hidden pixel text-[8px] text-purple-500 opacity-60 animate-bounce">↑↓ スワイプで切替</span>
+      </div>
+
+      <!-- 前のモンスターへ（最上部スワイプ誘導） -->
+      <div id="swipeNavPrev" class="swipe-nav mb-4" onclick="navigatePrev()">
+        <span class="swipe-arrow" style="transform:rotate(180deg); display:inline-block;">↓</span>
+        <div class="text-right">
+          <div class="swipe-label">下スワイプで前へ</div>
+          <div class="swipe-name" id="swipeNavPrevName"></div>
+        </div>
       </div>
 
       <!-- 番号・タイプ -->
@@ -364,6 +409,15 @@
       <div class="flex justify-between">
         <button id="prevBtn" onclick="navigatePrev()" class="nav-btn pixel text-[9px] text-purple-400">← PREV</button>
         <button id="nextBtn" onclick="navigateNext()" class="nav-btn pixel text-[9px] text-purple-400">NEXT →</button>
+      </div>
+
+      <!-- 次のモンスターへ（最下部スワイプ誘導） -->
+      <div id="swipeNavNext" class="swipe-nav mt-4" onclick="navigateNext()">
+        <div>
+          <div class="swipe-label">上スワイプで次へ</div>
+          <div class="swipe-name" id="swipeNavNextName"></div>
+        </div>
+        <span class="swipe-arrow">↑</span>
       </div>
 
     </div>
@@ -722,7 +776,14 @@ function selectMonster(index) {
   if (activeItem) activeItem.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
 
   // モバイル：詳細パネルをスライドイン
-  if (isMobile()) showMobileDetail();
+  if (isMobile()) {
+    showMobileDetail();
+    // パネル先頭に戻してナビゲーター更新
+    setTimeout(() => {
+      document.getElementById('detailPanel').scrollTop = 0;
+      updateSwipeNav();
+    }, 350);
+  }
 
   setTimeout(() => { isAnimating = false; }, 400);
 }
@@ -749,6 +810,23 @@ document.addEventListener('keydown', e => {
   if (e.key === 'ArrowDown') { e.preventDefault(); navigateNext(); }
 });
 
+// ===== モバイルスワイプナビゲーター更新 =====
+function updateSwipeNav() {
+  if (window.innerWidth >= 768) return;
+  const prev = currentIndex > 0 ? MONSTERS[currentIndex - 1] : null;
+  const next = currentIndex < MONSTERS.length - 1 ? MONSTERS[currentIndex + 1] : null;
+  const prevEl = document.getElementById('swipeNavPrev');
+  const nextEl = document.getElementById('swipeNavNext');
+  document.getElementById('swipeNavPrevName').textContent = prev ? `No.${String(prev.id).padStart(3,'0')} ${prev.name}` : '';
+  document.getElementById('swipeNavNextName').textContent = next ? `No.${String(next.id).padStart(3,'0')} ${next.name}` : '';
+  // スクロール位置で表示切替
+  const panel = document.getElementById('detailPanel');
+  const atTop    = panel.scrollTop <= 4;
+  const atBottom = panel.scrollTop + panel.clientHeight >= panel.scrollHeight - 4;
+  prevEl.classList.toggle('visible', atTop && !!prev);
+  nextEl.classList.toggle('visible', atBottom && !!next);
+}
+
 // ===== モバイルスワイプ（YouTube Shorts風）=====
 // パネル最下部で上スワイプ → 次、最上部で下スワイプ → 前
 (function() {
@@ -770,6 +848,8 @@ document.addEventListener('keydown', e => {
     if (dy < -THRESHOLD && atBottom) navigateNext(); // 最下部で上スワイプ → 次
     else if (dy > THRESHOLD && atTop)  navigatePrev(); // 最上部で下スワイプ → 前
   }, { passive: true });
+
+  panel.addEventListener('scroll', updateSwipeNav, { passive: true });
 })();
 
 selectMonster(0);
