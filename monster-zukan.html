@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ファニーモンスター図鑑 | 劇団FAX</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <style>
+    :root { --accent: #a78bfa; --accent2: #6d28d9; }
+    body { font-family: 'Noto Sans JP', sans-serif; background: #0b0118; overflow: hidden; }
+    .pixel { font-family: 'Press Start 2P', monospace; }
+
+    /* ========== スキャンライン ========== */
+    .scanlines::after {
+      content: '';
+      position: fixed; inset: 0;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.07) 2px, rgba(0,0,0,0.07) 4px);
+      pointer-events: none; z-index: 200;
+    }
+
+    /* ========== 画面フラッシュ ========== */
+    #flash {
+      position: fixed; inset: 0; background: white;
+      opacity: 0; pointer-events: none; z-index: 150;
+    }
+    @keyframes flash-anim {
+      0%   { opacity: 0.7; }
+      100% { opacity: 0; }
+    }
+    #flash.flashing { animation: flash-anim 0.35s ease-out forwards; }
+
+    /* ========== 衝撃波リング ========== */
+    .shockwave {
+      position: absolute; inset: 0; border-radius: 24px;
+      border: 2px solid var(--accent);
+      opacity: 0; pointer-events: none;
+    }
+    @keyframes shock {
+      0%   { transform: scale(1);   opacity: 0.8; }
+      100% { transform: scale(1.5); opacity: 0;   }
+    }
+    .shockwave.ring1 { animation: shock 0.6s ease-out forwards; }
+    .shockwave.ring2 { animation: shock 0.6s 0.12s ease-out forwards; }
+    .shockwave.ring3 { animation: shock 0.6s 0.24s ease-out forwards; }
+
+    /* ========== 背景パーティクル ========== */
+    #particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .particle {
+      position: absolute; border-radius: 50%;
+      background: var(--accent); opacity: 0;
+    }
+    @keyframes float-particle {
+      0%   { transform: translateY(0) scale(1);   opacity: 0; }
+      20%  { opacity: 0.6; }
+      80%  { opacity: 0.3; }
+      100% { transform: translateY(-120px) scale(0.4); opacity: 0; }
+    }
+
+    /* ========== 左パネル ========== */
+    .list-panel {
+      background: linear-gradient(180deg, #110126 0%, #0d011e 100%);
+      border-right: 1px solid rgba(139,92,246,0.3);
+      z-index: 10; position: relative;
+    }
+    .list-panel::-webkit-scrollbar { width: 4px; }
+    .list-panel::-webkit-scrollbar-track { background: #0d011e; }
+    .list-panel::-webkit-scrollbar-thumb { background: #6d28d9; border-radius: 2px; }
+
+    .monster-item {
+      transition: all 0.15s ease;
+      border-left: 3px solid transparent; cursor: pointer;
+      position: relative; overflow: hidden;
+    }
+    .monster-item::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(90deg, rgba(109,40,217,0.3), transparent);
+      transform: translateX(-100%); transition: transform 0.3s ease;
+    }
+    .monster-item:hover::before { transform: translateX(0); }
+    .monster-item:hover { border-left-color: rgba(139,92,246,0.5); }
+    .monster-item.active { border-left-color: #a78bfa; background: rgba(109,40,217,0.25); }
+    .monster-item.active .num { color: #a78bfa; }
+    .monster-item.active .thumb-wrap { box-shadow: 0 0 12px rgba(167,139,250,0.6); }
+
+    /* ========== 右パネル ========== */
+    .detail-panel {
+      background: radial-gradient(ellipse at 30% 20%, #1e0a3c 0%, #0b0118 60%);
+      position: relative; z-index: 10;
+    }
+
+    /* ========== 図鑑番号 ========== */
+    .zukan-no {
+      font-family: 'Press Start 2P', monospace;
+      color: rgba(167,139,250,0.5); letter-spacing: 0.1em;
+    }
+
+    /* ========== モンスター名タイプライター ========== */
+    #detailName {
+      text-shadow: 0 0 40px rgba(167,139,250,0.6);
+      min-height: 3rem;
+    }
+    .typewriter-char {
+      display: inline-block; opacity: 0;
+      animation: char-appear 0.05s ease forwards;
+    }
+    @keyframes char-appear {
+      from { opacity: 0; transform: translateY(-8px) scale(1.3); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* ========== タイプバッジ ========== */
+    .type-badge {
+      display: inline-block; padding: 4px 14px;
+      border-radius: 999px; font-size: 12px; font-weight: 700;
+      letter-spacing: 0.05em; position: relative; overflow: hidden;
+    }
+    /* シマー */
+    .type-badge::after {
+      content: ''; position: absolute;
+      top: 0; left: -60%; width: 40%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      animation: shimmer 2.5s ease-in-out infinite;
+    }
+    @keyframes shimmer { 0%,60% { left: -60%; } 100% { left: 130%; } }
+
+    /* バッジ登場バウンス */
+    @keyframes badge-bounce {
+      0%   { opacity: 0; transform: scale(0.5); }
+      60%  { transform: scale(1.2); }
+      80%  { transform: scale(0.95); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    .badge-enter { animation: badge-bounce 0.4s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+
+    /* ========== 画像コンテナ ========== */
+    .img-container {
+      position: relative; border-radius: 24px;
+      background: #ffffff;
+    }
+    /* グラデボーダー */
+    .img-container::before {
+      content: ''; position: absolute; inset: -1px; border-radius: 24px;
+      background: linear-gradient(135deg, rgba(139,92,246,0.5), rgba(59,130,246,0.3), rgba(236,72,153,0.2));
+      z-index: 0;
+    }
+
+    /* 浮遊アニメーション（常時） */
+    @keyframes float {
+      0%,100% { transform: translateY(0px) rotate(0deg); }
+      33%     { transform: translateY(-12px) rotate(1deg); }
+      66%     { transform: translateY(-6px) rotate(-0.5deg); }
+    }
+    #detailImg {
+      position: relative; z-index: 1;
+      mix-blend-mode: multiply;
+      animation: float 4s ease-in-out infinite;
+      filter: drop-shadow(0 8px 24px rgba(109,40,217,0.4));
+    }
+
+    /* 画像登場アニメーション */
+    @keyframes img-enter {
+      0%   { opacity: 0; transform: translateY(40px) scale(0.8); }
+      60%  { transform: translateY(-8px) scale(1.05); }
+      80%  { transform: translateY(4px) scale(0.98); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .img-entering { animation: img-enter 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards !important; }
+
+    /* グロー呼吸（常時） */
+    @keyframes glow-breathe {
+      0%,100% { box-shadow: 0 0 20px rgba(167,139,250,0.2), 0 0 60px rgba(109,40,217,0.1); }
+      50%     { box-shadow: 0 0 40px rgba(167,139,250,0.5), 0 0 80px rgba(109,40,217,0.3), 0 0 120px rgba(167,139,250,0.1); }
+    }
+    .img-container { animation: glow-breathe 3s ease-in-out infinite; }
+
+    /* ========== 説明文フェードイン ========== */
+    .desc-line {
+      opacity: 0; transform: translateY(6px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .desc-line.visible { opacity: 1; transform: translateY(0); }
+
+    /* ========== セリフバブル ========== */
+    .speech-bubble {
+      position: relative;
+      background: rgba(139,92,246,0.12);
+      border: 1px solid rgba(139,92,246,0.35);
+      border-radius: 16px;
+    }
+    .speech-bubble::before {
+      content: '"'; position: absolute; top: -2px; left: 14px;
+      font-size: 3rem; color: rgba(139,92,246,0.25); line-height: 1;
+    }
+    @keyframes quote-in {
+      from { opacity: 0; transform: translateX(-10px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    #detailQuote { opacity: 0; }
+    #detailQuote.visible { animation: quote-in 0.4s ease forwards; }
+
+    /* ========== グラスカード ========== */
+    .glass-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      backdrop-filter: blur(8px); border-radius: 16px;
+    }
+
+    /* ========== ヘッダー ========== */
+    header {
+      background: rgba(11,1,24,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(139,92,246,0.25);
+      position: relative; z-index: 20;
+    }
+
+    /* ========== PREV/NEXT ボタン ========== */
+    .nav-btn {
+      position: relative; overflow: hidden;
+      padding: 6px 16px; border-radius: 8px;
+      border: 1px solid rgba(139,92,246,0.3);
+      transition: all 0.2s ease;
+    }
+    .nav-btn:hover {
+      border-color: var(--accent);
+      background: rgba(109,40,217,0.2);
+      transform: scale(1.05);
+      box-shadow: 0 0 16px rgba(167,139,250,0.3);
+    }
+    .nav-btn:active { transform: scale(0.97); }
+
+    /* ========== 初期表示 ========== */
+    @keyframes idle-bounce {
+      0%,100% { transform: translateY(0) scale(1); }
+      50%     { transform: translateY(-10px) scale(1.05); }
+    }
+    #emptyIcon { animation: idle-bounce 2.5s ease-in-out infinite; display: inline-block; }
+
+    /* ========== モバイルビュー切り替え ========== */
+    @media (max-width: 767px) {
+      body { overflow: auto; }
+      #emptyState { display: none !important; }
+
+      /* レイアウト：縦積み・全画面 */
+      #mainLayout { display: block !important; height: auto !important; }
+
+      /* 左パネル（一覧）：モバイルでは全幅 */
+      #monsterList {
+        width: 100% !important;
+        height: calc(100vh - 48px);
+        display: block;
+      }
+      /* 詳細パネル：デフォルト非表示 */
+      #detailPanel {
+        position: fixed; inset: 0; top: 48px;
+        z-index: 50; overflow-y: auto;
+        background: radial-gradient(ellipse at 30% 20%, #1e0a3c 0%, #0b0118 60%);
+        transform: translateX(100%);
+        transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+      }
+      /* 詳細パネル表示時 */
+      #detailPanel.mobile-open {
+        transform: translateX(0);
+      }
+      /* 戻るボタン表示 */
+      #backBtn { display: flex !important; }
+    }
+
+    /* 戻るボタン（PCでは非表示） */
+    #backBtn {
+      display: none;
+      align-items: center; gap: 8px;
+      padding: 8px 16px;
+      background: rgba(109,40,217,0.2);
+      border: 1px solid rgba(139,92,246,0.4);
+      border-radius: 10px; cursor: pointer;
+      transition: all 0.2s ease;
+      color: #a78bfa; font-size: 11px;
+    }
+    #backBtn:hover { background: rgba(109,40,217,0.4); }
+
+    /* モバイルPREV/NEXTは横スワイプ感 */
+    @media (max-width: 767px) {
+      .nav-btn { padding: 10px 20px; font-size: 8px; }
+    }
+  </style>
+</head>
+<body class="scanlines min-h-screen text-white">
+
+<!-- 画面フラッシュ -->
+<div id="flash"></div>
+
+<!-- 背景パーティクル -->
+<div id="particles"></div>
+
+<!-- ヘッダー -->
+<header class="h-12 flex items-center px-4 gap-3">
+  <a href="index.html" class="text-purple-400 hover:text-purple-300 text-xs transition-colors">← 劇団FAX</a>
+  <span class="text-purple-800">|</span>
+  <span class="pixel text-[9px] text-purple-300 tracking-widest">FUNNY MONSTER ZUKAN</span>
+  <span class="ml-auto text-[10px] text-purple-600 pixel">v2.0</span>
+</header>
+
+<div class="flex" id="mainLayout" style="height: calc(100vh - 48px);">
+
+  <!-- ===== 左パネル（一覧） ===== -->
+  <div class="list-panel w-72 shrink-0 overflow-y-auto" id="monsterList">
+    <div class="px-3 py-3 border-b border-purple-900/50">
+      <p class="pixel text-[8px] text-purple-500 mb-1">MONSTERS</p>
+      <p class="text-xs text-purple-400"><span class="font-bold text-purple-300">30</span> 体確認済み</p>
+    </div>
+  </div>
+
+  <!-- ===== 右パネル（詳細） ===== -->
+  <div class="detail-panel flex-1 overflow-y-auto" id="detailPanel">
+
+    <!-- 初期表示 -->
+    <div id="emptyState" class="h-full flex flex-col items-center justify-center gap-4 text-center px-8">
+      <span id="emptyIcon" class="text-6xl opacity-30">👾</span>
+      <p class="pixel text-[10px] text-purple-700 leading-loose">モンスターを<br>選んでください</p>
+    </div>
+
+    <!-- 詳細 -->
+    <div id="detailContent" class="hidden p-5 md:p-10 max-w-2xl mx-auto">
+
+      <!-- モバイル戻るボタン -->
+      <button id="backBtn" onclick="showMobileList()" class="mb-5 pixel text-[9px]">
+        ← 一覧に戻る
+      </button>
+
+      <!-- 番号・タイプ -->
+      <div class="flex items-center justify-between mb-4">
+        <span class="zukan-no text-sm" id="detailNo">No.001</span>
+        <span class="type-badge" id="detailType"></span>
+      </div>
+
+      <!-- 名前 -->
+      <h1 class="text-3xl md:text-4xl font-black text-white mb-6" id="detailName"></h1>
+
+      <!-- 画像 -->
+      <div class="img-container p-4 mb-8 flex items-center justify-center" style="min-height:280px;">
+        <!-- 衝撃波 -->
+        <div class="shockwave" id="sw1"></div>
+        <div class="shockwave" id="sw2"></div>
+        <div class="shockwave" id="sw3"></div>
+        <img id="detailImg" src="" alt="" class="max-h-64 w-auto object-contain" />
+      </div>
+
+      <!-- 説明文 -->
+      <div class="glass-card p-5 mb-4">
+        <p class="pixel text-[9px] text-purple-500 mb-3 tracking-widest">// ZUKAN DATA</p>
+        <p class="text-sm text-slate-200 leading-7" id="detailDesc"></p>
+      </div>
+
+      <!-- セリフ -->
+      <div class="speech-bubble px-5 pt-8 pb-4 mb-8">
+        <p class="text-base text-purple-200 font-bold" id="detailQuote"></p>
+      </div>
+
+      <!-- PREV / NEXT -->
+      <div class="flex justify-between">
+        <button onclick="navigatePrev()" class="nav-btn pixel text-[9px] text-purple-400">← PREV</button>
+        <button onclick="navigateNext()" class="nav-btn pixel text-[9px] text-purple-400">NEXT →</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== データ =====
+const MONSTERS = [
+  { id:1,  file:'IMG_1132.JPG', name:'ギラマスク',   type:'毒',  typeColor:'#7c3aed', typeBg:'rgba(124,58,237,0.25)',  desc:'ピンクと黄緑のコントラストが目を引く、ずんぐりとしたモンスター。顔の半分を覆う黄緑色のマスクが特徴で、いつもニヤリと歯を見せている。実は人見知りで、マスクは恥ずかしさを隠すためのものだという。', quote:'うるさい、見るな。' },
+  { id:2,  file:'IMG_1133.JPG', name:'ゴウテン',     type:'霊',  typeColor:'#9333ea', typeBg:'rgba(147,51,234,0.25)',  desc:'頭に乗せた色鮮やかな塔から不思議なエネルギーを発する、にぎやかなモンスター。おでこには宝石が輝き、口からはカラフルな舌を出している。祭りの夜にだけ現れると伝えられている。', quote:'今夜も踊ろうぞ！' },
+  { id:3,  file:'IMG_1134.JPG', name:'ハナゴン',     type:'草',  typeColor:'#16a34a', typeBg:'rgba(22,163,74,0.2)',    desc:'頭に赤青の風車をつけた緑のベレー帽がトレードマーク。長い牙とモジャモジャの毛が特徴で、手に持った棒でリズムを刻みながら歩く。草むらに潜み、花の蜜を集めて生きている。', quote:'ふんふふん〜♪' },
+  { id:4,  file:'IMG_1135.JPG', name:'オウカン',     type:'光',  typeColor:'#ca8a04', typeBg:'rgba(202,138,4,0.2)',    desc:'頭に輝く王冠のような飾りをつけた緑のモンスター。満面の笑みで現れ、会う者すべてを明るい気持ちにさせる。赤い靴がお気に入りで、毎日丁寧に磨いている。', quote:'わはは！今日も最高だ！' },
+  { id:5,  file:'IMG_1136.JPG', name:'ナミダン',     type:'水',  typeColor:'#0284c7', typeBg:'rgba(2,132,199,0.2)',    desc:'三角形の緑の体に赤いランドセルを背負った、目玉が飛び出るモンスター。常に涙をこぼしており、行く先々を水浸しにしてしまう。本人いわく、うれしくて泣いているらしい。', quote:'うれしくて……うれしくて……' },
+  { id:6,  file:'IMG_1137.JPG', name:'ピラニカ',     type:'水',  typeColor:'#0284c7', typeBg:'rgba(2,132,199,0.2)',    desc:'ピンクと緑が混じった奇妙な魚型モンスター。大きな口と鋭いヒレが特徴で、深海から地上に飛び出してきたと言われている。機嫌が悪いときは口が90度開く。', quote:'ガブッといくぞ！' },
+  { id:7,  file:'IMG_1138.JPG', name:'ネムリン',     type:'闇',  typeColor:'#4f46e5', typeBg:'rgba(79,70,229,0.2)',    desc:'青い体に極彩色の模様が描かれた、横向きに浮遊するモンスター。常に半目で眠そうにしているが、実はすべてを見通す能力を持つ。起こすと非常に怒る。', quote:'……（まだ寝てる）' },
+  { id:8,  file:'IMG_1139.JPG', name:'オノブシ',     type:'草',  typeColor:'#16a34a', typeBg:'rgba(22,163,74,0.2)',    desc:'黄緑色のもふもふした体に、カラフルなお面をつけた戦士モンスター。手に持った斧が自慢で、森の番人として君臨している。見た目より圧倒的に強い。', quote:'この森は俺が守る！' },
+  { id:9,  file:'IMG_1140.JPG', name:'バンドン',     type:'炎',  typeColor:'#ea580c', typeBg:'rgba(234,88,12,0.2)',    desc:'緑の帽子にアンテナをつけたオレンジのモンスター。アコーディオンが大好きで、どこへでも持ち歩いている。演奏すると周囲に炎が踊るように揺れる。', quote:'さあ、盛り上がっていこう！' },
+  { id:10, file:'IMG_1141.JPG', name:'ハーフロン',   type:'霊',  typeColor:'#9333ea', typeBg:'rgba(147,51,234,0.25)',  desc:'半分が紫のゴースト、半分が緑のロボットという不思議な存在。ティールのスカーフが個性的なアクセント。魂とメカの境界線に住んでいると言われている。', quote:'ぼくは……どっちなんだろう' },
+  { id:11, file:'IMG_1142.JPG', name:'ヒラメカ',     type:'炎',  typeColor:'#ea580c', typeBg:'rgba(234,88,12,0.2)',    desc:'赤い丸い体に派手なつば広帽をかぶったモンスター。口の部分の模様が「口」の文字にそっくり。大声でしゃべるのが好きで、声が大きすぎていつも相手が引いてしまう。', quote:'聞けえええ！俺の話を！' },
+  { id:12, file:'IMG_1143.JPG', name:'ゾンワン',     type:'霊',  typeColor:'#9333ea', typeBg:'rgba(147,51,234,0.25)',  desc:'薄ピンクの犬型モンスターで、背中にお城が生えており、頭上に紫のドクロが浮かんでいる。何も怖くないふりをしているが、実はびびりの甘えん坊。', quote:'べ、別に怖くないし…' },
+  { id:13, file:'IMG_1144.JPG', name:'スルリン',     type:'水',  typeColor:'#0284c7', typeBg:'rgba(2,132,199,0.2)',    desc:'細長い青紫のモンスターで、水を切るような流線型の体が特徴。尻尾の先に小さな球がついており、それが唯一の弱点だという。高速で海中を泳ぐ。', quote:'ビューンと行くぜ！' },
+  { id:14, file:'IMG_1145.JPG', name:'ハナゾウ',     type:'光',  typeColor:'#ca8a04', typeBg:'rgba(202,138,4,0.2)',    desc:'ピンクの象型モンスター。全身がカラフルなモザイク模様で覆われており、元気よく駆け回る。鼻から音楽を流す能力があり、演奏が始まると周囲が踊り出す。', quote:'パオーン！今日も全力！' },
+  { id:15, file:'IMG_1146.JPG', name:'タコシン',     type:'毒',  typeColor:'#7c3aed', typeBg:'rgba(124,58,237,0.25)',  desc:'赤い触手の体に緑のベストを着込んだ紳士なモンスター。青い帽子をかぶり、常に謎の液体入りの瓶を携帯している。いつも何かを企んでいる表情を浮かべている。', quote:'ふふふ、計画通りだ' },
+  { id:16, file:'IMG_1147.JPG', name:'ニジアーチ',   type:'水',  typeColor:'#0284c7', typeBg:'rgba(2,132,199,0.2)',    desc:'ティールのアーチ型モンスター。ほぼシンプルな形だが、左側にただ一つ赤い目がある。動き方が予測できず、ぽよんぽよんと不規則に跳ねる。', quote:'どこへでも跳んでいける' },
+  { id:17, file:'IMG_1148.JPG', name:'トロロン',     type:'草',  typeColor:'#16a34a', typeBg:'rgba(22,163,74,0.2)',    desc:'黄色いとろけた顔に赤い帽子のモンスター。いつもとろとろ溶けながら歩いており、行く先に黄色い液体を垂らす。機嫌はいつも良く、スローペースが心地よい。', quote:'とろっとろ〜♪' },
+  { id:18, file:'IMG_1149.JPG', name:'ボクサルー',   type:'格闘',typeColor:'#dc2626', typeBg:'rgba(220,38,38,0.2)',    desc:'青いボクサーモンスター。赤いグローブで世界中の悪を倒すのが夢。額の黄色いラインが必殺技発動のサインで、光り始めたら全力で逃げるべき。', quote:'うおりゃあ！全力で行くぞ！' },
+  { id:19, file:'IMG_1150.JPG', name:'ジョーカン',   type:'闇',  typeColor:'#4f46e5', typeBg:'rgba(79,70,229,0.2)',    desc:'紫のジョーカー（道化師）型モンスター。パーティーハットを被り、黄緑に光る目が不気味。笑いながら相手を混乱させるのが得意で、後で「冗談」と言い訳する。', quote:'あははは！全部冗談だよ？' },
+  { id:20, file:'IMG_1151.JPG', name:'ヨコミ',       type:'風',  typeColor:'#0891b2', typeBg:'rgba(8,145,178,0.2)',    desc:'黄色いたまご型モンスターで、体の横を向いた一つ目と紫の口が特徴。茶色い下半身は重たく、ちょこちょこした動きでゆっくり移動する。のんびり屋。', quote:'ちょっと待ってよ〜' },
+  { id:21, file:'IMG_1152.JPG', name:'ハクサン',     type:'水',  typeColor:'#0284c7', typeBg:'rgba(2,132,199,0.2)',    desc:'青と黄色が混じった魚型モンスター。尻尾はカラフルなウロコ模様で、頭から細い触手を3本伸ばしている。深海の探検家として知られ、未発見の海底を日々探索している。', quote:'深いほど楽しいんだ' },
+  { id:22, file:'IMG_1153.JPG', name:'ハナウナ',     type:'草',  typeColor:'#16a34a', typeBg:'rgba(22,163,74,0.2)',    desc:'紫のウナギ型モンスターで、頭には緑の葉っぱのモヒカン、尻尾はピンクの花が咲いている。くるりと丸まって眠るのが好きで、花が咲いている間は起こさない方がいい。', quote:'花が咲いたら起こして' },
+  { id:23, file:'IMG_1154.JPG', name:'カラスオウ',   type:'闇',  typeColor:'#4f46e5', typeBg:'rgba(79,70,229,0.2)',    desc:'赤い体に青いくちばし、頭に王冠のような棘を持つ鳥型の王様モンスター。全身に複雑な装飾が施され、目つきが非常に鋭い。自分が最強だと心の底から信じている。', quote:'余の前にひれ伏せ' },
+  { id:24, file:'IMG_1155.JPG', name:'ミズカラプス', type:'岩',  typeColor:'#78716c', typeBg:'rgba(120,113,108,0.25)', desc:'灰青色の恐竜型モンスター。頭部が幅広く、背中に緑の模様がある。低姿勢で地面を這うように歩き、足裏で地面の振動を感じ取る特殊能力を持つ。', quote:'大地のざわめきが聞こえる' },
+  { id:25, file:'IMG_1156.JPG', name:'ツノウマ',     type:'風',  typeColor:'#0891b2', typeBg:'rgba(8,145,178,0.2)',    desc:'ピンクの馬型モンスターで、頭から赤い長い角が天高く伸びる。背中には水色のウロコ状のひれがある。颯爽と駆け抜ける姿は美しく、見る者を魅了する。', quote:'風になって駆け抜けるわ' },
+  { id:26, file:'IMG_1157.JPG', name:'ハートカン',   type:'霊',  typeColor:'#9333ea', typeBg:'rgba(147,51,234,0.25)',  desc:'ハート型の紫ピンクの体を持ち、黄色い目でにやりと笑うモンスター。緑の羽と大きな武器を持ち、愛と暴力が同居している複雑な性格。縞模様のソックスがかわいい。', quote:'愛してるからやっつける！' },
+  { id:27, file:'IMG_1158.JPG', name:'ワルラッパ',   type:'岩',  typeColor:'#78716c', typeBg:'rgba(120,113,108,0.25)', desc:'大きく丸い紫のモンスターで、縞模様の角が二本生えている。セイウチのような口元と鋭い爪が特徴。どっしり構えてほとんど動かず、動かす必要もないと思っている。', quote:'……（動く気がない）' },
+  { id:28, file:'IMG_1159.JPG', name:'キビタン',     type:'風',  typeColor:'#0891b2', typeBg:'rgba(8,145,178,0.2)',    desc:'黄緑色の奇妙な鳥モンスター。ピンクと緑の翼、赤いくちばしが特徴的。独特のリズムで歩きながら独り言が絶えない。何を言っているのかは誰にもわからない。', quote:'トコトコ、ケッケッ' },
+  { id:29, file:'IMG_1160.JPG', name:'フワリン',     type:'光',  typeColor:'#ca8a04', typeBg:'rgba(202,138,4,0.2)',    desc:'パステルカラーの蝶と猫を合わせたようなモンスター。ミントグリーンの顔、カラフルな翼、カールした尻尾が愛らしい。穏やかな性格で、誰とでも仲良くなれる。', quote:'ふわ〜、今日もいい天気♪' },
+  { id:30, file:'IMG_1161.JPG', name:'アカトリ',     type:'炎',  typeColor:'#ea580c', typeBg:'rgba(234,88,12,0.2)',    desc:'赤と黄色の鳥モンスター。大きなくちばし、緑の首周り、カラフルな脚が特徴。ダンスが得意で、リズムに乗りながら歩く。踊らない日はないと本人が言っている。', quote:'踊らにゃ損、損！' },
+];
+
+let currentIndex = 0;
+let isAnimating = false;
+const IMG_BASE = 'images/ファニーモンスター/';
+
+// ===== パーティクル生成 =====
+const particleContainer = document.getElementById('particles');
+for (let i = 0; i < 40; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  const size = Math.random() * 3 + 1;
+  p.style.cssText = `
+    width:${size}px; height:${size}px;
+    left:${Math.random()*100}%;
+    top:${60 + Math.random()*40}%;
+    animation: float-particle ${4 + Math.random()*6}s ${Math.random()*8}s ease-in-out infinite;
+    opacity: 0;
+  `;
+  // 色をランダムに
+  const colors = ['#a78bfa','#60a5fa','#f472b6','#34d399','#fbbf24'];
+  p.style.background = colors[Math.floor(Math.random()*colors.length)];
+  particleContainer.appendChild(p);
+}
+
+// ===== リスト生成 =====
+const listEl = document.getElementById('monsterList');
+MONSTERS.forEach((m, i) => {
+  const item = document.createElement('div');
+  item.className = 'monster-item flex items-center gap-3 px-3 py-2.5';
+  item.dataset.index = i;
+  item.innerHTML = `
+    <span class="num pixel text-[8px] text-purple-700 w-8 shrink-0">
+      ${String(m.id).padStart(3,'0')}
+    </span>
+    <div class="thumb-wrap w-10 h-10 rounded-lg overflow-hidden bg-white shrink-0 flex items-center justify-center transition-all duration-300">
+      <img src="${IMG_BASE}${m.file}" alt="${m.name}"
+           class="w-full h-full object-contain" style="mix-blend-mode:multiply;" loading="lazy" />
+    </div>
+    <span class="text-sm font-bold text-slate-300 truncate">${m.name}</span>
+    <span class="ml-auto shrink-0 text-[9px] font-bold px-1.5 py-0.5 rounded-full"
+          style="background:${m.typeBg};color:${m.typeColor};">${m.type}</span>
+  `;
+  item.addEventListener('click', () => selectMonster(i));
+  listEl.appendChild(item);
+});
+
+// ===== タイプライター =====
+function typewriterEffect(el, text) {
+  el.innerHTML = '';
+  [...text].forEach((char, i) => {
+    const span = document.createElement('span');
+    span.className = 'typewriter-char';
+    span.textContent = char;
+    span.style.animationDelay = `${i * 60}ms`;
+    el.appendChild(span);
+  });
+}
+
+// ===== 衝撃波 =====
+function triggerShockwave() {
+  ['sw1','sw2','sw3'].forEach(id => {
+    const el = document.getElementById(id);
+    el.className = 'shockwave';
+    void el.offsetWidth;
+    el.className = `shockwave ring${id.slice(-1)}`;
+  });
+}
+
+// ===== フラッシュ =====
+function triggerFlash() {
+  const flash = document.getElementById('flash');
+  flash.classList.remove('flashing');
+  void flash.offsetWidth;
+  flash.classList.add('flashing');
+}
+
+// ===== 説明文アニメーション =====
+function animateDesc(text) {
+  const el = document.getElementById('detailDesc');
+  // 句点で区切って段落的に扱う
+  const sentences = text.match(/[^。]+。?/g) || [text];
+  el.innerHTML = sentences.map(s =>
+    `<span class="desc-line">${s}</span>`
+  ).join('');
+  const lines = el.querySelectorAll('.desc-line');
+  lines.forEach((line, i) => {
+    setTimeout(() => line.classList.add('visible'), 300 + i * 120);
+  });
+}
+
+// ===== メイン選択関数 =====
+function selectMonster(index) {
+  if (isAnimating) return;
+  isAnimating = true;
+  currentIndex = index;
+  const m = MONSTERS[index];
+
+  // リストアクティブ
+  document.querySelectorAll('.monster-item').forEach(el => el.classList.remove('active'));
+  document.querySelector(`.monster-item[data-index="${index}"]`).classList.add('active');
+
+  // フラッシュ
+  triggerFlash();
+
+  // 詳細パネル表示
+  document.getElementById('emptyState').style.display = 'none';
+  const detail = document.getElementById('detailContent');
+  detail.classList.remove('hidden');
+
+  // 番号（即時）
+  document.getElementById('detailNo').textContent = `No.${String(m.id).padStart(3,'0')}`;
+
+  // タイプバッジ（バウンス）
+  const typeEl = document.getElementById('detailType');
+  typeEl.className = 'type-badge';
+  void typeEl.offsetWidth;
+  typeEl.textContent = m.type + 'タイプ';
+  typeEl.style.background = m.typeBg;
+  typeEl.style.color = m.typeColor;
+  typeEl.style.border = `1px solid ${m.typeColor}55`;
+  typeEl.classList.add('badge-enter');
+
+  // 名前タイプライター（少し遅延）
+  setTimeout(() => typewriterEffect(document.getElementById('detailName'), m.name), 80);
+
+  // 画像（バウンス登場）
+  const img = document.getElementById('detailImg');
+  img.style.animation = 'none';
+  img.style.opacity = '0';
+  img.src = IMG_BASE + m.file;
+  img.alt = m.name;
+  setTimeout(() => {
+    img.classList.remove('img-entering');
+    void img.offsetWidth;
+    img.classList.add('img-entering');
+    img.style.opacity = '';
+    // 登場後は浮遊アニメに戻す
+    setTimeout(() => {
+      img.classList.remove('img-entering');
+      img.style.animation = '';
+    }, 500);
+    triggerShockwave();
+  }, 100);
+
+  // 説明文（時間差フェード）
+  animateDesc(m.desc);
+
+  // セリフ
+  const quoteEl = document.getElementById('detailQuote');
+  quoteEl.textContent = m.quote;
+  quoteEl.classList.remove('visible');
+  setTimeout(() => quoteEl.classList.add('visible'), 600);
+
+  // スクロール
+  const activeItem = document.querySelector('.monster-item.active');
+  if (activeItem) activeItem.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+
+  // モバイル：詳細パネルをスライドイン
+  if (isMobile()) showMobileDetail();
+
+  setTimeout(() => { isAnimating = false; }, 400);
+}
+
+function navigatePrev() { if (currentIndex > 0) selectMonster(currentIndex - 1); }
+function navigateNext() { if (currentIndex < MONSTERS.length - 1) selectMonster(currentIndex + 1); }
+
+// ===== モバイルビュー切り替え =====
+function isMobile() { return window.innerWidth < 768; }
+
+function showMobileDetail() {
+  document.getElementById('detailPanel').classList.add('mobile-open');
+  // 一覧側のスクロールを止める
+  document.getElementById('monsterList').style.overflow = 'hidden';
+}
+
+function showMobileList() {
+  document.getElementById('detailPanel').classList.remove('mobile-open');
+  document.getElementById('monsterList').style.overflow = 'auto';
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowUp')   { e.preventDefault(); navigatePrev(); }
+  if (e.key === 'ArrowDown') { e.preventDefault(); navigateNext(); }
+});
+
+selectMonster(0);
+</script>
+</body>
+</html>
