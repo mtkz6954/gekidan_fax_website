@@ -4,9 +4,9 @@ import { resolve } from 'path';
 import * as cheerio from 'cheerio';
 
 const ROOT = resolve(__dirname, '../..');
-const PAGES = ['index.html', 'about.html', 'activity.html', 'monster-zukan.html'];
+const PAGES = ['index.html', 'about.html', 'activity.html', 'asobiba.html', 'monster-zukan.html'];
 // monster-zukan.html は独自レイアウトで description メタタグなし
-const PAGES_WITH_DESCRIPTION = ['index.html', 'about.html', 'activity.html'];
+const PAGES_WITH_DESCRIPTION = ['index.html', 'about.html', 'activity.html', 'asobiba.html'];
 
 const loaded = {};
 beforeAll(() => {

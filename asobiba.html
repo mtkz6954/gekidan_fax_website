@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>あそびば | 劇団FAX</title>
+  <meta name="description" content="劇団FAXの遊べるページを集めたあそびば。ファニーモンスター図鑑と、これから増えるゲームへの入口。" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="effects.css" />
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: { sans: ['"Noto Sans JP"','sans-serif'] } } } }
+  </script>
+  <style>
+    body { font-family: 'Noto Sans JP', sans-serif; }
+  </style>
+</head>
+
+<body class="min-h-screen bg-white text-slate-800 antialiased">
+
+<header class="sticky top-0 z-40 border-b border-slate-100 bg-white/90 backdrop-blur-md transition-shadow duration-300">
+  <div class="mx-auto flex h-14 max-w-5xl items-center justify-between px-5 md:h-16 md:px-8">
+    <a href="index.html" class="flex items-center gap-2.5 group">
+      <img src="images/FAX.png" alt="劇団FAX" class="h-8 w-auto md:h-9 transition-transform duration-300 group-hover:scale-110" />
+    </a>
+    <nav class="hidden items-center gap-7 text-[13px] font-bold text-slate-500 md:flex">
+      <a href="index.html" class="hover:text-sky-600 transition-colors nav-link-effect">トップ</a>
+      <a href="about.html" class="hover:text-sky-600 transition-colors nav-link-effect">劇団について</a>
+      <a href="activity.html" class="hover:text-sky-600 transition-colors nav-link-effect">活動内容</a>
+      <a href="asobiba.html" class="text-slate-900 nav-link-effect">あそびば</a>
+    </nav>
+    <a href="https://example.com/ticket" class="glow-btn magnetic-btn ripple-btn rounded-full bg-orange-400 px-4 py-1.5 text-[11px] font-black text-white transition-all hover:-translate-y-0.5 hover:bg-orange-500 md:px-5 md:py-2 md:text-xs">チケット購入</a>
+  </div>
+</header>
+
+<main class="pb-16 md:pb-0">
+  <section class="border-b border-slate-100 animated-gradient-subtle relative overflow-hidden">
+    <div class="blob-1 bg-sky-200 top-12 -left-16"></div>
+    <div class="blob-2 bg-orange-200 top-20 right-0"></div>
+    <div class="mx-auto max-w-5xl px-5 pb-12 pt-10 md:px-8 md:pb-16 md:pt-16 relative z-10">
+      <p class="text-xs font-bold text-sky-500 uppercase tracking-wider" data-animate="fade-up">Asobiba</p>
+      <h1 class="mt-2 text-3xl font-black text-slate-900 md:text-4xl" data-animate="fade-up">あそびば</h1>
+      <p class="mt-4 max-w-2xl text-[15px] leading-8 text-slate-500" data-animate="fade-up">
+        劇団FAXの遊べるページを集めた入口です。いまはファニーモンスター図鑑へ入れます。これからゲームもここに増えていきます。
+      </p>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 py-12 md:px-8 md:py-16">
+    <div class="grid gap-6 md:grid-cols-2">
+      <article class="tilt-card overflow-hidden rounded-3xl border border-slate-100 bg-white shadow-lg shadow-slate-200/50" data-animate="fade-up">
+        <div class="relative h-56 overflow-hidden bg-gradient-to-br from-purple-100 via-white to-sky-100">
+          <img src="images/ファニーモンスター/IMG_1577.JPG" alt="ファニーモンスター図鑑" class="absolute inset-0 h-full w-full object-cover mix-blend-multiply opacity-95" />
+          <div class="absolute left-5 top-5 rounded-full bg-white/90 px-3 py-1 text-[11px] font-black text-purple-600 shadow-sm">いま遊べる</div>
+          <div class="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-white via-white/80 to-transparent"></div>
+        </div>
+        <div class="p-6 md:p-7">
+          <p class="text-xs font-bold uppercase tracking-[0.2em] text-purple-500">Funny Monster</p>
+          <h2 class="mt-2 text-2xl font-black text-slate-900">ファニーモンスター図鑑</h2>
+          <p class="mt-3 text-[15px] leading-8 text-slate-600">
+            劇団FAXのまわりにいるファニーモンスターたちを、ゲームみたいな画面で眺められる図鑑です。気になる一体を選んでください。
+          </p>
+          <a href="monster-zukan.html" class="mt-6 inline-flex items-center gap-2 rounded-full bg-purple-500 px-6 py-3 text-sm font-black text-white transition-all hover:-translate-y-0.5 hover:bg-purple-600">
+            図鑑へ
+          </a>
+        </div>
+      </article>
+
+      <article class="tilt-card overflow-hidden rounded-3xl border border-slate-100 bg-slate-50 shadow-lg shadow-slate-200/40" data-animate="fade-left">
+        <div class="relative flex h-56 items-center justify-center bg-gradient-to-br from-sky-50 via-white to-orange-50">
+          <div class="absolute right-5 top-5 rounded-full border border-orange-200 bg-white/90 px-3 py-1 text-[11px] font-black text-orange-500 shadow-sm">近日公開</div>
+          <div class="rounded-3xl border border-dashed border-slate-200 bg-white/80 px-8 py-10 text-center shadow-sm">
+            <p class="text-4xl">🎮</p>
+            <p class="mt-3 text-sm font-black text-slate-700">ゲーム</p>
+          </div>
+        </div>
+        <div class="p-6 md:p-7">
+          <p class="text-xs font-bold uppercase tracking-[0.2em] text-orange-500">Coming Soon</p>
+          <h2 class="mt-2 text-2xl font-black text-slate-900">あたらしいゲーム</h2>
+          <p class="mt-3 text-[15px] leading-8 text-slate-600">
+            ここには、これから劇団FAXの世界で遊べるゲームを追加していく予定です。公開までもう少し待っていてください。
+          </p>
+          <span class="mt-6 inline-flex items-center rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-bold text-slate-400">
+            準備中
+          </span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-5 pb-12 md:px-8 md:pb-16" data-animate="fade-up">
+    <div class="rounded-3xl border border-slate-100 bg-white p-6 shadow-sm">
+      <p class="text-sm leading-7 text-slate-500">
+        あそびばは少しずつ育てていく場所です。図鑑のつづきとして、ゲームや小さな遊びをここに並べていきます。
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer class="border-t border-slate-100">
+  <div class="mx-auto flex max-w-5xl flex-col gap-6 px-5 py-8 text-xs text-slate-400 md:flex-row md:items-center md:justify-between md:px-8">
+    <div class="flex items-center gap-2">
+      <img src="images/FAX.png" alt="劇団FAX" class="h-6 w-auto" />
+    </div>
+    <nav class="flex gap-5">
+      <a href="index.html" class="hover:text-sky-600 transition-colors nav-link-effect">トップ</a>
+      <a href="about.html" class="hover:text-sky-600 transition-colors nav-link-effect">劇団について</a>
+      <a href="activity.html" class="hover:text-sky-600 transition-colors nav-link-effect">活動内容</a>
+    </nav>
+    <span>&copy; 2026 劇団FAX</span>
+  </div>
+</footer>
+
+<nav class="fixed inset-x-0 bottom-0 z-50 border-t border-slate-100 bg-white/95 backdrop-blur-md md:hidden">
+  <div class="mx-auto grid max-w-sm grid-cols-5">
+    <a href="index.html" class="flex flex-col items-center gap-1 py-2.5 text-[10px] font-bold text-slate-400"><img src="images/icons/top.svg" alt="" class="h-6 w-6">トップ</a>
+    <a href="about.html" class="flex flex-col items-center gap-1 py-2.5 text-[10px] font-bold text-slate-400"><img src="images/icons/about.svg" alt="" class="h-6 w-6">劇団</a>
+    <a href="activity.html" class="flex flex-col items-center gap-1 py-2.5 text-[10px] font-bold text-slate-400"><img src="images/icons/activity.svg" alt="" class="h-6 w-6">活動</a>
+    <a href="asobiba.html" class="flex flex-col items-center gap-1 py-2.5 text-[10px] font-bold text-purple-500"><img src="images/icons/zukan.svg" alt="" class="h-6 w-6">あそびば</a>
+    <a href="https://example.com/ticket" class="flex flex-col items-center gap-1 py-2.5 text-[10px] font-bold text-orange-500"><img src="images/icons/ticket.svg" alt="" class="h-6 w-6">チケット</a>
+  </div>
+</nav>
+
+<script src="effects.js"></script>
+</body>
+</html>

@@ -4,20 +4,20 @@ import { resolve } from 'path';
 import * as cheerio from 'cheerio';
 
 const ROOT = resolve(__dirname, '../..');
-const PAGES = ['index.html', 'about.html', 'activity.html', 'monster-zukan.html'];
+const PAGES = ['index.html', 'about.html', 'activity.html', 'asobiba.html', 'monster-zukan.html'];
 
 const EXPECTED_HEADER_LINKS = [
   'index.html',
   'about.html',
   'activity.html',
-  'monster-zukan.html',
+  'asobiba.html',
 ];
 
 const EXPECTED_MOBILE_NAV_LINKS = [
   'index.html',
   'about.html',
   'activity.html',
-  'monster-zukan.html',
+  'asobiba.html',
   'https://example.com/ticket',
 ];
 
@@ -30,7 +30,7 @@ beforeAll(() => {
 });
 
 // monster-zukan.html は独自レイアウト（ヘッダーは「← 劇団FAX」リンクのみ、モバイルボトムナビなし）
-const STANDARD_PAGES = ['index.html', 'about.html', 'activity.html'];
+const STANDARD_PAGES = ['index.html', 'about.html', 'activity.html', 'asobiba.html'];
 
 describe('ナビゲーション整合性', () => {
   for (const page of STANDARD_PAGES) {
@@ -65,12 +65,12 @@ describe('ナビゲーション整合性', () => {
   }
 
   describe('monster-zukan.html', () => {
-    it('ヘッダーに index.html への戻りリンクがある', () => {
+    it('ヘッダーに asobiba.html への戻りリンクがある', () => {
       const $ = loaded['monster-zukan.html'];
       const headerLinks = $('header a')
         .map((_, el) => $(el).attr('href'))
         .get();
-      expect(headerLinks).toContain('index.html');
+      expect(headerLinks).toContain('asobiba.html');
     });
 
     it('モバイルでヘッダーが固定されるスタイルを持つ', () => {
@@ -80,7 +80,7 @@ describe('ナビゲーション整合性', () => {
   });
 
   // フッターテスト（monster-zukan はフッター構造が異なるため除外）
-  for (const page of ['index.html', 'about.html', 'activity.html']) {
+  for (const page of ['index.html', 'about.html', 'activity.html', 'asobiba.html']) {
     describe(`${page} フッター`, () => {
       it('フッターにナビリンクがある', () => {
         const $ = loaded[page];
