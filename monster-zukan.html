@@ -750,33 +750,25 @@ document.addEventListener('keydown', e => {
 });
 
 // ===== モバイルスワイプ（YouTube Shorts風）=====
+// パネル最下部で上スワイプ → 次、最上部で下スワイプ → 前
 (function() {
   const panel = document.getElementById('detailPanel');
-  let startY = 0, startX = 0, dragging = false;
-  const THRESHOLD = 60;
+  let startY = 0, startX = 0, atTop = false, atBottom = false;
+  const THRESHOLD = 80;
 
   panel.addEventListener('touchstart', e => {
     startY = e.touches[0].clientY;
     startX = e.touches[0].clientX;
-    dragging = true;
+    atTop    = panel.scrollTop <= 0;
+    atBottom = panel.scrollTop + panel.clientHeight >= panel.scrollHeight - 2;
   }, { passive: true });
 
-  panel.addEventListener('touchmove', e => {
-    if (!dragging) return;
-    const dy = e.touches[0].clientY - startY;
-    const dx = e.touches[0].clientX - startX;
-    // 縦スワイプ優先のとき横スクロールを止める
-    if (Math.abs(dy) > Math.abs(dx)) e.preventDefault();
-  }, { passive: false });
-
   panel.addEventListener('touchend', e => {
-    if (!dragging) return;
-    dragging = false;
     const dy = e.changedTouches[0].clientY - startY;
     const dx = e.changedTouches[0].clientX - startX;
     if (Math.abs(dy) < Math.abs(dx)) return; // 横スワイプは無視
-    if (dy < -THRESHOLD) navigateNext();
-    else if (dy > THRESHOLD) navigatePrev();
+    if (dy < -THRESHOLD && atBottom) navigateNext(); // 最下部で上スワイプ → 次
+    else if (dy > THRESHOLD && atTop)  navigatePrev(); // 最上部で下スワイプ → 前
   }, { passive: true });
 })();
 
