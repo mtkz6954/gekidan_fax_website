@@ -13,8 +13,14 @@ test.describe('ページ遷移', () => {
     await headerNav.getByRole('link', { name: /活動内容/ }).click();
     await expect(page).toHaveURL(/activity/);
 
-    // 図鑑 へ遷移
-    await headerNav.getByRole('link', { name: /図鑑/ }).click();
+    // あそびば へ遷移
+    await headerNav.getByRole('link', { name: /あそびば/ }).click();
+    await expect(page).toHaveURL(/asobiba/);
+  });
+
+  test('あそびばから図鑑に遷移できる', async ({ page }) => {
+    await page.goto('/asobiba.html');
+    await page.getByRole('link', { name: /図鑑へ/ }).click();
     await expect(page).toHaveURL(/monster-zukan/);
   });
 
