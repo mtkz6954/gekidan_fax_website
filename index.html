@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="effects.css" />
   <script>
     tailwind.config = { theme: { extend: { fontFamily: { sans: ['"Noto Sans JP"','sans-serif'] } } } }
   </script>
@@ -21,85 +22,90 @@
 
 <body class="min-h-screen bg-white text-slate-800 antialiased">
 
-<!-- ────────────────────────────────────
-     Header
-──────────────────────────────────── -->
-<header class="sticky top-0 z-40 border-b border-slate-100 bg-white/90 backdrop-blur-md">
+<!-- Header -->
+<header class="sticky top-0 z-40 border-b border-slate-100 bg-white/90 backdrop-blur-md transition-shadow duration-300">
   <div class="mx-auto flex h-14 max-w-5xl items-center justify-between px-5 md:h-16 md:px-8">
-    <!-- logo -->
     <a href="index.html" class="flex items-center gap-2.5 group">
-      <img src="images/FAX.png" alt="劇団FAX" class="h-8 w-auto md:h-9" />
+      <img src="images/FAX.png" alt="劇団FAX" class="h-8 w-auto md:h-9 transition-transform duration-300 group-hover:scale-110" />
     </a>
-    <!-- nav -->
     <nav class="hidden items-center gap-7 text-[13px] font-bold text-slate-500 md:flex">
-      <a href="index.html" class="text-slate-900">トップ</a>
-      <a href="about.html" class="hover:text-sky-600 transition-colors">劇団について</a>
-      <a href="activity.html" class="hover:text-sky-600 transition-colors">活動内容</a>
-      <a href="monster-zukan.html" class="hover:text-purple-600 transition-colors">👾 図鑑</a>
+      <a href="index.html" class="text-slate-900 nav-link-effect">トップ</a>
+      <a href="about.html" class="hover:text-sky-600 transition-colors nav-link-effect">劇団について</a>
+      <a href="activity.html" class="hover:text-sky-600 transition-colors nav-link-effect">活動内容</a>
+      <a href="monster-zukan.html" class="hover:text-purple-600 transition-colors nav-link-effect">👾 図鑑</a>
     </nav>
-    <!-- cta -->
-    <a href="https://example.com/ticket" class="rounded-full bg-orange-400 px-4 py-1.5 text-[11px] font-black text-white transition-all hover:-translate-y-0.5 hover:bg-orange-500 hover:shadow-md md:px-5 md:py-2 md:text-xs">チケット購入</a>
+    <a href="https://example.com/ticket" class="glow-btn magnetic-btn ripple-btn rounded-full bg-orange-400 px-4 py-1.5 text-[11px] font-black text-white transition-all hover:-translate-y-0.5 hover:bg-orange-500 md:px-5 md:py-2 md:text-xs">チケット購入</a>
   </div>
 </header>
 
 <main class="pb-16 md:pb-0">
 
-<!-- ────────────────────────────────────
-     Hero
-──────────────────────────────────── -->
-<section class="bg-white">
+<!-- ティッカー帯 -->
+<div class="overflow-hidden bg-slate-900 py-2">
+  <div class="ticker-strip">
+    <span class="mx-8 text-xs font-bold text-orange-300 whitespace-nowrap">🎭 次回公演『キルギスのやつ』7/17-19 @神奈川</span>
+    <span class="mx-8 text-xs font-bold text-sky-300 whitespace-nowrap">✨ チケット好評発売中！前売2,000円</span>
+    <span class="mx-8 text-xs font-bold text-purple-300 whitespace-nowrap">🌍 中央アジア・キルギスを題材にした文化交流イベント</span>
+    <span class="mx-8 text-xs font-bold text-orange-300 whitespace-nowrap">🎭 次回公演『キルギスのやつ』7/17-19 @神奈川</span>
+    <span class="mx-8 text-xs font-bold text-sky-300 whitespace-nowrap">✨ チケット好評発売中！前売2,000円</span>
+    <span class="mx-8 text-xs font-bold text-purple-300 whitespace-nowrap">🌍 中央アジア・キルギスを題材にした文化交流イベント</span>
+  </div>
+</div>
 
-  <!-- キービジュアル：全幅画像 -->
-  <div class="relative w-full overflow-hidden" style="max-height:480px;">
+<!-- Hero -->
+<section class="bg-white relative" data-sparkle>
+  <!-- 背景ブロブ装飾 -->
+  <div class="blob-1 bg-sky-300 top-20 -left-20"></div>
+  <div class="blob-2 bg-orange-300 top-40 right-0"></div>
+
+  <!-- キービジュアル：パララックス -->
+  <div class="parallax-container relative w-full" style="max-height:480px;">
     <img src="images/kilgis.png" alt="キルギスの風景"
-         class="w-full object-cover"
-         style="height:clamp(220px,40vw,480px); object-position:center 40%;" />
-    <!-- 下向きグラデーション：画像→白へ滑らかにつなぐ -->
-    <div class="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
-    <!-- 次回公演バッジ（画像左下） -->
-    <div class="absolute bottom-5 left-5 md:left-10 inline-flex items-center gap-2 rounded-full border border-orange-200 bg-white/90 px-3 py-1 text-xs font-bold text-orange-600 shadow-sm backdrop-blur-sm">
+         class="parallax-img w-full object-cover"
+         data-speed="0.2"
+         style="height:clamp(240px,42vw,500px); object-position:center 40%;" />
+    <div class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
+    <div class="absolute bottom-5 left-5 md:left-10 inline-flex items-center gap-2 rounded-full border border-orange-200 bg-white/90 px-3 py-1 text-xs font-bold text-orange-600 shadow-sm backdrop-blur-sm shimmer-badge">
       <span class="h-1.5 w-1.5 rounded-full bg-orange-400 anim-pulse"></span>次回公演
     </div>
   </div>
 
   <!-- コンテンツエリア -->
-  <div class="mx-auto max-w-5xl px-5 pb-14 pt-4 md:px-8 md:pb-20 md:pt-6">
-
-    <!-- 2-col -->
+  <div class="mx-auto max-w-5xl px-5 pb-14 pt-4 md:px-8 md:pb-20 md:pt-6 relative z-10">
     <div class="grid gap-10 md:grid-cols-[1fr_340px] md:items-start">
 
       <!-- left: text -->
       <div>
-        <p class="text-[13px] font-bold text-sky-500">劇団FAX</p>
-        <h1 class="mt-2 text-[2.5rem] font-black leading-[1.15] tracking-tight text-slate-900 md:text-[3.25rem]">
+        <p class="text-[13px] font-bold text-sky-500" data-animate="fade-up">劇団FAX</p>
+        <h1 class="mt-2 text-[2.5rem] font-black leading-[1.15] tracking-tight text-slate-900 md:text-[3.25rem] hero-title" data-animate="fade-up">
           『キルギスのやつ』
         </h1>
-        <p class="mt-5 max-w-xl text-[15px] leading-8 text-slate-500">
+        <p class="mt-5 max-w-xl text-[15px] leading-8 text-slate-500" data-animate="fade-up">
           キルギス共和国を題材にした、演劇をつかった多文化・多分野交流イベント。多様な背景を持つ人々が緩やかに出会い、つながることを目指しています。
         </p>
 
         <!-- dates -->
-        <div class="mt-7 flex flex-wrap gap-2 text-[13px] font-bold text-slate-600">
-          <span class="rounded-full bg-sky-50 px-3.5 py-1.5 border border-sky-100">7/17(木) 19:00</span>
-          <span class="rounded-full bg-sky-50 px-3.5 py-1.5 border border-sky-100">7/18(金) 12:00 / 19:00</span>
-          <span class="rounded-full bg-sky-50 px-3.5 py-1.5 border border-sky-100">7/19(土) 12:00</span>
+        <div class="mt-7 flex flex-wrap gap-2 text-[13px] font-bold text-slate-600" data-animate="fade-up">
+          <span class="rounded-full bg-sky-50 px-3.5 py-1.5 border border-sky-100 hover:bg-sky-100 hover:scale-105 transition-all cursor-default">7/17(木) 19:00</span>
+          <span class="rounded-full bg-sky-50 px-3.5 py-1.5 border border-sky-100 hover:bg-sky-100 hover:scale-105 transition-all cursor-default">7/18(金) 12:00 / 19:00</span>
+          <span class="rounded-full bg-sky-50 px-3.5 py-1.5 border border-sky-100 hover:bg-sky-100 hover:scale-105 transition-all cursor-default">7/19(土) 12:00</span>
         </div>
 
         <!-- cta -->
-        <div class="mt-8 flex flex-wrap items-center gap-3">
+        <div class="mt-8 flex flex-wrap items-center gap-3" data-animate="fade-up">
           <a href="https://example.com/ticket"
-             class="inline-flex items-center gap-1.5 rounded-full bg-orange-400 px-7 py-3 text-sm font-black text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-orange-500 hover:shadow-md">
+             class="glow-btn magnetic-btn ripple-btn inline-flex items-center gap-1.5 rounded-full bg-orange-400 px-7 py-3 text-sm font-black text-white shadow-sm transition-all hover:-translate-y-1 hover:bg-orange-500 hover:shadow-lg">
             チケットを購入する
           </a>
           <a href="about.html"
-             class="rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-bold text-slate-500 transition-colors hover:border-sky-200 hover:text-sky-600">
+             class="magnetic-btn rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-bold text-slate-500 transition-all hover:border-sky-300 hover:text-sky-600 hover:-translate-y-0.5 hover:shadow-md">
             劇団について →
           </a>
         </div>
       </div>
 
       <!-- right: info card -->
-      <aside class="rounded-2xl bg-white p-5 ring-1 ring-slate-200/80 shadow-lg shadow-slate-200/40 md:mt-2">
+      <aside class="tilt-card rounded-2xl bg-white p-5 ring-1 ring-slate-200/80 shadow-lg shadow-slate-200/40 md:mt-2 info-card-responsive" data-animate="fade-left">
         <div class="space-y-4 text-sm text-slate-600">
           <div>
             <div class="text-[10px] font-bold text-sky-500 uppercase tracking-wider mb-1">会場</div>
@@ -119,7 +125,7 @@
           </div>
         </div>
         <a href="https://example.com/ticket"
-           class="mt-5 flex w-full items-center justify-center rounded-xl bg-orange-400 py-2.5 text-sm font-black text-white transition-colors hover:bg-orange-500">
+           class="ripple-btn mt-5 flex w-full items-center justify-center rounded-xl bg-orange-400 py-2.5 text-sm font-black text-white transition-all hover:bg-orange-500 hover:shadow-md">
           チケット購入 →
         </a>
       </aside>
@@ -128,13 +134,11 @@
   </div>
 </section>
 
-<!-- ────────────────────────────────────
-     公演について
-──────────────────────────────────── -->
+<!-- 公演について -->
 <section class="mx-auto max-w-5xl px-5 py-10 md:px-8 md:py-14">
-  <h2 class="text-lg font-black text-slate-900 md:text-xl">公演について</h2>
+  <h2 class="text-lg font-black text-slate-900 md:text-xl fancy-heading">公演について</h2>
   <div class="mt-5 grid gap-5 md:grid-cols-[1fr_1fr]">
-    <div class="rounded-2xl border border-slate-100 p-6 space-y-4">
+    <div class="tilt-card rounded-2xl border border-slate-100 p-6 space-y-4 hover:border-sky-200 transition-colors" data-animate="fade-up">
       <p class="text-[15px] leading-8 text-slate-600">
         <span class="font-bold text-slate-800">劇団FAX「未知との遭遇」シリーズ最新作『キルギスのやつ』</span>は、演劇の上演を軸に、トークイベント・展示・音楽演奏・物販・交流を組み合わせた複合型の文化交流イベントです。
       </p>
@@ -151,7 +155,7 @@
         舞台を観るだけでなく、触れて、味わって、語り合える場へ――ぜひ足をお運びください。
       </p>
     </div>
-    <div class="rounded-2xl border border-slate-100 p-6">
+    <div class="tilt-card rounded-2xl border border-slate-100 p-6 hover:border-orange-200 transition-colors" data-animate="fade-left">
       <div class="text-xs font-bold text-orange-500 uppercase tracking-wider">会場アクセス</div>
       <h3 class="mt-2 text-base font-black text-slate-900">神奈川県立青少年センター スタジオHIKARI</h3>
       <div class="mt-3 space-y-1.5 text-sm text-slate-500 leading-7">
@@ -166,94 +170,92 @@
   </div>
 </section>
 
-<!-- ────────────────────────────────────
-     チケット帯
-──────────────────────────────────── -->
-<section class="mx-auto max-w-5xl px-5 md:px-8">
-  <div class="rounded-2xl bg-gradient-to-r from-orange-400 to-orange-500 px-7 py-6 text-white md:px-10 md:py-8">
-    <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+<!-- チケット帯 -->
+<section class="mx-auto max-w-5xl px-5 md:px-8" data-animate="zoom-in">
+  <div class="animated-gradient rounded-2xl px-7 py-6 text-white md:px-10 md:py-8 relative overflow-hidden">
+    <!-- 装飾パーティクル -->
+    <div class="absolute top-3 right-10 w-16 h-16 rounded-full bg-white/10 blur-xl"></div>
+    <div class="absolute bottom-2 left-20 w-20 h-20 rounded-full bg-white/5 blur-2xl"></div>
+    <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between relative z-10">
       <div>
         <div class="text-xl font-black md:text-2xl">チケット購入</div>
-        <p class="mt-1 text-sm text-orange-100">前売り 2,000円 ／ 当日 3,000円</p>
+        <p class="mt-1 text-sm text-white/70">前売り 2,000円 ／ 当日 3,000円</p>
       </div>
       <a href="https://example.com/ticket"
-         class="inline-flex items-center justify-center rounded-full bg-white px-7 py-3 text-sm font-black text-orange-500 transition-all hover:-translate-y-0.5 hover:shadow-md">
+         class="magnetic-btn ripple-btn inline-flex items-center justify-center rounded-full bg-white px-7 py-3 text-sm font-black text-orange-500 transition-all hover:-translate-y-1 hover:shadow-xl">
         購入フォームへ →
       </a>
     </div>
   </div>
 </section>
 
-<!-- ────────────────────────────────────
-     お知らせ
-──────────────────────────────────── -->
+<!-- お知らせ -->
 <section class="mx-auto max-w-5xl px-5 py-12 md:px-8 md:py-16">
-  <h2 class="text-lg font-black text-slate-900 md:text-xl">お知らせ</h2>
-  <div class="mt-5 divide-y divide-slate-100 border-t border-slate-100">
-    <a href="#" class="group flex items-center gap-4 py-4 transition-colors md:hover:bg-sky-50/30">
+  <h2 class="text-lg font-black text-slate-900 md:text-xl fancy-heading">お知らせ</h2>
+  <div class="mt-5 divide-y divide-slate-100 border-t border-slate-100" data-stagger>
+    <a href="#" class="group flex items-center gap-4 py-4 transition-all md:hover:bg-sky-50/30 md:hover:px-4 md:rounded-lg">
       <time class="shrink-0 w-20 text-center text-xs font-bold text-slate-400">2026.03.12</time>
       <span class="min-w-0 flex-1 text-[15px] font-bold text-slate-700 truncate group-hover:text-sky-600 transition-colors">次回公演『キルギスのやつ』情報を公開しました</span>
-      <span class="hidden shrink-0 text-slate-300 group-hover:text-sky-500 md:block">→</span>
+      <span class="hidden shrink-0 text-slate-300 group-hover:text-sky-500 group-hover:translate-x-1 transition-all md:block">→</span>
     </a>
-    <a href="#" class="group flex items-center gap-4 py-4 transition-colors md:hover:bg-sky-50/30">
+    <a href="#" class="group flex items-center gap-4 py-4 transition-all md:hover:bg-sky-50/30 md:hover:px-4 md:rounded-lg">
       <time class="shrink-0 w-20 text-center text-xs font-bold text-slate-400">2026.02.20</time>
       <span class="min-w-0 flex-1 text-[15px] font-bold text-slate-700 truncate group-hover:text-sky-600 transition-colors">劇団紹介ページを更新しました</span>
-      <span class="hidden shrink-0 text-slate-300 group-hover:text-sky-500 md:block">→</span>
+      <span class="hidden shrink-0 text-slate-300 group-hover:text-sky-500 group-hover:translate-x-1 transition-all md:block">→</span>
     </a>
-    <a href="#" class="group flex items-center gap-4 py-4 transition-colors md:hover:bg-sky-50/30">
+    <a href="#" class="group flex items-center gap-4 py-4 transition-all md:hover:bg-sky-50/30 md:hover:px-4 md:rounded-lg">
       <time class="shrink-0 w-20 text-center text-xs font-bold text-slate-400">2026.01.28</time>
       <span class="min-w-0 flex-1 text-[15px] font-bold text-slate-700 truncate group-hover:text-sky-600 transition-colors">チケット情報掲載のお知らせ</span>
-      <span class="hidden shrink-0 text-slate-300 group-hover:text-sky-500 md:block">→</span>
+      <span class="hidden shrink-0 text-slate-300 group-hover:text-sky-500 group-hover:translate-x-1 transition-all md:block">→</span>
     </a>
   </div>
 </section>
 
-<!-- ────────────────────────────────────
-     お問い合わせ
-──────────────────────────────────── -->
-<section class="mx-auto max-w-5xl px-5 pb-12 md:px-8 md:pb-16">
-  <div class="rounded-2xl bg-sky-500 px-7 py-7 text-white md:px-10 md:py-9">
-    <div class="text-[10px] font-bold uppercase tracking-[.25em] text-sky-200">Contact</div>
-    <h2 class="mt-1.5 text-xl font-black md:text-2xl">お問い合わせ</h2>
-    <p class="mt-3 max-w-md text-sm leading-7 text-sky-100">出演に関するご相談、公演詳細、取材依頼など、お気軽にお問い合わせください。</p>
-    <div class="mt-4 flex flex-wrap items-center gap-3">
-      <a href="https://mail.google.com/mail/?view=cm&to=canisendafax@gmail.com" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-lg bg-white/15 px-4 py-2 text-sm font-bold backdrop-blur-sm hover:bg-white/25 transition-colors">✉️ Gmailで送る</a>
-      <a href="mailto:canisendafax@gmail.com" class="inline-flex items-center gap-2 rounded-lg bg-white/15 px-4 py-2 text-sm font-bold backdrop-blur-sm hover:bg-white/25 transition-colors">📧 その他のメールアプリ</a>
+<!-- お問い合わせ -->
+<section class="mx-auto max-w-5xl px-5 pb-12 md:px-8 md:pb-16" data-animate="fade-up">
+  <div class="rounded-2xl bg-gradient-to-br from-sky-500 via-sky-600 to-blue-600 px-7 py-7 text-white md:px-10 md:py-9 relative overflow-hidden">
+    <div class="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-white/10 blur-2xl"></div>
+    <div class="absolute -bottom-10 -left-10 w-32 h-32 rounded-full bg-white/5 blur-xl"></div>
+    <div class="relative z-10">
+      <div class="text-[10px] font-bold uppercase tracking-[.25em] text-sky-200">Contact</div>
+      <h2 class="mt-1.5 text-xl font-black md:text-2xl">お問い合わせ</h2>
+      <p class="mt-3 max-w-md text-sm leading-7 text-sky-100">出演に関するご相談、公演詳細、取材依頼など、お気軽にお問い合わせください。</p>
+      <div class="mt-4 flex flex-wrap items-center gap-3">
+        <a href="https://mail.google.com/mail/?view=cm&to=canisendafax@gmail.com" target="_blank" rel="noopener" class="ripple-btn inline-flex items-center gap-2 rounded-lg bg-white/15 px-4 py-2 text-sm font-bold backdrop-blur-sm hover:bg-white/30 transition-all hover:-translate-y-0.5">✉️ Gmailで送る</a>
+        <a href="mailto:canisendafax@gmail.com" class="ripple-btn inline-flex items-center gap-2 rounded-lg bg-white/15 px-4 py-2 text-sm font-bold backdrop-blur-sm hover:bg-white/30 transition-all hover:-translate-y-0.5">📧 その他のメールアプリ</a>
+      </div>
     </div>
   </div>
 </section>
 
 </main>
 
-<!-- ────────────────────────────────────
-     Footer
-──────────────────────────────────── -->
+<!-- Footer -->
 <footer class="border-t border-slate-100">
   <div class="mx-auto flex max-w-5xl flex-col gap-6 px-5 py-8 text-xs text-slate-400 md:flex-row md:items-center md:justify-between md:px-8">
     <div class="flex items-center gap-2">
       <img src="images/FAX.png" alt="劇団FAX" class="h-6 w-auto" />
     </div>
     <nav class="flex gap-5">
-      <a href="index.html" class="hover:text-sky-600 transition-colors">トップ</a>
-      <a href="about.html" class="hover:text-sky-600 transition-colors">劇団について</a>
-      <a href="activity.html" class="hover:text-sky-600 transition-colors">活動内容</a>
+      <a href="index.html" class="hover:text-sky-600 transition-colors nav-link-effect">トップ</a>
+      <a href="about.html" class="hover:text-sky-600 transition-colors nav-link-effect">劇団について</a>
+      <a href="activity.html" class="hover:text-sky-600 transition-colors nav-link-effect">活動内容</a>
     </nav>
     <span>&copy; 2026 劇団FAX</span>
   </div>
 </footer>
 
-<!-- ────────────────────────────────────
-     Mobile Nav
-──────────────────────────────────── -->
+<!-- Mobile Nav -->
 <nav class="fixed inset-x-0 bottom-0 z-50 border-t border-slate-100 bg-white/95 backdrop-blur-md md:hidden">
   <div class="mx-auto grid max-w-sm grid-cols-5">
-    <a href="index.html" class="flex flex-col items-center gap-0.5 py-2 text-[10px] font-bold text-sky-600"><span class="text-sm">🎭</span>トップ</a>
-    <a href="about.html" class="flex flex-col items-center gap-0.5 py-2 text-[10px] font-bold text-slate-400"><span class="text-sm">📖</span>劇団</a>
-    <a href="activity.html" class="flex flex-col items-center gap-0.5 py-2 text-[10px] font-bold text-slate-400"><span class="text-sm">✨</span>活動</a>
-    <a href="monster-zukan.html" class="flex flex-col items-center gap-0.5 py-2 text-[10px] font-bold text-purple-500"><span class="text-sm">👾</span>図鑑</a>
-    <a href="https://example.com/ticket" class="flex flex-col items-center gap-0.5 py-2 text-[10px] font-bold text-orange-500"><span class="text-sm">🎫</span>チケット</a>
+    <a href="index.html" class="flex flex-col items-center gap-1 py-2.5 text-[10px] font-bold text-sky-600"><img src="images/icons/top.svg" alt="" class="h-6 w-6">トップ</a>
+    <a href="about.html" class="flex flex-col items-center gap-1 py-2.5 text-[10px] font-bold text-slate-400"><img src="images/icons/about.svg" alt="" class="h-6 w-6">劇団</a>
+    <a href="activity.html" class="flex flex-col items-center gap-1 py-2.5 text-[10px] font-bold text-slate-400"><img src="images/icons/activity.svg" alt="" class="h-6 w-6">活動</a>
+    <a href="monster-zukan.html" class="flex flex-col items-center gap-1 py-2.5 text-[10px] font-bold text-purple-500"><img src="images/icons/zukan.svg" alt="" class="h-6 w-6">図鑑</a>
+    <a href="https://example.com/ticket" class="flex flex-col items-center gap-1 py-2.5 text-[10px] font-bold text-orange-500"><img src="images/icons/ticket.svg" alt="" class="h-6 w-6">チケット</a>
   </div>
 </nav>
 
+<script src="effects.js"></script>
 </body>
 </html>

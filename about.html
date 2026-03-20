@@ -9,52 +9,55 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="effects.css" />
   <script>
     tailwind.config = { theme: { extend: { fontFamily: { sans: ['"Noto Sans JP"','sans-serif'] } } } }
   </script>
-  <style>body { font-family: 'Noto Sans JP', sans-serif; } .scrollbar-hide::-webkit-scrollbar{display:none;}</style>
+  <style>body { font-family: 'Noto Sans JP', sans-serif; }</style>
 </head>
 
 <body class="min-h-screen bg-white text-slate-800 antialiased">
 
 <!-- Header -->
-<header class="sticky top-0 z-40 border-b border-slate-100 bg-white/90 backdrop-blur-md">
+<header class="sticky top-0 z-40 border-b border-slate-100 bg-white/90 backdrop-blur-md transition-shadow duration-300">
   <div class="mx-auto flex h-14 max-w-5xl items-center justify-between px-5 md:h-16 md:px-8">
     <a href="index.html" class="flex items-center gap-2.5 group">
-      <img src="images/FAX.png" alt="劇団FAX" class="h-8 w-auto md:h-9" />
+      <img src="images/FAX.png" alt="劇団FAX" class="h-8 w-auto md:h-9 transition-transform duration-300 group-hover:scale-110" />
     </a>
     <nav class="hidden items-center gap-7 text-[13px] font-bold text-slate-500 md:flex">
-      <a href="index.html" class="hover:text-sky-600 transition-colors">トップ</a>
-      <a href="about.html" class="text-slate-900">劇団について</a>
-      <a href="activity.html" class="hover:text-sky-600 transition-colors">活動内容</a>
-      <a href="monster-zukan.html" class="hover:text-purple-600 transition-colors">👾 図鑑</a>
+      <a href="index.html" class="hover:text-sky-600 transition-colors nav-link-effect">トップ</a>
+      <a href="about.html" class="text-slate-900 nav-link-effect">劇団について</a>
+      <a href="activity.html" class="hover:text-sky-600 transition-colors nav-link-effect">活動内容</a>
+      <a href="monster-zukan.html" class="hover:text-purple-600 transition-colors nav-link-effect">👾 図鑑</a>
     </nav>
-    <a href="https://example.com/ticket" class="rounded-full bg-orange-400 px-4 py-1.5 text-[11px] font-black text-white transition-all hover:-translate-y-0.5 hover:bg-orange-500 hover:shadow-md md:px-5 md:py-2 md:text-xs">チケット購入</a>
+    <a href="https://example.com/ticket" class="glow-btn magnetic-btn ripple-btn rounded-full bg-orange-400 px-4 py-1.5 text-[11px] font-black text-white transition-all hover:-translate-y-0.5 hover:bg-orange-500 md:px-5 md:py-2 md:text-xs">チケット購入</a>
   </div>
 </header>
 
 <main class="pb-16 md:pb-0">
 
 <!-- Page Header -->
-<section class="border-b border-slate-100 bg-gradient-to-b from-sky-50/40 to-white">
-  <div class="mx-auto max-w-5xl px-5 pb-10 pt-10 md:px-8 md:pb-12 md:pt-16">
-    <p class="text-xs font-bold text-sky-500 uppercase tracking-wider">About</p>
-    <h1 class="mt-2 text-3xl font-black text-slate-900 md:text-4xl">劇団FAXとは</h1>
+<section class="border-b border-slate-100 animated-gradient-subtle relative overflow-hidden">
+  <div class="blob-1 bg-sky-200 -top-10 right-10"></div>
+  <div class="blob-2 bg-orange-200 top-20 -left-10"></div>
+  <div class="mx-auto max-w-5xl px-5 pb-10 pt-10 md:px-8 md:pb-12 md:pt-16 relative z-10">
+    <p class="text-xs font-bold text-sky-500 uppercase tracking-wider" data-animate="fade-up">About</p>
+    <h1 class="mt-2 text-3xl font-black text-slate-900 md:text-4xl" data-animate="fade-up">劇団FAXとは</h1>
   </div>
 </section>
 
 <!-- イメージ写真 -->
-<section class="mx-auto max-w-5xl px-5 pt-10 md:px-8 md:pt-14">
+<section class="mx-auto max-w-5xl px-5 pt-10 md:px-8 md:pt-14" data-animate="zoom-in">
   <div class="grid grid-cols-3 gap-2 md:gap-3">
-    <div class="col-span-2 overflow-hidden rounded-2xl">
-      <img src="images/LINE_ALBUM_ゲネ()写です_260320_1.jpg" alt="劇団FAXの公演風景" class="w-full h-40 md:h-72 object-cover hover:scale-105 transition-transform duration-500" />
+    <div class="col-span-2 overflow-hidden rounded-2xl shadow-lg">
+      <img src="images/LINE_ALBUM_ゲネ()写です_260320_1.jpg" alt="劇団FAXの公演風景" class="w-full h-40 md:h-72 object-cover hover:scale-110 transition-transform duration-700" />
     </div>
     <div class="flex flex-col gap-2 md:gap-3">
-      <div class="flex-1 overflow-hidden rounded-2xl">
-        <img src="images/LINE_ALBUM_ゲネ写_260320_2.jpg" alt="舞台シーン" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+      <div class="flex-1 overflow-hidden rounded-2xl shadow-md">
+        <img src="images/LINE_ALBUM_ゲネ写_260320_2.jpg" alt="舞台シーン" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700" />
       </div>
-      <div class="flex-1 overflow-hidden rounded-2xl">
-        <img src="images/kansyasai.JPG" alt="春の大感謝祭" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" />
+      <div class="flex-1 overflow-hidden rounded-2xl shadow-md">
+        <img src="images/kansyasai.JPG" alt="春の大感謝祭" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700" />
       </div>
     </div>
   </div>
@@ -62,67 +65,68 @@
 
 <!-- 劇団紹介 -->
 <section class="mx-auto max-w-5xl px-5 py-10 md:px-8 md:py-14">
-  <div class="max-w-2xl">
+  <div class="max-w-2xl" data-animate="fade-up">
     <p class="text-[15px] leading-[2] text-slate-600">主催・玉井秀和が2016年に京都で旗揚げした演劇集団。</p>
     <p class="mt-4 text-[15px] leading-[2] text-slate-600">公演によって脚本の担当が異なるためその作品スタイルは、見世物小屋風からエンタメ会話劇まで多岐に渡るが、主に脚本を担当するのは主催の玉井と、脚本の高矢。</p>
     <p class="mt-4 text-[15px] leading-[2] text-slate-600">民俗/寓話的に夢と現を行き来する少年少女の物語が特徴の玉井脚本。緻密な会話に引き込まれ次が気になるサスペンスをベースに、スリルと笑いが交錯する長編作品を得意とする高矢脚本。</p>
     <p class="mt-4 text-[15px] leading-[2] text-slate-700 font-medium">公演によってメンバーの様々な顔が楽しめる新時代演劇集団。</p>
   </div>
   <!-- ポップなフォトストリップ -->
-  <div class="mt-10 flex gap-3 overflow-x-auto pb-2 snap-x snap-mandatory scrollbar-hide" style="-ms-overflow-style:none;scrollbar-width:none;">
-    <div class="shrink-0 snap-center w-52 md:w-64 overflow-hidden rounded-xl rotate-[-2deg] shadow-lg ring-4 ring-white hover:rotate-0 transition-transform duration-300">
-      <img src="images/LINE_ALBUM_ゲネ写_260320_1.jpg" alt="公演風景" class="w-full h-36 md:h-44 object-cover" />
+  <div class="mt-10 flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide" data-animate="fade-up">
+    <div class="shrink-0 snap-center w-56 md:w-72 overflow-hidden rounded-xl rotate-[-2deg] shadow-xl ring-4 ring-white hover:rotate-0 hover:scale-105 transition-all duration-300">
+      <img src="images/LINE_ALBUM_ゲネ写_260320_1.jpg" alt="公演風景" class="w-full h-40 md:h-48 object-cover" />
     </div>
-    <div class="shrink-0 snap-center w-52 md:w-64 overflow-hidden rounded-xl rotate-[1.5deg] shadow-lg ring-4 ring-white hover:rotate-0 transition-transform duration-300">
-      <img src="images/SANSO_ゲネ写.jpg" alt="SANSO" class="w-full h-36 md:h-44 object-cover" />
+    <div class="shrink-0 snap-center w-56 md:w-72 overflow-hidden rounded-xl rotate-[1.5deg] shadow-xl ring-4 ring-white hover:rotate-0 hover:scale-105 transition-all duration-300">
+      <img src="images/SANSO_ゲネ写.jpg" alt="SANSO" class="w-full h-40 md:h-48 object-cover" />
     </div>
-    <div class="shrink-0 snap-center w-52 md:w-64 overflow-hidden rounded-xl rotate-[-1deg] shadow-lg ring-4 ring-white hover:rotate-0 transition-transform duration-300">
-      <img src="images/LINE_ALBUM_ゲネ写_260320_3.jpg" alt="舞台シーン" class="w-full h-36 md:h-44 object-cover" />
+    <div class="shrink-0 snap-center w-56 md:w-72 overflow-hidden rounded-xl rotate-[-1deg] shadow-xl ring-4 ring-white hover:rotate-0 hover:scale-105 transition-all duration-300">
+      <img src="images/LINE_ALBUM_ゲネ写_260320_3.jpg" alt="舞台シーン" class="w-full h-40 md:h-48 object-cover" />
     </div>
-    <div class="shrink-0 snap-center w-52 md:w-64 overflow-hidden rounded-xl rotate-[2deg] shadow-lg ring-4 ring-white hover:rotate-0 transition-transform duration-300">
-      <img src="images/LINE_ALBUM_モラルゲネ写真_260320_1.jpg" alt="MORAL" class="w-full h-36 md:h-44 object-cover" />
+    <div class="shrink-0 snap-center w-56 md:w-72 overflow-hidden rounded-xl rotate-[2deg] shadow-xl ring-4 ring-white hover:rotate-0 hover:scale-105 transition-all duration-300">
+      <img src="images/LINE_ALBUM_モラルゲネ写真_260320_1.jpg" alt="MORAL" class="w-full h-40 md:h-48 object-cover" />
     </div>
   </div>
 </section>
 
 <!-- 創作理念 -->
-<section class="border-t border-slate-100">
-  <div class="mx-auto max-w-5xl px-5 py-12 md:px-8 md:py-16">
-    <h2 class="text-lg font-black text-slate-900 md:text-xl">創作の理念</h2>
-    <div class="mt-6 max-w-2xl space-y-4 text-[15px] leading-[2] text-slate-600">
+<section class="border-t border-slate-100 relative overflow-hidden">
+  <div class="blob-1 bg-purple-200 top-40 -right-20"></div>
+  <div class="mx-auto max-w-5xl px-5 py-12 md:px-8 md:py-16 relative z-10">
+    <h2 class="text-lg font-black text-slate-900 md:text-xl fancy-heading">創作の理念</h2>
+    <div class="mt-6 max-w-2xl space-y-4 text-[15px] leading-[2] text-slate-600" data-animate="fade-up">
       <p>劇団FAXの創作の中心にあるのは、日本人の精神性を現代において掘り起こし、その表現を通じて<span class="font-bold text-slate-800">「縁」</span>を醸成することです。ここでいう「縁」とは、人と人だけでなく、場や時間、出来事を共有することで生まれる関係性のことを指しています。</p>
       <p>死生観や共同体意識、自然との交わりといった日本的精神の根幹を探るため、京都大学総合生存学館博士課程の研究活動として国内外でフィールドワークを実施。異文化との比較や共鳴を通じて、日本の輪郭を見直しています。研究テーマである「集落の祭りによる現代演劇の再解釈」は、調査と制作が交わりながら進み、そこから得られる視点や方法が作品全体を形づくっています。</p>
       <p>創作は演劇上演にとどまらず、展示やワークショップ、トークイベント、交流企画など多様な手段で展開。あらゆる場を通じて「縁」を生み育てることを目指しています。</p>
     </div>
 
     <!-- フィールドワーク写真 -->
-    <div class="mt-10 grid grid-cols-2 gap-3 md:gap-4">
-      <div class="overflow-hidden rounded-2xl bg-sky-50 p-1.5 md:p-2 shadow-sm">
-        <img src="images/スクリーンショット 2026-03-20 143650.png" alt="フィールドワーク - アフリカ" class="w-full h-40 md:h-56 object-cover rounded-xl" />
+    <div class="mt-10 grid grid-cols-2 gap-3 md:gap-4" data-stagger>
+      <div class="tilt-card overflow-hidden rounded-2xl bg-sky-50 p-2 md:p-3 shadow-md hover:shadow-xl transition-shadow">
+        <img src="images/スクリーンショット 2026-03-20 143650.png" alt="フィールドワーク - アフリカ" class="w-full h-44 md:h-60 object-cover rounded-xl hover:scale-105 transition-transform duration-500" />
         <p class="mt-2 px-1 pb-1 text-[11px] font-bold text-sky-600 text-center">フィールドワーク in アフリカ</p>
       </div>
-      <div class="overflow-hidden rounded-2xl bg-orange-50 p-1.5 md:p-2 shadow-sm">
-        <img src="images/スクリーンショット 2026-03-20 143703.png" alt="国際交流・フィールドワーク" class="w-full h-40 md:h-56 object-cover rounded-xl" />
+      <div class="tilt-card overflow-hidden rounded-2xl bg-orange-50 p-2 md:p-3 shadow-md hover:shadow-xl transition-shadow">
+        <img src="images/スクリーンショット 2026-03-20 143703.png" alt="国際交流・フィールドワーク" class="w-full h-44 md:h-60 object-cover rounded-xl hover:scale-105 transition-transform duration-500" />
         <p class="mt-2 px-1 pb-1 text-[11px] font-bold text-orange-500 text-center">国際交流 & リサーチ</p>
       </div>
     </div>
 
-    <h3 class="mt-12 text-base font-black text-slate-900 md:text-lg">今後のビジョン</h3>
-    <div class="mt-4 max-w-2xl space-y-4 text-[15px] leading-[2] text-slate-600">
+    <h3 class="mt-12 text-base font-black text-slate-900 md:text-lg fancy-heading">今後のビジョン</h3>
+    <div class="mt-4 max-w-2xl space-y-4 text-[15px] leading-[2] text-slate-600" data-animate="fade-up">
       <p>今後は、日本人の精神性を描く創作を軸に、国際的な芸術イベントの企画・プロデュースへと活動を広げていきます。海外で培ったネットワークを活かし、過疎地域の田んぼや畑での農作業と舞台芸術を組み合わせた季節ごとの企画を構想中。田植えや収穫の時期に合わせて上演・展示・ワークショップを行い、土地と人、文化を結ぶ「縁」を醸成します。</p>
       <p>5年後には、芸術・農業・国際交流を融合させた独自の芸術祭の本格開催を目標に掲げています。地域と世界をつなぐ拠点として、縁が持続的に広がっていく環境をつくることが、劇団FAXの次なる挑戦です。</p>
     </div>
 
     <!-- ビジョン関連写真 -->
-    <div class="mt-10 grid grid-cols-3 gap-2 md:gap-3">
-      <div class="overflow-hidden rounded-xl shadow-md">
-        <img src="images/スクリーンショット 2026-03-20 143718.png" alt="祭り・パフォーマンス" class="w-full h-28 md:h-44 object-cover hover:scale-110 transition-transform duration-500" />
+    <div class="mt-10 grid grid-cols-3 gap-2 md:gap-3" data-stagger>
+      <div class="overflow-hidden rounded-xl shadow-lg group">
+        <img src="images/スクリーンショット 2026-03-20 143718.png" alt="祭り・パフォーマンス" class="w-full h-32 md:h-48 object-cover group-hover:scale-110 transition-transform duration-700" />
       </div>
-      <div class="overflow-hidden rounded-xl shadow-md">
-        <img src="images/スクリーンショット 2026-03-20 143740.png" alt="野外パフォーマンス" class="w-full h-28 md:h-44 object-cover hover:scale-110 transition-transform duration-500" />
+      <div class="overflow-hidden rounded-xl shadow-lg group">
+        <img src="images/スクリーンショット 2026-03-20 143740.png" alt="野外パフォーマンス" class="w-full h-32 md:h-48 object-cover group-hover:scale-110 transition-transform duration-700" />
       </div>
-      <div class="overflow-hidden rounded-xl shadow-md">
-        <img src="images/LINE_ALBUM_ゲネ写_260320_2.jpg" alt="舞台演出" class="w-full h-28 md:h-44 object-cover hover:scale-110 transition-transform duration-500" />
+      <div class="overflow-hidden rounded-xl shadow-lg group">
+        <img src="images/LINE_ALBUM_ゲネ写_260320_2.jpg" alt="舞台演出" class="w-full h-32 md:h-48 object-cover group-hover:scale-110 transition-transform duration-700" />
       </div>
     </div>
   </div>
@@ -131,10 +135,10 @@
 <!-- 受賞歴 -->
 <section class="border-t border-slate-100">
   <div class="mx-auto max-w-5xl px-5 py-12 md:px-8 md:py-16">
-    <h2 class="text-lg font-black text-slate-900 md:text-xl">受賞歴・経歴</h2>
-    <div class="mt-6 grid gap-6 md:grid-cols-2">
+    <h2 class="text-lg font-black text-slate-900 md:text-xl fancy-heading">受賞歴・経歴</h2>
+    <div class="mt-6 grid gap-6 md:grid-cols-2" data-stagger>
       <!-- 玉井 -->
-      <div>
+      <div class="tilt-card rounded-2xl border border-slate-100 p-5 hover:border-sky-200 transition-colors">
         <div class="text-sm font-black text-sky-600">玉井秀和</div>
         <div class="mt-4 space-y-3">
           <div class="flex gap-3 text-sm">
@@ -151,17 +155,17 @@
           </div>
           <div class="flex gap-3 text-sm">
             <span class="shrink-0 w-10 font-bold text-slate-400">2020</span>
-            <span class="text-slate-600">『まばたき』京都学生演劇祭 <span class="inline-flex rounded bg-sky-50 px-1.5 py-0.5 text-xs font-bold text-sky-600">E9賞</span></span>
+            <span class="text-slate-600">『まばたき』京都学生演劇祭 <span class="inline-flex rounded bg-sky-50 px-1.5 py-0.5 text-xs font-bold text-sky-600 shimmer-badge">E9賞</span></span>
           </div>
         </div>
       </div>
       <!-- 高矢 -->
-      <div>
+      <div class="tilt-card rounded-2xl border border-slate-100 p-5 hover:border-orange-200 transition-colors">
         <div class="text-sm font-black text-orange-500">高矢航志</div>
         <div class="mt-4 space-y-3">
           <div class="flex gap-3 text-sm">
             <span class="shrink-0 w-10 font-bold text-slate-400">2023</span>
-            <span class="text-slate-600">『追想せる住人』関西演劇祭 <span class="inline-flex rounded bg-orange-50 px-1.5 py-0.5 text-xs font-bold text-orange-600">脚本賞</span></span>
+            <span class="text-slate-600">『追想せる住人』関西演劇祭 <span class="inline-flex rounded bg-orange-50 px-1.5 py-0.5 text-xs font-bold text-orange-600 shimmer-badge">脚本賞</span></span>
           </div>
           <div class="flex gap-3 text-sm">
             <span class="shrink-0 w-10 font-bold text-slate-400">2021</span>
@@ -178,13 +182,16 @@
 </section>
 
 <!-- メンバー -->
-<section class="border-t border-slate-100">
-  <div class="mx-auto max-w-5xl px-5 py-12 md:px-8 md:py-16">
-    <h2 class="text-lg font-black text-slate-900 md:text-xl">メンバー</h2>
-    <div class="mt-6 grid gap-6 md:grid-cols-[200px_1fr] md:items-start md:gap-10">
+<section class="border-t border-slate-100 relative overflow-hidden">
+  <div class="blob-2 bg-sky-200 bottom-10 right-0"></div>
+  <div class="mx-auto max-w-5xl px-5 py-12 md:px-8 md:py-16 relative z-10">
+    <h2 class="text-lg font-black text-slate-900 md:text-xl fancy-heading">メンバー</h2>
+    <div class="mt-6 grid gap-6 md:grid-cols-[200px_1fr] md:items-start md:gap-10" data-animate="fade-up">
       <!-- 写真 -->
       <div class="flex flex-col items-start gap-3">
-        <img src="images/Tamai.png" alt="玉井秀和" class="w-40 rounded-2xl object-cover md:w-full" />
+        <div class="overflow-hidden rounded-2xl shadow-lg">
+          <img src="images/Tamai.png" alt="玉井秀和" class="w-40 object-cover md:w-full hover:scale-105 transition-transform duration-500" />
+        </div>
         <div>
           <p class="text-[10px] font-bold uppercase tracking-wider text-orange-500">主催</p>
           <h3 class="mt-0.5 text-xl font-black text-slate-900">玉井秀和</h3>
@@ -210,9 +217,9 @@
       <img src="images/FAX.png" alt="劇団FAX" class="h-6 w-auto" />
     </div>
     <nav class="flex gap-5">
-      <a href="index.html" class="hover:text-sky-600 transition-colors">トップ</a>
-      <a href="about.html" class="hover:text-sky-600 transition-colors">劇団について</a>
-      <a href="activity.html" class="hover:text-sky-600 transition-colors">活動内容</a>
+      <a href="index.html" class="hover:text-sky-600 transition-colors nav-link-effect">トップ</a>
+      <a href="about.html" class="hover:text-sky-600 transition-colors nav-link-effect">劇団について</a>
+      <a href="activity.html" class="hover:text-sky-600 transition-colors nav-link-effect">活動内容</a>
     </nav>
     <span>&copy; 2026 劇団FAX</span>
   </div>
@@ -221,13 +228,14 @@
 <!-- Mobile Nav -->
 <nav class="fixed inset-x-0 bottom-0 z-50 border-t border-slate-100 bg-white/95 backdrop-blur-md md:hidden">
   <div class="mx-auto grid max-w-sm grid-cols-5">
-    <a href="index.html" class="flex flex-col items-center gap-0.5 py-2 text-[10px] font-bold text-slate-400"><span class="text-sm">🎭</span>トップ</a>
-    <a href="about.html" class="flex flex-col items-center gap-0.5 py-2 text-[10px] font-bold text-sky-600"><span class="text-sm">📖</span>劇団</a>
-    <a href="activity.html" class="flex flex-col items-center gap-0.5 py-2 text-[10px] font-bold text-slate-400"><span class="text-sm">✨</span>活動</a>
-    <a href="monster-zukan.html" class="flex flex-col items-center gap-0.5 py-2 text-[10px] font-bold text-purple-500"><span class="text-sm">👾</span>図鑑</a>
-    <a href="https://example.com/ticket" class="flex flex-col items-center gap-0.5 py-2 text-[10px] font-bold text-orange-500"><span class="text-sm">🎫</span>チケット</a>
+    <a href="index.html" class="flex flex-col items-center gap-1 py-2.5 text-[10px] font-bold text-slate-400"><img src="images/icons/top.svg" alt="" class="h-6 w-6">トップ</a>
+    <a href="about.html" class="flex flex-col items-center gap-1 py-2.5 text-[10px] font-bold text-sky-600"><img src="images/icons/about.svg" alt="" class="h-6 w-6">劇団</a>
+    <a href="activity.html" class="flex flex-col items-center gap-1 py-2.5 text-[10px] font-bold text-slate-400"><img src="images/icons/activity.svg" alt="" class="h-6 w-6">活動</a>
+    <a href="monster-zukan.html" class="flex flex-col items-center gap-1 py-2.5 text-[10px] font-bold text-purple-500"><img src="images/icons/zukan.svg" alt="" class="h-6 w-6">図鑑</a>
+    <a href="https://example.com/ticket" class="flex flex-col items-center gap-1 py-2.5 text-[10px] font-bold text-orange-500"><img src="images/icons/ticket.svg" alt="" class="h-6 w-6">チケット</a>
   </div>
 </nav>
 
+<script src="effects.js"></script>
 </body>
 </html>
