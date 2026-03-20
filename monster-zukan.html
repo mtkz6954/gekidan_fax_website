@@ -301,7 +301,7 @@
       #mobileImgArea {
         display: flex !important;
         align-items: center; justify-content: center;
-        flex: 0 0 42%; overflow: hidden;
+        flex: 0 0 34%; overflow: hidden;
         position: relative;
       }
       #mobileImgArea .shockwave-wrap {
@@ -311,7 +311,7 @@
       #mobileImgArea {
         background: #ffffff;
         border-radius: 20px;
-        margin: 10px 14px;
+        margin: 8px 14px 6px;
         animation: glow-breathe 3s ease-in-out infinite;
         position: relative;
       }
@@ -321,17 +321,29 @@
         z-index: 0;
       }
       #mobileImgArea #detailImg {
-        max-height: 90%; max-width: 90%; object-fit: contain; position: relative; z-index: 1;
+        max-height: 86%; max-width: 86%; object-fit: contain; position: relative; z-index: 1;
       }
 
       /* テキストエリア：残り */
       #mobileTextArea {
         display: flex !important; flex-direction: column;
-        flex: 1; padding: 10px 14px; overflow: hidden; gap: 6px;
+        flex: 1; padding: 6px 14px 8px; overflow: hidden; gap: 4px;
       }
-      #mobileTextArea #detailName { font-size: 1.25rem; margin: 0; }
-      #mobileTextArea #detailDesc { font-size: 11px; line-height: 1.6; }
-      #mobileTextArea #detailQuote { font-size: 12px; }
+      #mobileTextArea #detailName { font-size: 1.1rem; line-height: 1.15; margin: 0 0 2px; min-height: 0; }
+      #mobileTextArea #detailDesc { font-size: 10px; line-height: 1.45; }
+      #mobileTextArea #detailQuote { font-size: 11px; line-height: 1.35; }
+      #mobileTextArea .glass-card {
+        padding: 10px !important;
+        overflow: hidden !important;
+      }
+      #mobileTextArea .speech-bubble {
+        padding: 14px 14px 10px !important;
+      }
+      #mobileTextArea .speech-bubble::before {
+        top: 0;
+        left: 12px;
+        font-size: 2.2rem;
+      }
 
       /* PC専用要素を非表示 */
       #mobileTopBar ~ .pc-only,
