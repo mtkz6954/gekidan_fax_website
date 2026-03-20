@@ -24,6 +24,12 @@ test.describe('ページ遷移', () => {
     await expect(page).toHaveURL(/monster-zukan/);
   });
 
+  test('あそびばからゲーム1に遷移できる', async ({ page }) => {
+    await page.goto('/asobiba.html');
+    await page.getByRole('link', { name: /ファニーモンスター ラン！/ }).click();
+    await expect(page).toHaveURL(/game1\/game1/);
+  });
+
   test('ロゴクリックで index.html に戻る', async ({ page }) => {
     await page.goto('/about.html');
     await page.click('header a:first-child');
