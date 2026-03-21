@@ -298,12 +298,15 @@
     H = Math.max(300, Math.round(W * containerAspect));
 
     // GROUND_Yを再計算
-    // 横長: 従来通り下端から50px上
-    // 縦長: 画面の55%あたり（中央よりちょい下）に地面を配置
-    if (H <= 400) {
-      GROUND_Y = H - GROUND_BOTTOM;
-    } else {
+    // PC（幅768以上）: 下端からGROUND_BOTTOM+キャラ1体分上
+    // スマホ（幅768未満）縦長: 画面の55%あたり（中央よりちょい下）に地面を配置
+    const isMobile = window.innerWidth < 768;
+    if (!isMobile) {
+      GROUND_Y = H - GROUND_BOTTOM - 70;
+    } else if (H > 400) {
       GROUND_Y = Math.round(H * 0.55);
+    } else {
+      GROUND_Y = H - GROUND_BOTTOM;
     }
 
     // プレイヤーが地面に立っている場合、位置を更新（初回呼び出し時はまだplayer未定義）
@@ -622,7 +625,7 @@
     }
 
     // 地中の岩イラスト（縦長画面＝スマホで地面が広い場合のみ）
-    if (H > 400) {
+    if (H > 400 && window.innerWidth < 768) {
       const groundDepth = H - GROUND_Y;
       const rocks = [
         { x: 60,  yRatio: 0.25, w: 70, h: 45, type: 0 },
@@ -765,7 +768,7 @@
 
   function drawSun() {
     // 縦長画面（スマホ）では太陽を大きく＆低めに配置
-    const isTall = H > 400;
+    const isTall = H > 400 && window.innerWidth < 768;
     const baseR = isTall ? 84 : 28;
     const sunX = W - (isTall ? 120 : 80);
     const sunY = isTall ? 55 + baseR * 3 : 55;
