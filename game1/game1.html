@@ -298,12 +298,15 @@
     H = Math.max(300, Math.round(W * containerAspect));
 
     // GROUND_Yを再計算
-    // 横長: 従来通り下端から50px上
-    // 縦長: 画面の55%あたり（中央よりちょい下）に地面を配置
-    if (H <= 400) {
-      GROUND_Y = H - GROUND_BOTTOM;
-    } else {
+    // PC（幅768以上）: 下端からGROUND_BOTTOM+キャラ1体分上
+    // スマホ（幅768未満）縦長: 画面の55%あたり（中央よりちょい下）に地面を配置
+    const isMobile = window.innerWidth < 768;
+    if (!isMobile) {
+      GROUND_Y = H - GROUND_BOTTOM - 70;
+    } else if (H > 400) {
       GROUND_Y = Math.round(H * 0.55);
+    } else {
+      GROUND_Y = H - GROUND_BOTTOM;
     }
 
     // プレイヤーが地面に立っている場合、位置を更新（初回呼び出し時はまだplayer未定義）
@@ -398,6 +401,67 @@
   function imagesReady() {
     resizeCanvas();
     drawIdleScreen();
+  }
+
+  // --- Sound system ---
+  // 音量設定（0.0〜1.0） — 調整しやすいようにまとめて定義
+  const VOLUME = {
+    bgm:       0.25,  // BGM音量
+    jump:      0.4,   // ジャンプ
+    charge:    0.35,  // チャージ状態になった時
+    superJump: 0.5,   // 大ジャンプ
+    collect:   0.5,   // アイテム取得
+    damage:    0.6,   // 被ダメージ
+  };
+
+  const sfx = {
+    jump:      new Audio('../sounds/ジャンプ.wav'),
+    charge:    new Audio('../sounds/チャージ.wav'),
+    superJump: new Audio('../sounds/大ジャンプ.wav'),
+    collect:   new Audio('../sounds/アイテムゲット.wav'),
+    damage:    new Audio('../sounds/被ダメージ.wav'),
+  };
+
+  // 各効果音の音量を設定
+  sfx.jump.volume      = VOLUME.jump;
+  sfx.charge.volume    = VOLUME.charge;
+  sfx.superJump.volume = VOLUME.superJump;
+  sfx.collect.volume   = VOLUME.collect;
+  sfx.damage.volume    = VOLUME.damage;
+
+  function playSfx(name) {
+    const sound = sfx[name];
+    if (!sound) return;
+    sound.currentTime = 0;
+    sound.play().catch(() => {});
+  }
+
+  // BGM（2曲からランダム選択、ループ再生）
+  const bgmTracks = [
+    new Audio('../sounds/BGM1.mp3'),
+    new Audio('../sounds/BGM2.mp3'),
+  ];
+  bgmTracks.forEach(t => {
+    t.volume = VOLUME.bgm;
+    t.addEventListener('ended', () => {
+      t.currentTime = 0;
+      t.play().catch(() => {});
+    });
+  });
+  let currentBgm = null;
+
+  function startBgm() {
+    stopBgm();
+    currentBgm = bgmTracks[Math.floor(Math.random() * bgmTracks.length)];
+    currentBgm.currentTime = 0;
+    currentBgm.play().catch(() => {});
+  }
+
+  function stopBgm() {
+    if (currentBgm) {
+      currentBgm.pause();
+      currentBgm.currentTime = 0;
+    }
   }
 
   // --- Clouds (background decoration) ---
@@ -560,6 +624,86 @@
       ctx.fillRect(gx, GROUND_Y + 8 + (i % 3) * 10, 12 + (i % 5) * 3, 2);
     }
 
+    // 地中の岩イラスト（縦長画面＝スマホで地面が広い場合のみ）
+    if (H > 400 && window.innerWidth < 768) {
+      const groundDepth = H - GROUND_Y;
+      const rocks = [
+        { x: 60,  yRatio: 0.25, w: 70, h: 45, type: 0 },
+        { x: 220, yRatio: 0.55, w: 55, h: 35, type: 1 },
+        { x: 380, yRatio: 0.35, w: 80, h: 50, type: 2 },
+        { x: 520, yRatio: 0.70, w: 60, h: 40, type: 0 },
+        { x: 680, yRatio: 0.45, w: 65, h: 42, type: 1 },
+        { x: 150, yRatio: 0.75, w: 50, h: 32, type: 2 },
+        { x: 450, yRatio: 0.85, w: 75, h: 48, type: 0 },
+        { x: 750, yRatio: 0.65, w: 58, h: 38, type: 1 },
+      ];
+      for (const rock of rocks) {
+        const rx = rock.x;
+        const ry = GROUND_Y + 20 + groundDepth * rock.yRatio;
+        const rw = rock.w;
+        const rh = rock.h;
+        ctx.save();
+        if (rock.type === 0) {
+          // 丸い岩
+          const rGrad = ctx.createRadialGradient(rx + rw * 0.35, ry + rh * 0.3, rw * 0.1, rx + rw * 0.5, ry + rh * 0.5, rw * 0.55);
+          rGrad.addColorStop(0, '#9a8a7a');
+          rGrad.addColorStop(0.6, '#7a6a58');
+          rGrad.addColorStop(1, '#5a4a38');
+          ctx.fillStyle = rGrad;
+          ctx.beginPath();
+          ctx.ellipse(rx + rw / 2, ry + rh / 2, rw / 2, rh / 2, 0, 0, Math.PI * 2);
+          ctx.fill();
+          // ハイライト
+          ctx.fillStyle = 'rgba(180,170,155,0.3)';
+          ctx.beginPath();
+          ctx.ellipse(rx + rw * 0.35, ry + rh * 0.3, rw * 0.2, rh * 0.15, -0.3, 0, Math.PI * 2);
+          ctx.fill();
+        } else if (rock.type === 1) {
+          // 角ばった岩
+          ctx.fillStyle = '#6d5d4d';
+          ctx.beginPath();
+          ctx.moveTo(rx + rw * 0.1, ry + rh);
+          ctx.lineTo(rx, ry + rh * 0.4);
+          ctx.lineTo(rx + rw * 0.3, ry);
+          ctx.lineTo(rx + rw * 0.7, ry + rh * 0.1);
+          ctx.lineTo(rx + rw, ry + rh * 0.35);
+          ctx.lineTo(rx + rw * 0.9, ry + rh);
+          ctx.closePath();
+          ctx.fill();
+          // 明るい面
+          ctx.fillStyle = 'rgba(160,145,125,0.4)';
+          ctx.beginPath();
+          ctx.moveTo(rx + rw * 0.3, ry);
+          ctx.lineTo(rx + rw * 0.7, ry + rh * 0.1);
+          ctx.lineTo(rx + rw * 0.5, ry + rh * 0.5);
+          ctx.lineTo(rx + rw * 0.2, ry + rh * 0.35);
+          ctx.closePath();
+          ctx.fill();
+        } else {
+          // 層状の岩
+          ctx.fillStyle = '#7a6a5a';
+          ctx.beginPath();
+          ctx.roundRect(rx, ry, rw, rh, 6);
+          ctx.fill();
+          // 層の線
+          ctx.strokeStyle = 'rgba(90,75,58,0.5)';
+          ctx.lineWidth = 1.5;
+          for (let l = 1; l < 4; l++) {
+            ctx.beginPath();
+            ctx.moveTo(rx + 4, ry + rh * l / 4);
+            ctx.lineTo(rx + rw - 4, ry + rh * l / 4 + (l % 2 ? 2 : -2));
+            ctx.stroke();
+          }
+          // ハイライト
+          ctx.fillStyle = 'rgba(170,155,135,0.25)';
+          ctx.beginPath();
+          ctx.roundRect(rx + 3, ry + 3, rw * 0.6, rh * 0.22, 3);
+          ctx.fill();
+        }
+        ctx.restore();
+      }
+    }
+
   }
 
   // --- Draw cacti (background decoration) ---
@@ -623,11 +767,16 @@
   }
 
   function drawSun() {
-    const sunX = W - 80;
-    const sunY = 55;
-    const baseR = 28;
-    const pulse = Math.sin(frameCount * 0.03) * 3;
+    // 縦長画面（スマホ）では太陽を大きく＆低めに配置
+    const isTall = H > 400 && window.innerWidth < 768;
+    const baseR = isTall ? 84 : 28;
+    const sunX = W - (isTall ? 120 : 80);
+    const sunY = isTall ? 55 + baseR * 3 : 55;
+    const pulse = Math.sin(frameCount * 0.03) * (isTall ? 6 : 3);
     const r = baseR + pulse;
+
+    // スケール係数（スマホでは全パーツを拡大）
+    const s = isTall ? 3 : 1;
 
     // 光芒（放射状の光線）
     ctx.save();
@@ -636,12 +785,12 @@
     const rayCount = 12;
     for (let i = 0; i < rayCount; i++) {
       const angle = (i / rayCount) * Math.PI * 2;
-      const rayLen = r + 12 + Math.sin(frameCount * 0.05 + i) * 5;
+      const rayLen = r + 12 * s + Math.sin(frameCount * 0.05 + i) * 5 * s;
       ctx.beginPath();
-      ctx.moveTo(Math.cos(angle) * (r + 2), Math.sin(angle) * (r + 2));
+      ctx.moveTo(Math.cos(angle) * (r + 2 * s), Math.sin(angle) * (r + 2 * s));
       ctx.lineTo(Math.cos(angle) * rayLen, Math.sin(angle) * rayLen);
       ctx.strokeStyle = 'rgba(255,200,50,0.4)';
-      ctx.lineWidth = 3;
+      ctx.lineWidth = 3 * s;
       ctx.stroke();
     }
     ctx.restore();
@@ -656,7 +805,7 @@
     ctx.fill();
 
     // 本体（グラデーション）
-    const sunGrad = ctx.createRadialGradient(sunX - 5, sunY - 5, r * 0.1, sunX, sunY, r);
+    const sunGrad = ctx.createRadialGradient(sunX - 5 * s, sunY - 5 * s, r * 0.1, sunX, sunY, r);
     sunGrad.addColorStop(0, '#fff7a0');
     sunGrad.addColorStop(0.5, '#ffd93d');
     sunGrad.addColorStop(1, '#ffb347');
@@ -669,16 +818,16 @@
     ctx.fillStyle = '#e8a020';
     // 目
     ctx.beginPath();
-    ctx.arc(sunX - 8, sunY - 4, 3, 0, Math.PI * 2);
+    ctx.arc(sunX - 8 * s, sunY - 4 * s, 3 * s, 0, Math.PI * 2);
     ctx.fill();
     ctx.beginPath();
-    ctx.arc(sunX + 8, sunY - 4, 3, 0, Math.PI * 2);
+    ctx.arc(sunX + 8 * s, sunY - 4 * s, 3 * s, 0, Math.PI * 2);
     ctx.fill();
     // 笑い口
     ctx.beginPath();
-    ctx.arc(sunX, sunY + 4, 8, 0.1 * Math.PI, 0.9 * Math.PI);
+    ctx.arc(sunX, sunY + 4 * s, 8 * s, 0.1 * Math.PI, 0.9 * Math.PI);
     ctx.strokeStyle = '#e8a020';
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 2 * s;
     ctx.stroke();
   }
 
@@ -881,6 +1030,7 @@
       if (holdDuration >= CHARGE_THRESHOLD && !isCharging) {
         isCharging = true;
         spawnParticles(player.x + player.w / 2, GROUND_Y, 'rgba(255,217,61,0.8)', 3);
+        playSfx('charge');
       }
     }
 
@@ -971,6 +1121,7 @@
         spawnParticles(c.x + c.w / 2, c.y + c.h / 2, '#ffd93d', 10);
         spawnScorePopup(c.x + c.w / 2, c.y, '+100');
         collectibles.splice(i, 1);
+        playSfx('collect');
       }
     }
 
@@ -1073,6 +1224,8 @@
 
     overlay.classList.add('hidden');
     scoreDisplay.textContent = 'SCORE: 0';
+
+    startBgm();
   }
 
   function gameOver() {
@@ -1080,6 +1233,8 @@
     deadCooldown = true;
     shakeTimer = 8;
     flashTimer = 10;
+    playSfx('damage');
+    stopBgm();
 
     spawnParticles(player.x + player.w / 2, player.y - player.normalH / 2, '#ff6b6b', 20);
 
@@ -1108,6 +1263,7 @@
       isCrouching = false;
       player.vy = player.jumpPower;
       spawnParticles(player.x + player.w / 2, GROUND_Y, 'rgba(107,203,119,0.6)', 8);
+      playSfx('jump');
     }
   }
 
@@ -1118,6 +1274,7 @@
       player.vy = player.superJumpPower;
       spawnParticles(player.x + player.w / 2, GROUND_Y, 'rgba(255,217,61,0.8)', 15);
       spawnParticles(player.x + player.w / 2, GROUND_Y, 'rgba(107,203,119,0.6)', 8);
+      playSfx('superJump');
     }
   }
 
