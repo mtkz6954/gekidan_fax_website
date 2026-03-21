@@ -14,10 +14,10 @@
     font-family: 'Noto Sans JP', sans-serif;
     overflow: hidden;
     height: 100vh;
+    height: 100dvh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
   }
@@ -25,21 +25,26 @@
   #game-wrapper {
     position: relative;
     width: 100%;
-    max-width: 900px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
-    padding: 10px;
+    padding: 0;
+    gap: 0;
   }
 
   #header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
-    max-width: 800px;
-    padding: 0 4px;
+    padding: 8px 16px;
+    background: rgba(26,26,46,0.6);
+    backdrop-filter: blur(4px);
   }
 
   #header h1 {
@@ -70,20 +75,14 @@
   #canvas-container {
     position: relative;
     width: 100%;
-    max-width: 800px;
-    border-radius: 16px;
+    height: 100%;
     overflow: hidden;
-    box-shadow:
-      0 0 30px rgba(77, 150, 255, 0.15),
-      0 0 60px rgba(255, 107, 107, 0.1),
-      inset 0 0 1px rgba(255,255,255,0.1);
-    border: 2px solid rgba(255,255,255,0.08);
   }
 
   canvas {
     display: block;
     width: 100%;
-    height: auto;
+    height: 100%;
     background: #f0f4ff;
   }
 
@@ -175,10 +174,13 @@
 
   #controls-bar {
     display: none;
-    width: 100%;
-    max-width: 800px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
     gap: 12px;
-    padding: 0 4px;
+    padding: 12px;
   }
 
   .ctrl-btn {
@@ -205,7 +207,10 @@
   }
 
   #back-link {
-    margin-top: 8px;
+    position: absolute;
+    bottom: 8px;
+    right: 16px;
+    z-index: 20;
     font-size: 0.8rem;
     color: #555;
     text-decoration: none;
@@ -274,6 +279,28 @@
   const H = 300;
   canvas.width = W;
   canvas.height = H;
+
+  // --- Dynamic canvas resize ---
+  let gameScale = 1;
+  let offsetX = 0;
+  let offsetY = 0;
+
+  function resizeCanvas() {
+    const container = document.getElementById('canvas-container');
+    const rect = container.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+
+    const scaleX = canvas.width / W;
+    const scaleY = canvas.height / H;
+    gameScale = Math.min(scaleX, scaleY);
+    offsetX = (canvas.width - W * gameScale) / 2;
+    offsetY = (canvas.height - H * gameScale) / 2;
+  }
+
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
 
   // --- DOM refs ---
   const overlay = document.getElementById('overlay');
@@ -356,6 +383,7 @@
   }
 
   function imagesReady() {
+    resizeCanvas();
     drawIdleScreen();
   }
 
@@ -858,9 +886,16 @@
 
   // --- Draw ---
   function draw() {
-    ctx.clearRect(0, 0, W, H);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Fill letterbox areas with background color
+    ctx.fillStyle = '#1a1a2e';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     ctx.save();
+    ctx.translate(offsetX, offsetY);
+    ctx.scale(gameScale, gameScale);
+
     if (shakeTimer > 0) {
       const sx = (Math.random() - 0.5) * shakeTimer * 1.5;
       const sy = (Math.random() - 0.5) * shakeTimer * 1.5;
@@ -886,13 +921,19 @@
   }
 
   function drawIdleScreen() {
-    ctx.clearRect(0, 0, W, H);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#1a1a2e';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.save();
+    ctx.translate(offsetX, offsetY);
+    ctx.scale(gameScale, gameScale);
     drawGround();
     drawCacti();
     drawClouds();
     // Draw player standing
     player.y = GROUND_Y;
     drawPlayer();
+    ctx.restore();
   }
 
   // --- Game loop ---
