@@ -299,6 +299,7 @@
   let groundOffset = 0;
   let shakeTimer = 0;
   let flashTimer = 0;
+  let deadCooldown = false;
 
   // --- Player ---
   const player = {
@@ -872,12 +873,15 @@
     player.jumping = false;
     player.bobTimer = 0;
 
+    deadCooldown = false;
+
     overlay.classList.add('hidden');
     scoreDisplay.textContent = 'SCORE: 0';
   }
 
   function gameOver() {
     gameState = 'dead';
+    deadCooldown = true;
     shakeTimer = 8;
     flashTimer = 10;
 
@@ -889,6 +893,7 @@
     }
 
     setTimeout(() => {
+      deadCooldown = false;
       overlayTitle.textContent = 'ゲームオーバー！';
       overlaySub.textContent = '';
       overlayScore.style.display = 'block';
@@ -913,7 +918,7 @@
   document.addEventListener('keydown', (e) => {
     if (e.code === 'Space' || e.code === 'ArrowUp') {
       e.preventDefault();
-      if (gameState === 'idle' || gameState === 'dead') {
+      if (gameState === 'idle' || (gameState === 'dead' && !deadCooldown)) {
         startGame();
       } else {
         doJump();
