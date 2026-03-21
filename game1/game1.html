@@ -444,6 +444,21 @@
     }
   }
 
+  function spawnLandingEffect(x, y) {
+    for (let i = 0; i < 8; i++) {
+      const dir = i < 4 ? -1 : 1;
+      particles.push({
+        x, y: y - 2,
+        vx: dir * (1 + Math.random() * 3),
+        vy: -Math.random() * 2 - 0.5,
+        life: 20 + Math.random() * 10,
+        maxLife: 30,
+        size: 4 + Math.random() * 4,
+        color: 'rgba(160,137,107,0.6)',
+      });
+    }
+  }
+
   function spawnScorePopup(x, y, text) {
     particles.push({
       x, y, text,
@@ -740,6 +755,7 @@
         p.y = GROUND_Y;
         p.vy = 0;
         p.jumping = false;
+        spawnLandingEffect(p.x + p.w / 2, GROUND_Y);
       }
     }
     p.bobTimer++;
@@ -947,7 +963,7 @@
       player.jumping = true;
       isCrouching = false;
       player.vy = player.jumpPower;
-      spawnParticles(player.x + player.w / 2, GROUND_Y, 'rgba(107,203,119,0.6)', 5);
+      spawnParticles(player.x + player.w / 2, GROUND_Y, 'rgba(107,203,119,0.6)', 8);
     }
   }
 
