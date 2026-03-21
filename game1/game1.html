@@ -530,14 +530,6 @@
       ctx.fillRect(gx, GROUND_Y + 8 + (i % 3) * 10, 12 + (i % 5) * 3, 2);
     }
 
-    // Grass tufts
-    ctx.fillStyle = '#6bcb77';
-    for (let i = 0; i < 15; i++) {
-      const gx = ((i * 60 - groundOffset * 0.7) % (W + 30) + W + 30) % (W + 30) - 15;
-      ctx.beginPath();
-      ctx.ellipse(gx, GROUND_Y - 1, 4, 6, 0, 0, Math.PI * 2);
-      ctx.fill();
-    }
   }
 
   // --- Draw cacti (background decoration) ---
@@ -822,6 +814,7 @@
 
   // --- Update ---
   let nextObstacleTimer = 0;
+  let nextObstacleQueued = false;
   let nextCollectTimer = 0;
 
   function update() {
@@ -872,11 +865,31 @@
     }
 
     // --- Obstacles ---
-    nextObstacleTimer -= speed;
-    if (nextObstacleTimer <= 0) {
+    // 敵がプレイヤーの少し手前に来たら次の敵をスポーン予約
+    if (!nextObstacleQueued) {
+      for (const o of obstacles) {
+        // 敵がプレイヤーのx+100くらい（飛び越える直前）に来たら次をスポーン
+        if (o.x <= player.x + player.w + 100 && !o.triggered) {
+          o.triggered = true;
+          nextObstacleQueued = true;
+          // 少し間を空けてからスポーン
+          nextObstacleTimer = 200 + Math.random() * 300 - score * 0.01;
+          if (nextObstacleTimer < 120) nextObstacleTimer = 120;
+          break;
+        }
+      }
+    }
+    // 初回スポーン用タイマー（障害物がまだ無い場合）
+    if (obstacles.length === 0 && !nextObstacleQueued) {
+      nextObstacleTimer -= speed;
+    }
+    if (nextObstacleTimer > 0) {
+      nextObstacleTimer -= speed;
+    }
+    if (nextObstacleTimer <= 0 && (nextObstacleQueued || obstacles.length === 0)) {
       spawnObstacle();
-      nextObstacleTimer = 320 + Math.random() * 400 - score * 0.015;
-      if (nextObstacleTimer < 160) nextObstacleTimer = 160;
+      nextObstacleQueued = false;
+      nextObstacleTimer = 150; // 初回用のフォールバック
     }
 
     for (let i = obstacles.length - 1; i >= 0; i--) {
@@ -1016,6 +1029,7 @@
     particles = [];
     groundOffset = 0;
     nextObstacleTimer = 150;
+    nextObstacleQueued = false;
     nextCollectTimer = 150;
     shakeTimer = 0;
     flashTimer = 0;
