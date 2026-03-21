@@ -815,8 +815,8 @@
     nextObstacleTimer -= speed;
     if (nextObstacleTimer <= 0) {
       spawnObstacle();
-      nextObstacleTimer = 240 + Math.random() * 360 - score * 0.02;
-      if (nextObstacleTimer < 120) nextObstacleTimer = 120;
+      nextObstacleTimer = 320 + Math.random() * 400 - score * 0.015;
+      if (nextObstacleTimer < 160) nextObstacleTimer = 160;
     }
 
     for (let i = obstacles.length - 1; i >= 0; i--) {
@@ -953,7 +953,7 @@
     collectibles = [];
     particles = [];
     groundOffset = 0;
-    nextObstacleTimer = 100;
+    nextObstacleTimer = 150;
     nextCollectTimer = 150;
     shakeTimer = 0;
     flashTimer = 0;
