@@ -275,15 +275,15 @@
   // --- Canvas setup ---
   const canvas = document.getElementById('game');
   const ctx = canvas.getContext('2d');
-  const W = 800;
-  const H = 300;
+  const W = 800;           // 内部論理幅（固定）
+  let H = 300;             // 内部論理高さ（動的に変わる）
+  const GROUND_BOTTOM = 50; // 地面の厚さ（下端からの距離）
   canvas.width = W;
   canvas.height = H;
 
   // --- Dynamic canvas resize ---
+  let GROUND_Y = H - GROUND_BOTTOM;
   let gameScale = 1;
-  let offsetX = 0;
-  let offsetY = 0;
 
   function resizeCanvas() {
     const container = document.getElementById('canvas-container');
@@ -292,11 +292,25 @@
     canvas.width = rect.width * dpr;
     canvas.height = rect.height * dpr;
 
-    const scaleX = canvas.width / W;
-    const scaleY = canvas.height / H;
-    gameScale = Math.min(scaleX, scaleY);
-    offsetX = (canvas.width - W * gameScale) / 2;
-    offsetY = (canvas.height - H * gameScale) / 2;
+    // 内部高さを画面のアスペクト比に合わせて動的に計算
+    // 幅は常にW=800にフィットさせ、高さはアスペクト比から算出
+    const containerAspect = rect.height / rect.width;
+    H = Math.max(300, Math.round(W * containerAspect));
+
+    // GROUND_Yを再計算
+    // 横長: 従来通り下端から50px上
+    // 縦長: 画面の55%あたり（中央よりちょい下）に地面を配置
+    if (H <= 400) {
+      GROUND_Y = H - GROUND_BOTTOM;
+    } else {
+      GROUND_Y = Math.round(H * 0.55);
+    }
+
+    // プレイヤーが地面に立っている場合、位置を更新（初回呼び出し時はまだplayer未定義）
+    try { if (!player.jumping) player.y = GROUND_Y; } catch(e) {}
+
+    // スケールは幅基準（画面幅いっぱいに表示）
+    gameScale = canvas.width / W;
   }
 
   window.addEventListener('resize', resizeCanvas);
@@ -314,7 +328,6 @@
   const btnJump = document.getElementById('btn-jump');
 
   // --- Game state ---
-  const GROUND_Y = H - 50;
   let gameState = 'idle'; // idle | playing | dead
   let score = 0;
   let hiScore = 0;
@@ -388,19 +401,24 @@
   }
 
   // --- Clouds (background decoration) ---
+  function cloudY() {
+    // 空の上半分にランダム配置（縦長画面では広い範囲に散らばる）
+    const skyH = GROUND_Y;
+    return 20 + Math.random() * (skyH * 0.5);
+  }
   function spawnCloud() {
     clouds.push({
       x: W + 50,
-      y: 20 + Math.random() * 80,
+      y: cloudY(),
       w: 60 + Math.random() * 80,
       speed: 0.3 + Math.random() * 0.6,
       opacity: 0.15 + Math.random() * 0.2,
     });
   }
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 6; i++) {
     clouds.push({
       x: Math.random() * W,
-      y: 20 + Math.random() * 80,
+      y: cloudY(),
       w: 60 + Math.random() * 80,
       speed: 0.3 + Math.random() * 0.6,
       opacity: 0.15 + Math.random() * 0.2,
@@ -509,10 +527,12 @@
 
   // --- Drawing helpers ---
   function drawGround() {
-    // Gradient sky
+    // Gradient sky (全高さにわたって描画)
     const skyGrad = ctx.createLinearGradient(0, 0, 0, GROUND_Y);
-    skyGrad.addColorStop(0, '#e8f4fd');
-    skyGrad.addColorStop(0.6, '#f0f4ff');
+    skyGrad.addColorStop(0, '#c8e4f8');
+    skyGrad.addColorStop(0.3, '#d8ecfa');
+    skyGrad.addColorStop(0.7, '#e8f4fd');
+    skyGrad.addColorStop(0.9, '#f0f4ff');
     skyGrad.addColorStop(1, '#e0e8f0');
     ctx.fillStyle = skyGrad;
     ctx.fillRect(0, 0, W, GROUND_Y);
@@ -874,7 +894,7 @@
       c.x -= c.speed;
       if (c.x < -c.w) {
         c.x = W + c.w;
-        c.y = 20 + Math.random() * 80;
+        c.y = cloudY();
       }
     }
 
@@ -976,12 +996,7 @@
   function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Fill letterbox areas with background color
-    ctx.fillStyle = '#1a1a2e';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
     ctx.save();
-    ctx.translate(offsetX, offsetY);
     ctx.scale(gameScale, gameScale);
 
     if (shakeTimer > 0) {
@@ -1011,10 +1026,7 @@
 
   function drawIdleScreen() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#1a1a2e';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.save();
-    ctx.translate(offsetX, offsetY);
     ctx.scale(gameScale, gameScale);
     drawGround();
     drawSun();
