@@ -411,10 +411,10 @@
   // speedMult: 1.4=fast, 1.0=normal, 0.65=slow
   const obstacleTypes = [
     { key: 'obs1',     w: 55, h: 55, speedMult: 1.4,  label: 'fast' },    // pink bulldog — fast
-    { key: 'fly1',     w: 55, h: 50, speedMult: 1.35, label: 'fast' },    // winged owl — fast
+    { key: 'fly1',     w: 55, h: 50, speedMult: 1.35, label: 'fast', flying: true },    // winged owl — fast
     { key: 'obs2',     w: 55, h: 60, speedMult: 1.0,  label: 'normal' },  // red monster — normal
     { key: 'obs3',     w: 65, h: 50, speedMult: 1.0,  label: 'normal' },  // dinosaur — normal
-    { key: 'fly2',     w: 55, h: 45, speedMult: 0.95, label: 'normal' },  // flying creature — normal
+    { key: 'fly2',     w: 55, h: 45, speedMult: 0.95, label: 'normal', flying: true },  // flying creature — normal
     { key: 'elephant', w: 95, h: 85, speedMult: 0.65, label: 'slow' },    // elephant — slow
     { key: 'purple',   w: 70, h: 90, speedMult: 0.6,  label: 'slow' },    // purple jester — slow
   ];
@@ -436,13 +436,23 @@
   // --- Spawn obstacles ---
   function spawnObstacle() {
     const t = obstacleTypes[Math.floor(Math.random() * obstacleTypes.length)];
+    // flying敵はしゃがみで避けられる高さに配置
+    // しゃがみ時の頭上 = GROUND_Y - crouchH = 250 - 40 = 210
+    // fly敵の底辺がしゃがみの頭上ギリギリ上になるように
+    let yPos;
+    if (t.flying) {
+      yPos = GROUND_Y - player.crouchH - t.h - 5; // しゃがみの5px上を飛ぶ
+    } else {
+      yPos = GROUND_Y - t.h;
+    }
     obstacles.push({
       x: W + 20,
-      y: GROUND_Y - t.h,
+      y: yPos,
       w: t.w,
       h: t.h,
       key: t.key,
       speedMult: t.speedMult,
+      flying: t.flying || false,
     });
   }
 
@@ -736,13 +746,17 @@
 
   function drawObstacles() {
     for (const o of obstacles) {
-      // Shadow
-      ctx.fillStyle = 'rgba(0,0,0,0.12)';
+      // Shadow (flying敵は地面に薄い影、地上敵は通常の影)
+      const shadowAlpha = o.flying ? 0.06 : 0.12;
+      const shadowSize = o.flying ? 0.25 : 0.35;
+      ctx.fillStyle = `rgba(0,0,0,${shadowAlpha})`;
       ctx.beginPath();
-      ctx.ellipse(o.x + o.w / 2, GROUND_Y + 2, o.w * 0.35, 4, 0, 0, Math.PI * 2);
+      ctx.ellipse(o.x + o.w / 2, GROUND_Y + 2, o.w * shadowSize, 4, 0, 0, Math.PI * 2);
       ctx.fill();
 
-      drawImage(o.key, o.x, o.y, o.w, o.h, true);
+      // flying敵は上下に浮遊アニメーション
+      const flyBob = o.flying ? Math.sin(frameCount * 0.06 + o.x * 0.01) * 6 : 0;
+      drawImage(o.key, o.x, o.y + flyBob, o.w, o.h, true);
     }
   }
 
@@ -900,9 +914,10 @@
         continue;
       }
 
+      const flyBob = o.flying ? Math.sin(frameCount * 0.06 + o.x * 0.01) * 6 : 0;
       const oBox = {
         x: o.x,
-        y: o.y,
+        y: o.y + flyBob,
         w: o.w,
         h: o.h,
       };
