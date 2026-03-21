@@ -246,8 +246,9 @@
       <div class="overlay-hiscore" id="overlay-hiscore" style="display:none"></div>
       <button id="start-btn">スタート</button>
       <div class="overlay-hint">
-        PC: スペース / ↑ でジャンプ<br>
-        スマホ: 下のボタンまたは画面タップでジャンプ
+        PC: スペース / ↑ を離してジャンプ<br>
+        長押しでしゃがみ → チャージ → 大ジャンプ！<br>
+        スマホ: 下のボタンまたは画面タップ
       </div>
     </div>
   </div>
@@ -300,6 +301,11 @@
   let shakeTimer = 0;
   let flashTimer = 0;
   let deadCooldown = false;
+  let spacePressed = false;
+  let spaceDownTime = 0;
+  const CHARGE_THRESHOLD = 500;
+  let isCharging = false;
+  let isCrouching = false;
 
   // --- Player ---
   const player = {
@@ -310,7 +316,9 @@
     vy: 0,
     jumping: false,
     normalH: 70,
+    crouchH: 40,
     jumpPower: -13,
+    superJumpPower: -20,
     gravity: 0.6,
     bobTimer: 0,
     runFrame: 0,
@@ -587,7 +595,7 @@
 
   function drawPlayer() {
     const p = player;
-    const drawH = p.normalH;
+    const drawH = isCrouching ? p.crouchH : p.normalH;
     const drawY = GROUND_Y - drawH;
 
     // Run bob animation
@@ -607,6 +615,21 @@
 
     // Draw the monster image
     drawImage('player', -p.w / 2, -drawH / 2, p.w, drawH, false);
+
+    // Charge effect
+    if (isCharging) {
+      const pulse = Math.sin(frameCount * 0.3) * 0.3 + 0.5;
+      ctx.globalAlpha = pulse;
+      ctx.strokeStyle = '#ffd93d';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(0, 0, p.w * 0.7, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+      if (frameCount % 4 === 0) {
+        spawnParticles(p.x + p.w / 2, GROUND_Y, 'rgba(255,217,61,0.6)', 2);
+      }
+    }
 
     // Running dust particles
     if (!p.jumping && frameCount % 6 === 0) {
@@ -721,8 +744,18 @@
     }
     p.bobTimer++;
 
+    // --- Charge detection ---
+    if (spacePressed && !player.jumping) {
+      const holdDuration = performance.now() - spaceDownTime;
+      if (holdDuration >= CHARGE_THRESHOLD && !isCharging) {
+        isCharging = true;
+        spawnParticles(player.x + player.w / 2, GROUND_Y, 'rgba(255,217,61,0.8)', 3);
+      }
+    }
+
+    const currentH = isCrouching ? player.crouchH : player.normalH;
     const pBox = {
-      x: p.x, y: p.y - p.normalH, w: p.w, h: p.normalH,
+      x: p.x, y: p.y - currentH, w: p.w, h: currentH,
     };
 
     // --- Clouds ---
@@ -874,6 +907,9 @@
     player.bobTimer = 0;
 
     deadCooldown = false;
+    spacePressed = false;
+    isCrouching = false;
+    isCharging = false;
 
     overlay.classList.add('hidden');
     scoreDisplay.textContent = 'SCORE: 0';
@@ -909,8 +945,19 @@
   function doJump() {
     if (gameState === 'playing' && !player.jumping) {
       player.jumping = true;
+      isCrouching = false;
       player.vy = player.jumpPower;
       spawnParticles(player.x + player.w / 2, GROUND_Y, 'rgba(107,203,119,0.6)', 5);
+    }
+  }
+
+  function doSuperJump() {
+    if (gameState === 'playing' && !player.jumping) {
+      player.jumping = true;
+      isCrouching = false;
+      player.vy = player.superJumpPower;
+      spawnParticles(player.x + player.w / 2, GROUND_Y, 'rgba(255,217,61,0.8)', 15);
+      spawnParticles(player.x + player.w / 2, GROUND_Y, 'rgba(107,203,119,0.6)', 8);
     }
   }
 
@@ -920,8 +967,29 @@
       e.preventDefault();
       if (gameState === 'idle' || (gameState === 'dead' && !deadCooldown)) {
         startGame();
-      } else {
-        doJump();
+        return;
+      }
+      if (gameState === 'playing' && !spacePressed && !player.jumping) {
+        spacePressed = true;
+        spaceDownTime = performance.now();
+        isCrouching = true;
+        isCharging = false;
+      }
+    }
+  });
+
+  document.addEventListener('keyup', (e) => {
+    if (e.code === 'Space' || e.code === 'ArrowUp') {
+      e.preventDefault();
+      if (gameState === 'playing' && spacePressed) {
+        if (isCharging) {
+          doSuperJump();
+        } else {
+          doJump();
+        }
+        spacePressed = false;
+        isCrouching = false;
+        isCharging = false;
       }
     }
   });
@@ -929,14 +997,58 @@
   // Button controls
   startBtn.addEventListener('click', () => startGame());
 
-  btnJump.addEventListener('mousedown', (e) => { e.preventDefault(); doJump(); });
-  btnJump.addEventListener('touchstart', (e) => { e.preventDefault(); doJump(); });
+  function handleMobileDown(e) {
+    e.preventDefault();
+    if (gameState === 'playing' && !spacePressed && !player.jumping) {
+      spacePressed = true;
+      spaceDownTime = performance.now();
+      isCrouching = true;
+      isCharging = false;
+    }
+  }
+
+  function handleMobileUp(e) {
+    e.preventDefault();
+    if (gameState === 'playing' && spacePressed) {
+      if (isCharging) {
+        doSuperJump();
+      } else {
+        doJump();
+      }
+      spacePressed = false;
+      isCrouching = false;
+      isCharging = false;
+    }
+  }
+
+  btnJump.addEventListener('mousedown', handleMobileDown);
+  btnJump.addEventListener('mouseup', handleMobileUp);
+  btnJump.addEventListener('touchstart', handleMobileDown);
+  btnJump.addEventListener('touchend', handleMobileUp);
 
   // Tap on canvas to jump (mobile fallback)
   canvas.addEventListener('touchstart', (e) => {
     e.preventDefault();
-    if (gameState === 'idle' || gameState === 'dead') return;
-    doJump();
+    if (gameState === 'playing' && !spacePressed && !player.jumping) {
+      spacePressed = true;
+      spaceDownTime = performance.now();
+      isCrouching = true;
+      isCharging = false;
+    }
+  });
+
+  canvas.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    if (gameState === 'playing' && spacePressed) {
+      if (isCharging) {
+        doSuperJump();
+      } else {
+        doJump();
+      }
+      spacePressed = false;
+      isCrouching = false;
+      isCharging = false;
+    }
   });
 
   // --- Init ---
