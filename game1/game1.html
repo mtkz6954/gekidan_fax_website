@@ -14,10 +14,10 @@
     font-family: 'Noto Sans JP', sans-serif;
     overflow: hidden;
     height: 100vh;
+    height: 100dvh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
   }
@@ -25,21 +25,26 @@
   #game-wrapper {
     position: relative;
     width: 100%;
-    max-width: 900px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
-    padding: 10px;
+    padding: 0;
+    gap: 0;
   }
 
   #header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
-    max-width: 800px;
-    padding: 0 4px;
+    padding: 8px 16px;
+    background: rgba(26,26,46,0.6);
+    backdrop-filter: blur(4px);
   }
 
   #header h1 {
@@ -70,20 +75,14 @@
   #canvas-container {
     position: relative;
     width: 100%;
-    max-width: 800px;
-    border-radius: 16px;
+    height: 100%;
     overflow: hidden;
-    box-shadow:
-      0 0 30px rgba(77, 150, 255, 0.15),
-      0 0 60px rgba(255, 107, 107, 0.1),
-      inset 0 0 1px rgba(255,255,255,0.1);
-    border: 2px solid rgba(255,255,255,0.08);
   }
 
   canvas {
     display: block;
     width: 100%;
-    height: auto;
+    height: 100%;
     background: #f0f4ff;
   }
 
@@ -175,10 +174,13 @@
 
   #controls-bar {
     display: none;
-    width: 100%;
-    max-width: 800px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
     gap: 12px;
-    padding: 0 4px;
+    padding: 12px;
   }
 
   .ctrl-btn {
@@ -205,7 +207,10 @@
   }
 
   #back-link {
-    margin-top: 8px;
+    position: absolute;
+    bottom: 8px;
+    right: 16px;
+    z-index: 20;
     font-size: 0.8rem;
     color: #555;
     text-decoration: none;
@@ -246,14 +251,15 @@
       <div class="overlay-hiscore" id="overlay-hiscore" style="display:none"></div>
       <button id="start-btn">スタート</button>
       <div class="overlay-hint">
-        PC: スペース / ↑ でジャンプ<br>
-        スマホ: 下のボタンまたは画面タップでジャンプ
+        PC: スペース / ↑ を離してジャンプ<br>
+        長押しでしゃがみ → チャージ → 大ジャンプ！<br>
+        スマホ: 下のボタンまたは画面タップ
       </div>
     </div>
   </div>
 
   <div id="controls-bar">
-    <button class="ctrl-btn" id="btn-jump">⬆ ジャンプ</button>
+    <button class="ctrl-btn" id="btn-jump">🎮 押す→しゃがみ ／ 離す→ジャンプ</button>
   </div>
 
   <a href="../index.html" id="back-link">← トップページに戻る</a>
@@ -273,6 +279,28 @@
   const H = 300;
   canvas.width = W;
   canvas.height = H;
+
+  // --- Dynamic canvas resize ---
+  let gameScale = 1;
+  let offsetX = 0;
+  let offsetY = 0;
+
+  function resizeCanvas() {
+    const container = document.getElementById('canvas-container');
+    const rect = container.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+
+    const scaleX = canvas.width / W;
+    const scaleY = canvas.height / H;
+    gameScale = Math.min(scaleX, scaleY);
+    offsetX = (canvas.width - W * gameScale) / 2;
+    offsetY = (canvas.height - H * gameScale) / 2;
+  }
+
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
 
   // --- DOM refs ---
   const overlay = document.getElementById('overlay');
@@ -299,6 +327,12 @@
   let groundOffset = 0;
   let shakeTimer = 0;
   let flashTimer = 0;
+  let deadCooldown = false;
+  let spacePressed = false;
+  let spaceDownTime = 0;
+  const CHARGE_THRESHOLD = 500;
+  let isCharging = false;
+  let isCrouching = false;
 
   // --- Player ---
   const player = {
@@ -309,7 +343,9 @@
     vy: 0,
     jumping: false,
     normalH: 70,
-    jumpPower: -13,
+    crouchH: 40,
+    jumpPower: -9,
+    superJumpPower: -13.5,
     gravity: 0.6,
     bobTimer: 0,
     runFrame: 0,
@@ -317,15 +353,15 @@
 
   // --- Image loading ---
   const imgSrc = {
-    player:    '../images/ファニーモンスター/IMG_9335.PNG',
-    obs1:      '../images/ファニーモンスター/IMG_9370.PNG',
-    obs2:      '../images/ファニーモンスター/IMG_9362.PNG',
-    obs3:      '../images/ファニーモンスター/IMG_9417.PNG',
-    fly1:      '../images/ファニーモンスター/IMG_9333.PNG',
-    fly2:      '../images/ファニーモンスター/IMG_9421.PNG',
-    collect:   '../images/ファニーモンスター/IMG_9344.PNG',
-    elephant:  '../images/ファニーモンスター/IMG_9365.PNG',
-    purple:    '../images/ファニーモンスター/IMG_9368.PNG',
+    player:    '../images/ファニーモンスター/transparent/IMG_9335_transparent.png',
+    obs1:      '../images/ファニーモンスター/transparent/IMG_9370_transparent.png',
+    obs2:      '../images/ファニーモンスター/transparent/IMG_9362_transparent.png',
+    obs3:      '../images/ファニーモンスター/transparent/IMG_9417_transparent.png',
+    fly1:      '../images/ファニーモンスター/transparent/IMG_9333_transparent.png',
+    fly2:      '../images/ファニーモンスター/transparent/IMG_9421_transparent.png',
+    collect:   '../images/ファニーモンスター/transparent/IMG_9344_transparent.png',
+    elephant:  '../images/ファニーモンスター/transparent/IMG_9365_transparent.png',
+    purple:    '../images/ファニーモンスター/transparent/IMG_9368_transparent.png',
   };
 
   const images = {};
@@ -347,6 +383,7 @@
   }
 
   function imagesReady() {
+    resizeCanvas();
     drawIdleScreen();
   }
 
@@ -435,6 +472,21 @@
     }
   }
 
+  function spawnLandingEffect(x, y) {
+    for (let i = 0; i < 8; i++) {
+      const dir = i < 4 ? -1 : 1;
+      particles.push({
+        x, y: y - 2,
+        vx: dir * (1 + Math.random() * 3),
+        vy: -Math.random() * 2 - 0.5,
+        life: 20 + Math.random() * 10,
+        maxLife: 30,
+        size: 4 + Math.random() * 4,
+        color: 'rgba(160,137,107,0.6)',
+      });
+    }
+  }
+
   function spawnScorePopup(x, y, text) {
     particles.push({
       x, y, text,
@@ -478,14 +530,6 @@
       ctx.fillRect(gx, GROUND_Y + 8 + (i % 3) * 10, 12 + (i % 5) * 3, 2);
     }
 
-    // Grass tufts
-    ctx.fillStyle = '#6bcb77';
-    for (let i = 0; i < 15; i++) {
-      const gx = ((i * 60 - groundOffset * 0.7) % (W + 30) + W + 30) % (W + 30) - 15;
-      ctx.beginPath();
-      ctx.ellipse(gx, GROUND_Y - 1, 4, 6, 0, 0, Math.PI * 2);
-      ctx.fill();
-    }
   }
 
   // --- Draw cacti (background decoration) ---
@@ -548,6 +592,66 @@
     }
   }
 
+  function drawSun() {
+    const sunX = W - 80;
+    const sunY = 55;
+    const baseR = 28;
+    const pulse = Math.sin(frameCount * 0.03) * 3;
+    const r = baseR + pulse;
+
+    // 光芒（放射状の光線）
+    ctx.save();
+    ctx.translate(sunX, sunY);
+    ctx.rotate(frameCount * 0.005);
+    const rayCount = 12;
+    for (let i = 0; i < rayCount; i++) {
+      const angle = (i / rayCount) * Math.PI * 2;
+      const rayLen = r + 12 + Math.sin(frameCount * 0.05 + i) * 5;
+      ctx.beginPath();
+      ctx.moveTo(Math.cos(angle) * (r + 2), Math.sin(angle) * (r + 2));
+      ctx.lineTo(Math.cos(angle) * rayLen, Math.sin(angle) * rayLen);
+      ctx.strokeStyle = 'rgba(255,200,50,0.4)';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    // グロー
+    const glow = ctx.createRadialGradient(sunX, sunY, r * 0.3, sunX, sunY, r * 2);
+    glow.addColorStop(0, 'rgba(255,220,80,0.3)');
+    glow.addColorStop(1, 'rgba(255,220,80,0)');
+    ctx.fillStyle = glow;
+    ctx.beginPath();
+    ctx.arc(sunX, sunY, r * 2, 0, Math.PI * 2);
+    ctx.fill();
+
+    // 本体（グラデーション）
+    const sunGrad = ctx.createRadialGradient(sunX - 5, sunY - 5, r * 0.1, sunX, sunY, r);
+    sunGrad.addColorStop(0, '#fff7a0');
+    sunGrad.addColorStop(0.5, '#ffd93d');
+    sunGrad.addColorStop(1, '#ffb347');
+    ctx.fillStyle = sunGrad;
+    ctx.beginPath();
+    ctx.arc(sunX, sunY, r, 0, Math.PI * 2);
+    ctx.fill();
+
+    // 顔（かわいい）
+    ctx.fillStyle = '#e8a020';
+    // 目
+    ctx.beginPath();
+    ctx.arc(sunX - 8, sunY - 4, 3, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(sunX + 8, sunY - 4, 3, 0, Math.PI * 2);
+    ctx.fill();
+    // 笑い口
+    ctx.beginPath();
+    ctx.arc(sunX, sunY + 4, 8, 0.1 * Math.PI, 0.9 * Math.PI);
+    ctx.strokeStyle = '#e8a020';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  }
+
   function drawClouds() {
     ctx.fillStyle = '#fff';
     for (const c of clouds) {
@@ -586,7 +690,7 @@
 
   function drawPlayer() {
     const p = player;
-    const drawH = p.normalH;
+    const drawH = isCrouching ? p.crouchH : p.normalH;
     const drawY = GROUND_Y - drawH;
 
     // Run bob animation
@@ -606,6 +710,21 @@
 
     // Draw the monster image
     drawImage('player', -p.w / 2, -drawH / 2, p.w, drawH, false);
+
+    // Charge effect
+    if (isCharging) {
+      const pulse = Math.sin(frameCount * 0.3) * 0.3 + 0.5;
+      ctx.globalAlpha = pulse;
+      ctx.strokeStyle = '#ffd93d';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(0, 0, p.w * 0.7, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+      if (frameCount % 4 === 0) {
+        spawnParticles(p.x + p.w / 2, GROUND_Y, 'rgba(255,217,61,0.6)', 2);
+      }
+    }
 
     // Running dust particles
     if (!p.jumping && frameCount % 6 === 0) {
@@ -695,6 +814,7 @@
 
   // --- Update ---
   let nextObstacleTimer = 0;
+  let nextObstacleQueued = false;
   let nextCollectTimer = 0;
 
   function update() {
@@ -716,12 +836,23 @@
         p.y = GROUND_Y;
         p.vy = 0;
         p.jumping = false;
+        spawnLandingEffect(p.x + p.w / 2, GROUND_Y);
       }
     }
     p.bobTimer++;
 
+    // --- Charge detection ---
+    if (spacePressed && !player.jumping) {
+      const holdDuration = performance.now() - spaceDownTime;
+      if (holdDuration >= CHARGE_THRESHOLD && !isCharging) {
+        isCharging = true;
+        spawnParticles(player.x + player.w / 2, GROUND_Y, 'rgba(255,217,61,0.8)', 3);
+      }
+    }
+
+    const currentH = isCrouching ? player.crouchH : player.normalH;
     const pBox = {
-      x: p.x, y: p.y - p.normalH, w: p.w, h: p.normalH,
+      x: p.x, y: p.y - currentH, w: p.w, h: currentH,
     };
 
     // --- Clouds ---
@@ -734,11 +865,31 @@
     }
 
     // --- Obstacles ---
-    nextObstacleTimer -= speed;
-    if (nextObstacleTimer <= 0) {
+    // 敵がプレイヤーの少し手前に来たら次の敵をスポーン予約
+    if (!nextObstacleQueued) {
+      for (const o of obstacles) {
+        // 敵がプレイヤーのx+100くらい（飛び越える直前）に来たら次をスポーン
+        if (o.x <= player.x + player.w + 100 && !o.triggered) {
+          o.triggered = true;
+          nextObstacleQueued = true;
+          // 少し間を空けてからスポーン
+          nextObstacleTimer = 200 + Math.random() * 300 - score * 0.01;
+          if (nextObstacleTimer < 120) nextObstacleTimer = 120;
+          break;
+        }
+      }
+    }
+    // 初回スポーン用タイマー（障害物がまだ無い場合）
+    if (obstacles.length === 0 && !nextObstacleQueued) {
+      nextObstacleTimer -= speed;
+    }
+    if (nextObstacleTimer > 0) {
+      nextObstacleTimer -= speed;
+    }
+    if (nextObstacleTimer <= 0 && (nextObstacleQueued || obstacles.length === 0)) {
       spawnObstacle();
-      nextObstacleTimer = 240 + Math.random() * 360 - score * 0.02;
-      if (nextObstacleTimer < 120) nextObstacleTimer = 120;
+      nextObstacleQueued = false;
+      nextObstacleTimer = 150; // 初回用のフォールバック
     }
 
     for (let i = obstacles.length - 1; i >= 0; i--) {
@@ -808,9 +959,16 @@
 
   // --- Draw ---
   function draw() {
-    ctx.clearRect(0, 0, W, H);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Fill letterbox areas with background color
+    ctx.fillStyle = '#1a1a2e';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     ctx.save();
+    ctx.translate(offsetX, offsetY);
+    ctx.scale(gameScale, gameScale);
+
     if (shakeTimer > 0) {
       const sx = (Math.random() - 0.5) * shakeTimer * 1.5;
       const sy = (Math.random() - 0.5) * shakeTimer * 1.5;
@@ -818,6 +976,7 @@
     }
 
     drawGround();
+    drawSun();
     drawCacti();
     drawClouds();
     drawCollectibles();
@@ -836,13 +995,20 @@
   }
 
   function drawIdleScreen() {
-    ctx.clearRect(0, 0, W, H);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#1a1a2e';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.save();
+    ctx.translate(offsetX, offsetY);
+    ctx.scale(gameScale, gameScale);
     drawGround();
+    drawSun();
     drawCacti();
     drawClouds();
     // Draw player standing
     player.y = GROUND_Y;
     drawPlayer();
+    ctx.restore();
   }
 
   // --- Game loop ---
@@ -862,7 +1028,8 @@
     collectibles = [];
     particles = [];
     groundOffset = 0;
-    nextObstacleTimer = 100;
+    nextObstacleTimer = 150;
+    nextObstacleQueued = false;
     nextCollectTimer = 150;
     shakeTimer = 0;
     flashTimer = 0;
@@ -872,12 +1039,18 @@
     player.jumping = false;
     player.bobTimer = 0;
 
+    deadCooldown = false;
+    spacePressed = false;
+    isCrouching = false;
+    isCharging = false;
+
     overlay.classList.add('hidden');
     scoreDisplay.textContent = 'SCORE: 0';
   }
 
   function gameOver() {
     gameState = 'dead';
+    deadCooldown = true;
     shakeTimer = 8;
     flashTimer = 10;
 
@@ -889,6 +1062,7 @@
     }
 
     setTimeout(() => {
+      deadCooldown = false;
       overlayTitle.textContent = 'ゲームオーバー！';
       overlaySub.textContent = '';
       overlayScore.style.display = 'block';
@@ -904,8 +1078,19 @@
   function doJump() {
     if (gameState === 'playing' && !player.jumping) {
       player.jumping = true;
+      isCrouching = false;
       player.vy = player.jumpPower;
-      spawnParticles(player.x + player.w / 2, GROUND_Y, 'rgba(107,203,119,0.6)', 5);
+      spawnParticles(player.x + player.w / 2, GROUND_Y, 'rgba(107,203,119,0.6)', 8);
+    }
+  }
+
+  function doSuperJump() {
+    if (gameState === 'playing' && !player.jumping) {
+      player.jumping = true;
+      isCrouching = false;
+      player.vy = player.superJumpPower;
+      spawnParticles(player.x + player.w / 2, GROUND_Y, 'rgba(255,217,61,0.8)', 15);
+      spawnParticles(player.x + player.w / 2, GROUND_Y, 'rgba(107,203,119,0.6)', 8);
     }
   }
 
@@ -913,10 +1098,31 @@
   document.addEventListener('keydown', (e) => {
     if (e.code === 'Space' || e.code === 'ArrowUp') {
       e.preventDefault();
-      if (gameState === 'idle' || gameState === 'dead') {
+      if (gameState === 'idle' || (gameState === 'dead' && !deadCooldown)) {
         startGame();
-      } else {
-        doJump();
+        return;
+      }
+      if (gameState === 'playing' && !spacePressed && !player.jumping) {
+        spacePressed = true;
+        spaceDownTime = performance.now();
+        isCrouching = true;
+        isCharging = false;
+      }
+    }
+  });
+
+  document.addEventListener('keyup', (e) => {
+    if (e.code === 'Space' || e.code === 'ArrowUp') {
+      e.preventDefault();
+      if (gameState === 'playing' && spacePressed) {
+        if (isCharging) {
+          doSuperJump();
+        } else {
+          doJump();
+        }
+        spacePressed = false;
+        isCrouching = false;
+        isCharging = false;
       }
     }
   });
@@ -924,14 +1130,58 @@
   // Button controls
   startBtn.addEventListener('click', () => startGame());
 
-  btnJump.addEventListener('mousedown', (e) => { e.preventDefault(); doJump(); });
-  btnJump.addEventListener('touchstart', (e) => { e.preventDefault(); doJump(); });
+  function handleMobileDown(e) {
+    e.preventDefault();
+    if (gameState === 'playing' && !spacePressed && !player.jumping) {
+      spacePressed = true;
+      spaceDownTime = performance.now();
+      isCrouching = true;
+      isCharging = false;
+    }
+  }
+
+  function handleMobileUp(e) {
+    e.preventDefault();
+    if (gameState === 'playing' && spacePressed) {
+      if (isCharging) {
+        doSuperJump();
+      } else {
+        doJump();
+      }
+      spacePressed = false;
+      isCrouching = false;
+      isCharging = false;
+    }
+  }
+
+  btnJump.addEventListener('mousedown', handleMobileDown);
+  btnJump.addEventListener('mouseup', handleMobileUp);
+  btnJump.addEventListener('touchstart', handleMobileDown);
+  btnJump.addEventListener('touchend', handleMobileUp);
 
   // Tap on canvas to jump (mobile fallback)
   canvas.addEventListener('touchstart', (e) => {
     e.preventDefault();
-    if (gameState === 'idle' || gameState === 'dead') return;
-    doJump();
+    if (gameState === 'playing' && !spacePressed && !player.jumping) {
+      spacePressed = true;
+      spaceDownTime = performance.now();
+      isCrouching = true;
+      isCharging = false;
+    }
+  });
+
+  canvas.addEventListener('touchend', (e) => {
+    e.preventDefault();
+    if (gameState === 'playing' && spacePressed) {
+      if (isCharging) {
+        doSuperJump();
+      } else {
+        doJump();
+      }
+      spacePressed = false;
+      isCrouching = false;
+      isCharging = false;
+    }
   });
 
   // --- Init ---
