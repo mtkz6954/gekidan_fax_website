@@ -298,7 +298,13 @@
     H = Math.max(300, Math.round(W * containerAspect));
 
     // GROUND_Yを再計算
-    GROUND_Y = H - GROUND_BOTTOM;
+    // 横長: 従来通り下端から50px上
+    // 縦長: 画面の55%あたり（中央よりちょい下）に地面を配置
+    if (H <= 400) {
+      GROUND_Y = H - GROUND_BOTTOM;
+    } else {
+      GROUND_Y = Math.round(H * 0.55);
+    }
 
     // プレイヤーが地面に立っている場合、位置を更新（初回呼び出し時はまだplayer未定義）
     try { if (!player.jumping) player.y = GROUND_Y; } catch(e) {}
