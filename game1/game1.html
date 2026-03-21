@@ -600,6 +600,66 @@
     }
   }
 
+  function drawSun() {
+    const sunX = W - 80;
+    const sunY = 55;
+    const baseR = 28;
+    const pulse = Math.sin(frameCount * 0.03) * 3;
+    const r = baseR + pulse;
+
+    // 光芒（放射状の光線）
+    ctx.save();
+    ctx.translate(sunX, sunY);
+    ctx.rotate(frameCount * 0.005);
+    const rayCount = 12;
+    for (let i = 0; i < rayCount; i++) {
+      const angle = (i / rayCount) * Math.PI * 2;
+      const rayLen = r + 12 + Math.sin(frameCount * 0.05 + i) * 5;
+      ctx.beginPath();
+      ctx.moveTo(Math.cos(angle) * (r + 2), Math.sin(angle) * (r + 2));
+      ctx.lineTo(Math.cos(angle) * rayLen, Math.sin(angle) * rayLen);
+      ctx.strokeStyle = 'rgba(255,200,50,0.4)';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    // グロー
+    const glow = ctx.createRadialGradient(sunX, sunY, r * 0.3, sunX, sunY, r * 2);
+    glow.addColorStop(0, 'rgba(255,220,80,0.3)');
+    glow.addColorStop(1, 'rgba(255,220,80,0)');
+    ctx.fillStyle = glow;
+    ctx.beginPath();
+    ctx.arc(sunX, sunY, r * 2, 0, Math.PI * 2);
+    ctx.fill();
+
+    // 本体（グラデーション）
+    const sunGrad = ctx.createRadialGradient(sunX - 5, sunY - 5, r * 0.1, sunX, sunY, r);
+    sunGrad.addColorStop(0, '#fff7a0');
+    sunGrad.addColorStop(0.5, '#ffd93d');
+    sunGrad.addColorStop(1, '#ffb347');
+    ctx.fillStyle = sunGrad;
+    ctx.beginPath();
+    ctx.arc(sunX, sunY, r, 0, Math.PI * 2);
+    ctx.fill();
+
+    // 顔（かわいい）
+    ctx.fillStyle = '#e8a020';
+    // 目
+    ctx.beginPath();
+    ctx.arc(sunX - 8, sunY - 4, 3, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(sunX + 8, sunY - 4, 3, 0, Math.PI * 2);
+    ctx.fill();
+    // 笑い口
+    ctx.beginPath();
+    ctx.arc(sunX, sunY + 4, 8, 0.1 * Math.PI, 0.9 * Math.PI);
+    ctx.strokeStyle = '#e8a020';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  }
+
   function drawClouds() {
     ctx.fillStyle = '#fff';
     for (const c of clouds) {
@@ -903,6 +963,7 @@
     }
 
     drawGround();
+    drawSun();
     drawCacti();
     drawClouds();
     drawCollectibles();
@@ -928,6 +989,7 @@
     ctx.translate(offsetX, offsetY);
     ctx.scale(gameScale, gameScale);
     drawGround();
+    drawSun();
     drawCacti();
     drawClouds();
     // Draw player standing
