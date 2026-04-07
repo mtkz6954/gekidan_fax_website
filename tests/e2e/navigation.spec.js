@@ -5,15 +5,12 @@ test.describe('ページ遷移', () => {
     await page.goto('/index.html');
     const headerNav = page.locator('header nav').first();
 
-    // 劇団について へ遷移
     await headerNav.getByRole('link', { name: /劇団について/ }).click();
     await expect(page).toHaveURL(/about/);
 
-    // 活動内容 へ遷移
     await headerNav.getByRole('link', { name: /活動内容/ }).click();
     await expect(page).toHaveURL(/activity/);
 
-    // あそびば へ遷移
     await headerNav.getByRole('link', { name: /あそびば/ }).click();
     await expect(page).toHaveURL(/asobiba/);
   });
@@ -28,6 +25,12 @@ test.describe('ページ遷移', () => {
     await page.goto('/asobiba.html');
     await page.getByRole('link', { name: /ファニーモンスター ラン！/ }).click();
     await expect(page).toHaveURL(/game1\/game1/);
+  });
+
+  test('あそびばからファニモンタワーバトルに遷移できる', async ({ page }) => {
+    await page.goto('/asobiba.html');
+    await page.getByRole('link', { name: /ファニモンタワーバトル/ }).click();
+    await expect(page).toHaveURL(/game2/);
   });
 
   test('ロゴクリックで index.html に戻る', async ({ page }) => {
