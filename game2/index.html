@@ -52,13 +52,12 @@
       }
 
       var buildUrl = "Build";
-      var buildVersion = "20260407-gzip1";
-      var loaderUrl = buildUrl + "/funnymon-unityroom.loader.js?v=" + buildVersion;
+      var loaderUrl = buildUrl + "/gzip.loader.js";
       var config = {
         arguments: [],
-        dataUrl: buildUrl + "/funnymon-unityroom.data.gz?v=" + buildVersion,
-        frameworkUrl: buildUrl + "/funnymon-unityroom.framework.js.gz?v=" + buildVersion,
-        codeUrl: buildUrl + "/funnymon-unityroom.wasm.gz?v=" + buildVersion,
+        dataUrl: buildUrl + "/gzip.data.unityweb",
+        frameworkUrl: buildUrl + "/gzip.framework.js.unityweb",
+        codeUrl: buildUrl + "/gzip.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "FunnyMonTowerBattle",
