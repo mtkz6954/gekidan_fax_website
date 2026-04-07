@@ -52,12 +52,13 @@
       }
 
       var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/3.loader.js";
+      var buildVersion = "20260407b";
+      var loaderUrl = buildUrl + "/3.loader.js?v=" + buildVersion;
       var config = {
         arguments: [],
-        dataUrl: buildUrl + "/3.data.br",
-        frameworkUrl: buildUrl + "/3.framework.js.br",
-        codeUrl: buildUrl + "/3.wasm.br",
+        dataUrl: buildUrl + "/3.data.br?v=" + buildVersion,
+        frameworkUrl: buildUrl + "/3.framework.js.br?v=" + buildVersion,
+        codeUrl: buildUrl + "/3.wasm.br?v=" + buildVersion,
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "FunnyMonTowerBattle",
