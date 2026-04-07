@@ -24,6 +24,8 @@ describe('game2 build asset references', () => {
     expect(functionSource).toContain('application/wasm');
     expect(functionSource).toContain("pathname.endsWith('.js')");
     expect(functionSource).toContain("pathname.endsWith('.br')");
+    expect(functionSource).toContain('Content-Length');
+    expect(functionSource).toContain('arrayBuffer');
   });
 
   it('forces Cloudflare Pages to invoke Functions for game2 build assets', () => {
