@@ -3,11 +3,11 @@ function getContentType(pathname) {
     return 'application/javascript; charset=utf-8';
   }
 
-  if (pathname.endsWith('.js.br')) {
+  if (pathname.endsWith('.js.gz')) {
     return 'application/javascript; charset=utf-8';
   }
 
-  if (pathname.endsWith('.wasm.br')) {
+  if (pathname.endsWith('.wasm.gz')) {
     return 'application/wasm';
   }
 
@@ -20,8 +20,8 @@ export async function onRequest(context) {
   const headers = new Headers(assetResponse.headers);
   const pathname = new URL(context.request.url).pathname;
 
-  if (pathname.endsWith('.br')) {
-    headers.set('Content-Encoding', 'br');
+  if (pathname.endsWith('.gz')) {
+    headers.set('Content-Encoding', 'gzip');
   } else {
     headers.delete('Content-Encoding');
   }
