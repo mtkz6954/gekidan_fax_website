@@ -7,7 +7,15 @@ function getContentType(pathname) {
     return 'application/javascript; charset=utf-8';
   }
 
+  if (pathname.endsWith('.framework.js.unityweb')) {
+    return 'application/javascript; charset=utf-8';
+  }
+
   if (pathname.endsWith('.wasm.gz')) {
+    return 'application/wasm';
+  }
+
+  if (pathname.endsWith('.wasm.unityweb')) {
     return 'application/wasm';
   }
 
@@ -20,7 +28,7 @@ export async function onRequest(context) {
   const headers = new Headers(assetResponse.headers);
   const pathname = new URL(context.request.url).pathname;
 
-  if (pathname.endsWith('.gz')) {
+  if (pathname.endsWith('.gz') || pathname.endsWith('.unityweb')) {
     headers.set('Content-Encoding', 'gzip');
   } else {
     headers.delete('Content-Encoding');

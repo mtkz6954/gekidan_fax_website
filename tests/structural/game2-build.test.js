@@ -8,14 +8,14 @@ const FUNCTION_FILE = resolve(ROOT, 'functions/game2/Build/[[path]].js');
 const ROUTES_FILE = resolve(ROOT, '_routes.json');
 
 describe('game2 build asset references', () => {
-  it('references gzip-compressed Unity build assets with cache-busting query params', () => {
+  it('references the current gzip Unity build assets', () => {
     const html = readFileSync(GAME2_INDEX, 'utf-8');
     const functionSource = readFileSync(FUNCTION_FILE, 'utf-8');
 
-    expect(html).toContain('buildUrl + "/funnymon-unityroom.data.gz?v=');
-    expect(html).toContain('buildUrl + "/funnymon-unityroom.framework.js.gz?v=');
-    expect(html).toContain('buildUrl + "/funnymon-unityroom.wasm.gz?v=');
-    expect(html).toContain('buildUrl + "/funnymon-unityroom.loader.js?v=');
+    expect(html).toContain('Build/gzip.loader.js');
+    expect(html).toContain('dataUrl: "Build/gzip.data.unityweb"');
+    expect(html).toContain('frameworkUrl: "Build/gzip.framework.js.unityweb"');
+    expect(html).toContain('codeUrl: "Build/gzip.wasm.unityweb"');
 
     expect(existsSync(FUNCTION_FILE)).toBe(true);
     expect(functionSource).toContain('Content-Encoding');
@@ -23,7 +23,7 @@ describe('game2 build asset references', () => {
     expect(functionSource).toContain('application/javascript');
     expect(functionSource).toContain('application/wasm');
     expect(functionSource).toContain("pathname.endsWith('.js')");
-    expect(functionSource).toContain("pathname.endsWith('.gz')");
+    expect(functionSource).toContain("pathname.endsWith('.unityweb')");
     expect(functionSource).toContain('Content-Length');
     expect(functionSource).toContain('arrayBuffer');
   });
