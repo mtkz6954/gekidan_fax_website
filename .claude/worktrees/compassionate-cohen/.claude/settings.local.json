@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd /c/Users/matsu/Claude*Sandbox/gekidan-fax/.claude/worktrees/compassionate-cohen)",
+      "Bash(where gh:*)",
+      "Bash(where gh.exe)",
+      "mcp__Claude_Preview__preview_start"
+    ]
+  }
+}
