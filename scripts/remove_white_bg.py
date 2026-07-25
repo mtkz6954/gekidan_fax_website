@@ -15,15 +15,6 @@ import sys
 
 # ゲームで使用する画像ファイル
 GAME_IMAGES = [
-    "IMG_9335.PNG",  # player
-    "IMG_9370.PNG",  # obs1
-    "IMG_9362.PNG",  # obs2
-    "IMG_9417.PNG",  # obs3
-    "IMG_9333.PNG",  # fly1
-    "IMG_9421.PNG",  # fly2
-    "IMG_9344.PNG",  # collect
-    "IMG_9365.PNG",  # elephant
-    "IMG_9368.PNG",  # purple
 ]
 
 def remove_white_background(input_path, output_path, threshold=220, edge_softness=30):
