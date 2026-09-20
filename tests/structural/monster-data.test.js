@@ -52,8 +52,24 @@ beforeAll(() => {
 });
 
 describe('MONSTERSデータ整合性', () => {
-  it('190体のモンスターが定義されている', () => {
-    expect(monsters.length).toBe(190);
+  it('指定された4体がNo.1〜4にこの順で並ぶ', () => {
+    expect(monsters.slice(0, 4).map((monster) => monster.name)).toEqual([
+      'オノブシ',
+      'テラノスーツ',
+      'ダッシュウマ',
+      'デカグチ',
+    ]);
+    expect(monsters.slice(0, 4).map((monster) => monster.id)).toEqual([1, 2, 3, 4]);
+  });
+
+  it('オノブシの図鑑説明が最新である', () => {
+    expect(monsters.find((monster) => monster.name === 'オノブシ')?.desc).toBe(
+      '黄緑色のすべすべした体に、カラフルなお面をつけた戦士モンスター。手に持った斧が自慢で、森の番人として君臨している。見た目より圧倒的に強い。'
+    );
+  });
+
+  it('152体のモンスターが定義されている', () => {
+    expect(monsters.length).toBe(152);
   });
 
   it('各モンスターに必須プロパティがある', () => {
@@ -65,12 +81,12 @@ describe('MONSTERSデータ整合性', () => {
     }
   });
 
-  it('id が1〜190で重複なし', () => {
+  it('id が1〜152で重複なし', () => {
     const ids = monsters.map((m) => m.id);
     const unique = new Set(ids);
-    expect(unique.size).toBe(190);
+    expect(unique.size).toBe(152);
     expect(Math.min(...ids)).toBe(1);
-    expect(Math.max(...ids)).toBe(190);
+    expect(Math.max(...ids)).toBe(152);
   });
 
   it('type が有効なタイプのみ', () => {

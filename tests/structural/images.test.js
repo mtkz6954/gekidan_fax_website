@@ -38,6 +38,18 @@ describe('画像参照チェック', () => {
   }
 
   describe('monster-zukan.html モンスター画像', () => {
+    it('各画像ファイル名に対応するモンスター名が含まれる', () => {
+      const html = readFileSync(resolve(ROOT, 'monster-zukan.html'), 'utf-8');
+      const entries = [...html.matchAll(/file:\s*'([^']+)',\s*name:'([^']+)'/g)];
+
+      expect(entries.length).toBe(152);
+
+      for (const [, file, name] of entries) {
+        expect(file).toMatch(new RegExp(`^IMG_\\d+_${name}\\.(JPG|PNG)$`));
+        expect(Number(file.match(/^IMG_(\d+)/)[1])).toBeLessThan(8014);
+      }
+    });
+
     it('MONSTERS配列の全画像ファイルが存在する', () => {
       const html = readFileSync(resolve(ROOT, 'monster-zukan.html'), 'utf-8');
       // MONSTERS配列からfileプロパティを抽出
