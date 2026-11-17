@@ -3,360 +3,417 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FUNNY MONSTER | 劇団FAX</title>
+  <title>FUNNY MONSTER（ファニモン）| 劇団FAX</title>
   <link rel="icon" href="images/FAX_fabikon.png" type="image/png" />
-  <meta name="description" content="FUNNY MONSTER（ファニーモンスター）は、子ども心を飼いならさないキャラクターIPブランド。無垢で、ビビッドで、可愛い。だけど従順じゃない。" />
+  <meta name="description" content="FUNNY MONSTER（ファニモン）は、子ども心を飼いならさないキャラクターIPブランド。11月29日(日) アルトヴァリエ（東京ビッグサイト 西2ホール X46）に出店します。" />
+  <meta property="og:title" content="FUNNY MONSTER（ファニモン）" />
+  <meta property="og:description" content="11/29(日) アルトヴァリエ 東京ビッグサイト 西2ホール X46 に出店。オノブシ・テラノスーツ・ダッシュウマ・デカグチのグッズを販売します。" />
+  <meta property="og:image" content="https://gekidan-fax-website.pages.dev/images/funnymonster/logo-white.png" />
+  <meta name="twitter:card" content="summary_large_image" />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap" rel="stylesheet" />
   <script>
     tailwind.config = { theme: { extend: {
-      fontFamily: { sans: ['"Noto Sans JP"','sans-serif'], pop: ['Fredoka','"Noto Sans JP"','sans-serif'] },
-      colors: { fmpink:'#FF4D8D', fmyellow:'#FFD23F', fmlime:'#A6E22E', fmpurple:'#7C3AED', fmcyan:'#22D3EE', fmink:'#1A1030' }
+      fontFamily: {
+        sans: ['"Zen Kaku Gothic New"','sans-serif'],
+        dela: ['"Dela Gothic One"','"Zen Kaku Gothic New"','sans-serif']
+      },
+      colors: {
+        // ロゴの2色
+        pink:'#FF0373', lime:'#DFEF2D',
+        // 主役4体のパネル色
+        sun:'#FFE100', sky:'#4FC3F0'
+      }
     } } }
   </script>
   <style>
-    body { font-family: 'Noto Sans JP', sans-serif; }
-    .dots-bg {
-      background-color: #FFF8EE;
-      background-image: radial-gradient(rgba(124,58,237,0.10) 1.5px, transparent 1.5px);
-      background-size: 22px 22px;
+    body { font-family: 'Zen Kaku Gothic New', sans-serif; color: #000; background: #fff; }
+    :focus-visible { outline: 3px solid #FF0373; outline-offset: 3px; }
+
+    /* ---- Hero：ロゴの斜め帯を引用したピンクの帯 ---- */
+    .band { position: relative; }
+    .band::before { content: ""; position: absolute; inset: 0; background: #FF0373; transform: skewY(-3deg); transform-origin: left; z-index: 0; }
+    .band > * { position: relative; z-index: 1; }
+
+    /* 4体がピンク帯の裏から飛び出す（ページを開いた時の1回だけ） */
+    .lineup img { opacity: 0; transform: translateY(40%) scale(.7); transform-origin: bottom center; animation: popup .8s cubic-bezier(.2,1.5,.4,1) forwards; }
+    .lineup .c1 img { animation-delay: .25s; }
+    .lineup .c2 img { animation-delay: .4s; }
+    .lineup .c3 img { animation-delay: .55s; }
+    .lineup .c4 img { animation-delay: .7s; }
+    @keyframes popup { to { opacity: 1; transform: none; } }
+
+    /* ---- 主役パネル：縦書きの巨大な名前 ---- */
+    .tate { writing-mode: vertical-rl; text-orientation: upright; font-family: 'Dela Gothic One', sans-serif; line-height: 1; letter-spacing: -.02em; }
+    .panel img { transition: transform .35s cubic-bezier(.2,1.4,.4,1); }
+    .panel:hover img { transform: translateY(-10px) rotate(-3deg); }
+
+    /* ---- お品書き：グッズ写真 ---- */
+    .goods { display: flex; flex-direction: column; border: 3px solid #000; background: #fff; overflow: hidden; }
+    .goods > img, .goods > div:first-child { border-bottom: 3px solid #000; }
+    .goods-label { padding: 1rem 1.25rem 1.1rem; margin-top: auto; }
+    .goods-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; margin-top: .25rem; }
+    .goods-name { font-weight: 900; font-size: 1.125rem; line-height: 1.4; }
+    .goods-note { font-size: .875rem; font-weight: 500; line-height: 1.7; }
+    .goods-price { font-family: 'Dela Gothic One', sans-serif; font-size: 1.75rem; line-height: 1; white-space: nowrap; }
+    @media (min-width: 768px) { .goods-name { font-size: 1.25rem; } .goods-price { font-size: 2rem; } }
+
+    @media (prefers-reduced-motion: reduce) {
+      .lineup img { animation: none; transform: none; opacity: 1; }
+      .panel img, .panel:hover img { transition: none; transform: none; }
     }
-    .sticker { border: 2.5px solid #1A1030; box-shadow: 5px 5px 0 #1A1030; }
-    .sticker-sm { border: 2px solid #1A1030; box-shadow: 3px 3px 0 #1A1030; }
-    .sticker-hover { transition: transform .2s ease, box-shadow .2s ease; }
-    .sticker-hover:hover { transform: translate(-2px,-2px) rotate(-1deg); box-shadow: 8px 8px 0 #1A1030; }
-    @keyframes fm-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-    .fm-marquee { display: flex; width: max-content; animation: fm-marquee 30s linear infinite; }
-    .fm-marquee:hover { animation-play-state: paused; }
-    @keyframes wiggle { 0%,100% { transform: rotate(-2deg); } 50% { transform: rotate(2deg); } }
-    .wiggle { animation: wiggle 2.4s ease-in-out infinite; }
-    @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-    .bob { animation: bob 3s ease-in-out infinite; }
-    .outline-text { -webkit-text-stroke: 2.5px #1A1030; color: #FFD23F; text-shadow: 5px 5px 0 #FF4D8D; }
-    @media (min-width: 768px) { .outline-text { -webkit-text-stroke: 3px #1A1030; text-shadow: 7px 7px 0 #FF4D8D; } }
   </style>
 </head>
 
-<body class="min-h-screen dots-bg text-fmink antialiased">
+<body class="antialiased">
 
 <!-- Header -->
-<header class="sticky top-0 z-40 border-b-2 border-fmink bg-[#FFF8EE]/95 backdrop-blur-md">
-  <div class="mx-auto flex h-14 max-w-5xl items-center justify-between px-5 md:h-16 md:px-8">
-    <a href="funnymonster.html" class="font-pop text-lg font-bold tracking-tight md:text-xl">
-      FU<span class="text-fmpink">n</span>nY MO<span class="text-fmpurple">n</span>STER
+<header class="sticky top-0 z-40 border-b-[3px] border-black bg-white">
+  <div class="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-5 md:h-16 md:px-8">
+    <a href="funnymonster.html" class="shrink-0" aria-label="FUNNY MONSTER トップへ">
+      <img src="images/funnymonster/logo.png" alt="FUNNY MONSTER ファニモン" class="h-9 w-auto md:h-11" />
     </a>
-    <nav class="hidden items-center gap-6 text-[13px] font-bold text-slate-500 md:flex">
-      <a href="index.html" class="hover:text-sky-600 transition-colors">劇団FAX</a>
-      <a href="#about" class="hover:text-fmpink transition-colors">ABOUT</a>
-      <a href="#characters" class="hover:text-fmpink transition-colors">CHARACTERS</a>
-      <a href="#projects" class="hover:text-fmpink transition-colors">PROJECTS</a>
-      <a href="#news" class="hover:text-fmpink transition-colors">NEWS</a>
-      <a href="#contact" class="hover:text-fmpink transition-colors">CONTACT</a>
+    <nav class="hidden items-center gap-7 text-sm font-bold lg:flex" aria-label="ページ内メニュー">
+      <a href="#main4" class="hover:text-pink">キャラクター</a>
+      <a href="#shop" class="hover:text-pink">出店情報</a>
+      <a href="#games" class="hover:text-pink">ゲーム</a>
+      <a href="#about" class="hover:text-pink">ファニモンとは</a>
+      <a href="#contact" class="hover:text-pink">お問い合わせ</a>
+      <a href="index.html" class="text-black/50 hover:text-black">劇団FAX</a>
     </nav>
-    <a href="#sns" class="sticker-sm rounded-full bg-fmpink px-4 py-1.5 text-[11px] font-black text-white md:px-5 md:py-2 md:text-xs">FOLLOW US</a>
+    <a href="https://www.instagram.com/funnymonsterfax/" target="_blank" rel="noopener" class="shrink-0 bg-black px-4 py-2 text-xs font-black text-white hover:bg-pink md:text-sm">Instagram</a>
   </div>
 </header>
 
 <main class="pb-16 md:pb-0">
 
-<!-- Hero -->
-<section class="relative overflow-hidden">
-  <div class="mx-auto max-w-5xl px-5 pb-10 pt-14 text-center md:px-8 md:pb-14 md:pt-20">
-    <p class="inline-block -rotate-2 rounded-full bg-fmlime px-4 py-1.5 text-xs font-black sticker-sm">子ども心を飼いならさない キャラクターIPブランド</p>
-    <h1 class="outline-text mt-6 font-pop text-[3rem] font-bold leading-none tracking-tight md:text-[6rem]">
-      FUnnY<br class="md:hidden"> MOnSTER
-    </h1>
-    <p class="mt-6 font-pop text-lg font-semibold text-fmpurple md:text-2xl">Unleash your funny side.</p>
-    <p class="mx-auto mt-5 max-w-xl text-[15px] font-bold leading-8">
-      無垢で、ビビッドで、可愛い。だけど従順じゃない。<br>
-      心の底に眠る愛すべきFUNNYを、世界に解き放て。
-    </p>
-    <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
-      <a href="#characters" class="sticker sticker-hover rounded-full bg-fmyellow px-7 py-3 text-sm font-black">モンスターに会う 👾</a>
-      <a href="monster-zukan.html" class="sticker sticker-hover rounded-full bg-white px-7 py-3 text-sm font-black">図鑑をひらく 📖</a>
-    </div>
-    <p class="mt-4 text-xs font-bold text-slate-400">小さな n は、整った大文字の中に残る、飼いならされない子ども心のノイズ。</p>
+<!-- Hero：イベントポスター -->
+<section class="overflow-hidden pt-10 md:pt-14" aria-label="FUNNY MONSTER">
+  <h1 class="mx-auto w-[88%] max-w-[640px]">
+    <img src="images/funnymonster/logo.png" alt="FUNNY MONSTER ファニモン" class="w-full" />
+  </h1>
+
+  <div class="lineup relative z-10 mx-auto mt-6 flex max-w-5xl items-end justify-center gap-1 px-3 md:mt-8 md:gap-4">
+    <div class="c1 w-[23%]"><img src="images/funnymonster/onobushi.png" alt="オノブシ" class="mx-auto w-full" /></div>
+    <div class="c2 w-[18%]"><img src="images/funnymonster/teranosuit.png" alt="テラノスーツ" class="mx-auto w-full" /></div>
+    <div class="c3 w-[26%]"><img src="images/funnymonster/dashuma.png" alt="ダッシュウマ" class="mx-auto w-full" /></div>
+    <div class="c4 w-[22%]"><img src="images/funnymonster/dekaguchi.png" alt="デカグチ" class="mx-auto w-full" /></div>
   </div>
 
-  <!-- monster marquee -->
-  <div class="border-y-2 border-fmink bg-white py-4">
-    <div class="fm-marquee gap-4 px-2">
-      <img src="images/ファニーモンスター/IMG_1132_ギラマスク.JPG" alt="" class="h-24 w-24 shrink-0 rounded-2xl object-cover sticker-sm md:h-28 md:w-28" />
-      <img src="images/ファニーモンスター/IMG_1133_ゴウテン.JPG" alt="" class="h-24 w-24 shrink-0 rounded-2xl object-cover sticker-sm md:h-28 md:w-28" />
-      <img src="images/ファニーモンスター/IMG_1134_ハナゴン.JPG" alt="" class="h-24 w-24 shrink-0 rounded-2xl object-cover sticker-sm md:h-28 md:w-28" />
-      <img src="images/ファニーモンスター/IMG_1135_オウカン.JPG" alt="" class="h-24 w-24 shrink-0 rounded-2xl object-cover sticker-sm md:h-28 md:w-28" />
-      <img src="images/ファニーモンスター/IMG_1136_ナミダン.JPG" alt="" class="h-24 w-24 shrink-0 rounded-2xl object-cover sticker-sm md:h-28 md:w-28" />
-      <img src="images/ファニーモンスター/IMG_1137_ピラニカ.JPG" alt="" class="h-24 w-24 shrink-0 rounded-2xl object-cover sticker-sm md:h-28 md:w-28" />
-      <img src="images/ファニーモンスター/IMG_1138_ネムリン.JPG" alt="" class="h-24 w-24 shrink-0 rounded-2xl object-cover sticker-sm md:h-28 md:w-28" />
-      <img src="images/ファニーモンスター/IMG_1139_オノブシ.JPG" alt="" class="h-24 w-24 shrink-0 rounded-2xl object-cover sticker-sm md:h-28 md:w-28" />
-      <img src="images/ファニーモンスター/IMG_1140_バンドン.JPG" alt="" class="h-24 w-24 shrink-0 rounded-2xl object-cover sticker-sm md:h-28 md:w-28" />
-      <img src="images/ファニーモンスター/IMG_1141_ハーフロン.JPG" alt="" class="h-24 w-24 shrink-0 rounded-2xl object-cover sticker-sm md:h-28 md:w-28" />
-      <!-- duplicate for seamless loop -->
-      <img src="images/ファニーモンスター/IMG_1132_ギラマスク.JPG" alt="" class="h-24 w-24 shrink-0 rounded-2xl object-cover sticker-sm md:h-28 md:w-28" />
-      <img src="images/ファニーモンスター/IMG_1133_ゴウテン.JPG" alt="" class="h-24 w-24 shrink-0 rounded-2xl object-cover sticker-sm md:h-28 md:w-28" />
-      <img src="images/ファニーモンスター/IMG_1134_ハナゴン.JPG" alt="" class="h-24 w-24 shrink-0 rounded-2xl object-cover sticker-sm md:h-28 md:w-28" />
-      <img src="images/ファニーモンスター/IMG_1135_オウカン.JPG" alt="" class="h-24 w-24 shrink-0 rounded-2xl object-cover sticker-sm md:h-28 md:w-28" />
-      <img src="images/ファニーモンスター/IMG_1136_ナミダン.JPG" alt="" class="h-24 w-24 shrink-0 rounded-2xl object-cover sticker-sm md:h-28 md:w-28" />
-      <img src="images/ファニーモンスター/IMG_1137_ピラニカ.JPG" alt="" class="h-24 w-24 shrink-0 rounded-2xl object-cover sticker-sm md:h-28 md:w-28" />
-      <img src="images/ファニーモンスター/IMG_1138_ネムリン.JPG" alt="" class="h-24 w-24 shrink-0 rounded-2xl object-cover sticker-sm md:h-28 md:w-28" />
-      <img src="images/ファニーモンスター/IMG_1139_オノブシ.JPG" alt="" class="h-24 w-24 shrink-0 rounded-2xl object-cover sticker-sm md:h-28 md:w-28" />
-      <img src="images/ファニーモンスター/IMG_1140_バンドン.JPG" alt="" class="h-24 w-24 shrink-0 rounded-2xl object-cover sticker-sm md:h-28 md:w-28" />
-      <img src="images/ファニーモンスター/IMG_1141_ハーフロン.JPG" alt="" class="h-24 w-24 shrink-0 rounded-2xl object-cover sticker-sm md:h-28 md:w-28" />
+  <div class="band -mt-10 pb-12 pt-14 md:-mt-20 md:pb-16 md:pt-24">
+    <div class="mx-auto flex max-w-6xl flex-col gap-6 px-5 md:flex-row md:items-end md:justify-between md:px-8">
+      <div>
+        <p class="font-dela text-[3.75rem] leading-none text-lime md:text-[6.5rem]">11.29<span class="ml-3 text-[1.75rem] md:text-[2.75rem]">SUN</span></p>
+        <p class="mt-3 font-dela text-2xl text-white md:text-4xl">アルトヴァリエに出店します</p>
+        <p class="mt-2 text-base font-black md:text-lg">東京ビッグサイト 西2ホール ブース <span class="font-dela">X46</span></p>
+      </div>
+      <a href="#shop" class="self-start bg-black px-7 py-4 font-dela text-base text-lime hover:bg-white hover:text-black md:self-auto md:text-lg">お品書きを見る</a>
     </div>
   </div>
 </section>
 
-<!-- ABOUT -->
-<section id="about" class="mx-auto max-w-5xl scroll-mt-20 px-5 py-16 md:px-8 md:py-24">
-  <p class="font-pop text-sm font-bold text-fmpink">ABOUT</p>
-  <h2 class="mt-1 text-3xl font-black md:text-4xl">FUNNY MONSTERとは</h2>
-  <p class="mt-5 max-w-2xl text-[15px] font-medium leading-8 text-slate-600">
-    ファニーモンスターは、心の底に眠る愛すべきFUNNYを呼び覚まし、変を愛し、衝動を信じ、自分らしさを祝福し、子ども心を飼いならすことなく、無垢なエネルギーを社会に解き放つブランドです。世界の人々をFUNNYに溺れさせ、誰もが子どものように純粋に笑い、自分らしくいられる場所をつくります。
-  </p>
-
-  <div class="mt-10 grid gap-6 md:grid-cols-3">
-    <div class="sticker sticker-hover rounded-2xl bg-white p-6 -rotate-1">
-      <p class="font-pop text-xs font-bold text-fmpink">PHILOSOPHY</p>
-      <p class="mt-3 text-[15px] font-black leading-7">心の底にある愛すべきFUNNYを呼び覚ます</p>
-    </div>
-    <div class="sticker sticker-hover rounded-2xl bg-white p-6 rotate-1">
-      <p class="font-pop text-xs font-bold text-fmpurple">VISION</p>
-      <p class="mt-3 text-[15px] font-black leading-7">無垢なエネルギーを社会に解き放ち、誰もが子供のように純粋に笑い、自分らしくいられる場所を作る</p>
-    </div>
-    <div class="sticker sticker-hover rounded-2xl bg-white p-6 -rotate-1">
-      <p class="font-pop text-xs font-bold text-fmcyan">MISSION</p>
-      <p class="mt-3 text-[15px] font-black leading-7">世界の人々をFUNNYに溺れさせる</p>
-    </div>
+<!-- 主役の4体 -->
+<section id="main4" class="scroll-mt-16 pb-20 pt-16 md:pb-28 md:pt-24">
+  <div class="mx-auto max-w-6xl px-5 md:px-8">
+    <h2 class="font-dela text-4xl md:text-6xl">主役の4体</h2>
+    <p class="mt-4 max-w-[34em] text-base font-bold leading-8 md:text-lg">190体を超えるモンスターの中で、物語の真ん中にいる4体。まずはこの4体から覚えてください。</p>
   </div>
 
-  <div class="mt-10">
-    <p class="font-pop text-xs font-bold text-fmpurple">VALUES</p>
-    <div class="mt-4 flex flex-wrap gap-3">
-      <span class="sticker-sm -rotate-2 rounded-full bg-fmyellow px-5 py-2 text-sm font-black">変を愛する</span>
-      <span class="sticker-sm rotate-1 rounded-full bg-fmpink px-5 py-2 text-sm font-black text-white">衝動を信じる</span>
-      <span class="sticker-sm -rotate-1 rounded-full bg-fmlime px-5 py-2 text-sm font-black">FUNNYを解き放つ</span>
-      <span class="sticker-sm rotate-2 rounded-full bg-fmcyan px-5 py-2 text-sm font-black">自分らしさを祝福する</span>
-      <span class="sticker-sm -rotate-1 rounded-full bg-fmpurple px-5 py-2 text-sm font-black text-white">子ども心を飼いならさない</span>
-    </div>
-  </div>
-</section>
-
-<!-- CHARACTERS -->
-<section id="characters" class="scroll-mt-20 border-y-2 border-fmink bg-fmpurple/10 py-16 md:py-24">
-  <div class="mx-auto max-w-5xl px-5 md:px-8">
-    <p class="font-pop text-sm font-bold text-fmpurple">CHARACTERS</p>
-    <h2 class="mt-1 text-3xl font-black md:text-4xl">モンスターたち</h2>
-    <p class="mt-4 max-w-2xl text-[15px] font-medium leading-8 text-slate-600">
-      抑え込まれた衝動や、言葉にならないFUNNYから生まれた存在たち。現在確認されているだけで<span class="font-black text-fmpurple">190体</span>。全何体いるかは、誰も知らない。
-    </p>
-
-    <div class="mt-10 grid grid-cols-2 gap-5 md:grid-cols-3">
-      <div class="sticker sticker-hover rounded-2xl bg-white p-4 -rotate-1">
-        <img src="images/ファニーモンスター/IMG_1132_ギラマスク.JPG" alt="ギラマスク" class="aspect-square w-full rounded-xl object-cover" />
-        <div class="mt-3 flex items-center justify-between">
-          <p class="text-base font-black">ギラマスク</p>
-          <span class="rounded-full px-2.5 py-0.5 text-[10px] font-black text-white" style="background:#7c3aed">毒</span>
-        </div>
-        <p class="mt-1.5 text-xs font-bold text-slate-500">「うるさい、見るな。」</p>
+  <div class="mx-auto mt-10 grid max-w-6xl gap-[3px] border-y-[3px] border-black bg-black md:mt-14 md:grid-cols-2 md:border-x-[3px] lg:grid-cols-4">
+    <!-- オノブシ -->
+    <article class="panel flex flex-col gap-5 overflow-hidden bg-pink p-5 md:min-h-[620px]">
+      <div class="flex flex-1 items-start gap-2">
+        <p class="tate shrink-0 text-[4.25rem] md:text-[4.75rem] lg:text-[4rem] xl:text-[4.5rem]">オノブシ</p>
+        <img src="images/funnymonster/onobushi.png" alt="オノブシ" class="min-w-0 flex-1 self-end object-contain object-bottom max-h-[340px]" />
       </div>
-      <div class="sticker sticker-hover rounded-2xl bg-white p-4 rotate-1">
-        <img src="images/ファニーモンスター/IMG_1133_ゴウテン.JPG" alt="ゴウテン" class="aspect-square w-full rounded-xl object-cover" />
-        <div class="mt-3 flex items-center justify-between">
-          <p class="text-base font-black">ゴウテン</p>
-          <span class="rounded-full px-2.5 py-0.5 text-[10px] font-black text-white" style="background:#9333ea">霊</span>
-        </div>
-        <p class="mt-1.5 text-xs font-bold text-slate-500">「今夜も踊ろうぞ！」</p>
+      <div class="bg-white p-4 border-[3px] border-black lg:min-h-[14.5rem]">
+        <p class="text-xs font-black">図鑑 No.1　草タイプ</p>
+        <p class="mt-1 font-dela text-xl leading-snug lg:text-lg">「この森は俺が守る！」</p>
+        <p class="mt-2 text-sm font-medium leading-7">お面をつけた戦士。自慢の斧を持ち、森の番人として君臨している。見た目より圧倒的に強い。</p>
       </div>
-      <div class="sticker sticker-hover rounded-2xl bg-white p-4 -rotate-2">
-        <img src="images/ファニーモンスター/IMG_1136_ナミダン.JPG" alt="ナミダン" class="aspect-square w-full rounded-xl object-cover" />
-        <div class="mt-3 flex items-center justify-between">
-          <p class="text-base font-black">ナミダン</p>
-          <span class="rounded-full px-2.5 py-0.5 text-[10px] font-black text-white" style="background:#0284c7">水</span>
-        </div>
-        <p class="mt-1.5 text-xs font-bold text-slate-500">「うれしくて……うれしくて……」</p>
+    </article>
+    <!-- テラノスーツ -->
+    <article class="panel flex flex-col gap-5 overflow-hidden bg-sky p-5 md:min-h-[620px]">
+      <div class="flex flex-1 items-start gap-2">
+        <p class="tate shrink-0 text-[4.25rem] md:text-[4.75rem] lg:text-[4rem] xl:text-[4.5rem]">テラノスーツ</p>
+        <img src="images/funnymonster/teranosuit.png" alt="テラノスーツ" class="min-w-0 flex-1 self-end object-contain object-bottom max-h-[340px]" />
       </div>
-      <div class="sticker sticker-hover rounded-2xl bg-white p-4 rotate-2">
-        <img src="images/ファニーモンスター/IMG_1138_ネムリン.JPG" alt="ネムリン" class="aspect-square w-full rounded-xl object-cover" />
-        <div class="mt-3 flex items-center justify-between">
-          <p class="text-base font-black">ネムリン</p>
-          <span class="rounded-full px-2.5 py-0.5 text-[10px] font-black text-white" style="background:#4f46e5">闇</span>
-        </div>
-        <p class="mt-1.5 text-xs font-bold text-slate-500">「……（まだ寝てる）」</p>
+      <div class="bg-white p-4 border-[3px] border-black lg:min-h-[14.5rem]">
+        <p class="text-xs font-black">図鑑 No.2　炎タイプ</p>
+        <p class="mt-1 font-dela text-xl leading-snug lg:text-lg">「今日もアポは取った」</p>
+        <p class="mt-2 text-sm font-medium leading-7">シャツとズボンを着こなす恐竜。鋭い歯を持ちながら、ビジネスマンとして社会に溶け込もうとしている。</p>
       </div>
-      <div class="sticker sticker-hover rounded-2xl bg-white p-4 rotate-1">
-        <img src="images/ファニーモンスター/IMG_1143_ゾンワン.JPG" alt="ゾンワン" class="aspect-square w-full rounded-xl object-cover" />
-        <div class="mt-3 flex items-center justify-between">
-          <p class="text-base font-black">ゾンワン</p>
-          <span class="rounded-full px-2.5 py-0.5 text-[10px] font-black text-white" style="background:#9333ea">霊</span>
-        </div>
-        <p class="mt-1.5 text-xs font-bold text-slate-500">「べ、別に怖くないし…」</p>
+    </article>
+    <!-- ダッシュウマ -->
+    <article class="panel flex flex-col gap-5 overflow-hidden bg-sun p-5 md:min-h-[620px]">
+      <div class="flex flex-1 items-start gap-2">
+        <p class="tate shrink-0 text-[4.25rem] md:text-[4.75rem] lg:text-[4rem] xl:text-[4.5rem]">ダッシュウマ</p>
+        <img src="images/funnymonster/dashuma.png" alt="ダッシュウマ" class="min-w-0 flex-1 self-end object-contain object-bottom max-h-[340px]" />
       </div>
-      <div class="sticker sticker-hover rounded-2xl bg-white p-4 -rotate-1">
-        <img src="images/ファニーモンスター/IMG_1145_ハナゾウ.JPG" alt="ハナゾウ" class="aspect-square w-full rounded-xl object-cover" />
-        <div class="mt-3 flex items-center justify-between">
-          <p class="text-base font-black">ハナゾウ</p>
-          <span class="rounded-full px-2.5 py-0.5 text-[10px] font-black text-white" style="background:#ca8a04">光</span>
-        </div>
-        <p class="mt-1.5 text-xs font-bold text-slate-500">「パオーン！今日も全力！」</p>
+      <div class="bg-white p-4 border-[3px] border-black lg:min-h-[14.5rem]">
+        <p class="text-xs font-black">図鑑 No.3　風タイプ</p>
+        <p class="mt-1 font-dela text-xl leading-snug lg:text-lg">「走れば全部解決する！」</p>
+        <p class="mt-2 text-sm font-medium leading-7">水色の馬。風のように速く走る。走ると頭の中が整理されるらしい。</p>
       </div>
-    </div>
-
-    <div class="mt-10 text-center">
-      <a href="monster-zukan.html" class="sticker sticker-hover inline-block rounded-full bg-fmpurple px-8 py-3.5 text-sm font-black text-white">ファニーモンスター図鑑で全員に会う →</a>
-    </div>
+    </article>
+    <!-- デカグチ -->
+    <article class="panel flex flex-col gap-5 overflow-hidden bg-lime p-5 md:min-h-[620px]">
+      <div class="flex flex-1 items-start gap-2">
+        <p class="tate shrink-0 text-[4.25rem] md:text-[4.75rem] lg:text-[4rem] xl:text-[4.5rem]">デカグチ</p>
+        <img src="images/funnymonster/dekaguchi.png" alt="デカグチ" class="min-w-0 flex-1 self-end object-contain object-bottom max-h-[340px]" />
+      </div>
+      <div class="bg-white p-4 border-[3px] border-black lg:min-h-[14.5rem]">
+        <p class="text-xs font-black">図鑑 No.4　草タイプ</p>
+        <p class="mt-1 font-dela text-xl leading-snug lg:text-lg">「もっと食う！全部食う！」</p>
+        <p class="mt-2 text-sm font-medium leading-7">体からはみ出す巨大な口で、何でも食べてしまう。なのに体重は増えない。</p>
+      </div>
+    </article>
   </div>
 </section>
 
-<!-- PROJECTS -->
-<section id="projects" class="mx-auto max-w-5xl scroll-mt-20 px-5 py-16 md:px-8 md:py-24">
-  <p class="font-pop text-sm font-bold text-fmcyan">PROJECTS</p>
-  <h2 class="mt-1 text-3xl font-black md:text-4xl">あそぶ・たのしむ</h2>
+<!-- 出店情報・お品書き -->
+<section id="shop" class="scroll-mt-16 border-t-[3px] border-black py-20 md:py-28">
+  <div class="mx-auto max-w-6xl px-5 md:px-8">
+    <h2 class="font-dela text-4xl md:text-6xl">アルトヴァリエ出店</h2>
+    <p class="mt-4 max-w-[36em] text-base font-bold leading-8 md:text-lg">ファニモン初めてのイベント出店です。主役4体のグッズを持って、ビッグサイトで待っています。</p>
 
-  <div class="mt-10 grid gap-6 md:grid-cols-2">
-    <a href="game1/game1.html" class="sticker sticker-hover block rounded-2xl bg-white p-6 -rotate-1">
-      <div class="flex items-center gap-4">
-        <img src="game1/game1_icon.png" alt="FUNNY MONSTER RUN" class="h-16 w-16 rounded-xl object-cover sticker-sm" />
+    <!-- お品書き -->
+    <div class="mt-12 flex items-end justify-between gap-4 border-b-[3px] border-black pb-3">
+      <h3 class="font-dela text-3xl md:text-4xl">お品書き</h3>
+      <p class="text-sm font-bold">お支払いはPayPay・現金</p>
+    </div>
+
+    <div class="mt-6 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+      <!-- Tシャツ -->
+      <article class="goods md:col-span-2">
+        <div class="grid grid-cols-[1.35fr_1fr] gap-[3px] bg-black">
+          <img src="images/funnymonster/goods-tshirt.jpg" alt="モンスターがぎっしり集まった白いTシャツ" class="h-72 w-full bg-white object-cover md:h-[26rem]" loading="lazy" />
+          <img src="images/funnymonster/goods-tshirt-teranosuit.jpg" alt="Tシャツを着たテラノスーツ（イメージ）" class="h-72 w-full object-cover object-top md:h-[26rem]" loading="lazy" />
+        </div>
+        <div class="goods-label">
+          <p class="goods-name">Tシャツ（白）</p>
+          <div class="goods-row"><p class="goods-note">モンスターたちがぎっしり集まった1枚。枚数限定です。右の写真はテラノスーツが着たイメージです。</p><p class="goods-price">¥3,800</p></div>
+        </div>
+      </article>
+      <!-- トートバッグ -->
+      <article class="goods">
+        <img src="images/funnymonster/goods-tote.jpg" alt="オノブシとテラノスーツとロゴが入ったトートバッグ" class="h-72 w-full object-cover md:h-[26rem]" loading="lazy" />
+        <div class="goods-label">
+          <p class="goods-name">トートバッグ</p>
+          <div class="goods-row"><p class="goods-note">オノブシとテラノスーツ、ロゴ入り。</p><p class="goods-price">¥1,500</p></div>
+        </div>
+      </article>
+      <!-- アクキー -->
+      <article class="goods">
+        <img src="images/funnymonster/goods-acrylic.jpg" alt="主役4体のアクリルキーホルダー" class="h-96 w-full object-cover md:h-[28rem]" loading="lazy" />
+        <div class="goods-label">
+          <p class="goods-name">アクリルキーホルダー</p>
+          <div class="goods-row"><p class="goods-note">主役4体。キャラの形にくり抜いた大きめサイズ。</p><p class="goods-price">¥700</p></div>
+        </div>
+      </article>
+      <!-- キーボードキーホルダー -->
+      <article class="goods">
+        <img src="images/funnymonster/goods-keyboard.jpg" alt="主役4体のキーボードキーホルダー" class="h-96 w-full bg-white object-contain md:h-[28rem]" loading="lazy" />
+        <div class="goods-label">
+          <p class="goods-name">キーボードキーホルダー</p>
+          <div class="goods-row"><p class="goods-note">主役4体。透明なキーの中でモンスターが光ります。</p><p class="goods-price">¥800</p></div>
+        </div>
+      </article>
+      <!-- ステッカー -->
+      <article class="goods">
+        <img src="images/funnymonster/goods-sticker.jpg" alt="ノートPCに貼ったテラノスーツのステッカー" class="h-96 w-full object-cover md:h-[28rem]" loading="lazy" />
+        <div class="goods-label">
+          <p class="goods-name">ステッカー</p>
+          <div class="goods-row"><p class="goods-note">主役4体。スマホやPCに。</p><p class="goods-price">¥200</p></div>
+        </div>
+      </article>
+      <!-- 原画 -->
+      <article class="flex flex-col justify-between gap-4 border-[3px] border-black bg-sun p-6 md:col-span-2 md:flex-row md:items-center lg:col-span-3">
         <div>
-          <p class="font-pop text-[10px] font-bold text-fmlime">FREE GAME</p>
-          <p class="text-lg font-black">FUNNY MONSTER RUN</p>
+          <p class="goods-name">原画の展示・販売</p>
+          <p class="goods-note mt-1">モンスターたちの手描き原画を会場に持っていきます。どれも1点ものです。</p>
         </div>
-      </div>
-      <p class="mt-4 text-sm font-medium leading-7 text-slate-600">モンスターと一緒に走り抜けろ！ブラウザですぐ遊べるランゲーム。</p>
-      <p class="mt-3 text-sm font-black text-fmpink">あそぶ →</p>
-    </a>
-    <a href="game2/index.html" class="sticker sticker-hover block rounded-2xl bg-white p-6 rotate-1">
-      <div class="flex items-center gap-4">
-        <img src="game2/game2-icon.png" alt="ファニモンタワーバトル" class="h-16 w-16 rounded-xl object-cover sticker-sm" />
-        <div>
-          <p class="font-pop text-[10px] font-bold text-fmlime">FREE GAME</p>
-          <p class="text-lg font-black">ファニモンタワーバトル</p>
-        </div>
-      </div>
-      <p class="mt-4 text-sm font-medium leading-7 text-slate-600">モンスターを積んで積んで積みまくれ！ハラハラの物理タワーバトル。</p>
-      <p class="mt-3 text-sm font-black text-fmpink">あそぶ →</p>
-    </a>
-    <div class="sticker sticker-hover rounded-2xl bg-white p-6 rotate-1">
-      <div class="flex items-center gap-4">
-        <img src="https://stickershop.line-scdn.net/stickershop/v1/product/17082588/LINEStorePC/main.png?v=1" alt="きもかわモンスタースタンプ" class="h-16 w-16 rounded-xl object-cover sticker-sm bg-white" />
-        <div>
-          <p class="font-pop text-[10px] font-bold text-fmlime">LINE STICKER</p>
-          <p class="text-lg font-black">きもかわモンスタースタンプ</p>
-        </div>
-      </div>
-      <p class="mt-4 text-sm font-medium leading-7 text-slate-600">日常会話をFUNNYに侵食する、カラフルできもかわなモンスターのLINEスタンプ。通常版と敬語Ver.の2種類が発売中！</p>
-      <div class="mt-3 flex flex-wrap gap-4">
-        <a href="https://store.line.me/stickershop/product/17082588/ja" target="_blank" rel="noopener" class="text-sm font-black text-fmpink">通常版 →</a>
-        <a href="https://store.line.me/stickershop/product/17151396/ja" target="_blank" rel="noopener" class="text-sm font-black text-fmpink">敬語Ver. →</a>
-      </div>
+        <p class="goods-price shrink-0">1点もの</p>
+      </article>
     </div>
-    <div class="sticker rounded-2xl bg-white/60 p-6 -rotate-1">
-      <p class="font-pop text-[10px] font-bold text-slate-400">COMING SOON</p>
-      <p class="mt-1 text-lg font-black text-slate-400">グッズ・アートトイ</p>
-      <p class="mt-3 text-sm font-medium leading-7 text-slate-400">ステッカー、Tシャツ、そしていつかソフビへ。構想進行中。</p>
+    <p class="mt-5 text-sm font-bold">数量限定のため、なくなり次第終了です。ブースではアニメ映像も流します。</p>
+
+    <!-- 会場 -->
+    <div class="mt-16 grid gap-8 border-t-[3px] border-black pt-12 lg:grid-cols-[1fr_1.15fr] lg:gap-14">
+      <div>
+        <h3 class="font-dela text-3xl md:text-4xl">会場</h3>
+        <dl class="mt-8 grid grid-cols-[5.5rem_1fr] gap-y-4 text-base md:text-lg">
+          <dt class="font-black">日にち</dt><dd class="font-dela text-xl md:text-2xl">2026年11月29日（日）</dd>
+          <dt class="font-black">会場</dt><dd class="font-bold">東京ビッグサイト 西2ホール</dd>
+          <dt class="font-black">ブース</dt><dd class="font-dela text-5xl text-pink md:text-6xl">X46</dd>
+        </dl>
+        <p class="mt-8 text-sm font-bold leading-7">当日の様子は <a href="https://www.instagram.com/funnymonsterfax/" target="_blank" rel="noopener" class="underline decoration-pink decoration-[3px] underline-offset-4">Instagram</a> で発信します。</p>
+      </div>
+      <figure class="border-[3px] border-black">
+        <img src="images/funnymonster/booth-map-x46.png" alt="西2ホールの会場図。X列46番が FUNNY MONSTER のブース" class="w-full" loading="lazy" />
+        <figcaption class="border-t-[3px] border-black px-4 py-3 text-sm font-bold">西2ホールのX列、46番が私たちのブースです。</figcaption>
+      </figure>
     </div>
   </div>
 </section>
 
-<!-- NEWS -->
-<section id="news" class="scroll-mt-20 border-y-2 border-fmink bg-white py-16 md:py-24">
-  <div class="mx-auto max-w-5xl px-5 md:px-8">
-    <p class="font-pop text-sm font-bold text-fmpink">NEWS</p>
-    <h2 class="mt-1 text-3xl font-black md:text-4xl">おしらせ</h2>
-    <ul class="mt-8 divide-y-2 divide-fmink/10">
-      <li class="flex flex-col gap-1 py-5 md:flex-row md:items-center md:gap-6">
-        <span class="font-pop text-sm font-bold text-slate-400">2026.07</span>
-        <span class="text-[15px] font-bold">FUNNY MONSTER 公式ページを公開しました 🎉</span>
+<!-- ゲーム -->
+<section id="games" class="scroll-mt-16 border-y-[3px] border-black bg-lime py-20 md:py-28">
+  <div class="mx-auto max-w-6xl px-5 md:px-8">
+    <h2 class="font-dela text-4xl md:text-6xl">あそぶ</h2>
+
+    <div class="mt-10 grid items-center gap-8 md:grid-cols-[auto_1fr]">
+      <img src="game2/game2-icon.png" alt="ファニモンタワー" class="w-40 border-[3px] border-black md:w-56" />
+      <div>
+        <p class="text-sm font-black">unityroom で公開中</p>
+        <h3 class="mt-1 font-dela text-4xl md:text-6xl">ファニモンタワー</h3>
+        <p class="mt-3 max-w-[30em] text-base font-bold leading-8">モンスターを積んで、積んで、積みまくる。崩したら負けのタワーゲーム。ブラウザですぐ遊べます。</p>
+        <a href="https://unityroom.com/games/funny-monstar-tower" target="_blank" rel="noopener" class="mt-6 inline-block bg-black px-7 py-4 font-dela text-base text-lime hover:bg-pink hover:text-white md:text-lg">unityroomで遊ぶ</a>
+      </div>
+    </div>
+
+    <ul class="mt-14 grid gap-[3px] border-[3px] border-black bg-black md:grid-cols-3">
+      <li class="bg-white">
+        <a href="game1/game1.html" class="flex h-full items-center gap-4 p-5 hover:bg-sun">
+          <img src="game1/game1_icon.png" alt="" class="h-14 w-14 shrink-0 border-2 border-black object-cover" />
+          <span><span class="block font-black">FUNNY MONSTER RUN</span><span class="text-sm font-medium">走って避けるランゲーム</span></span>
+        </a>
       </li>
-      <li class="flex flex-col gap-1 py-5 md:flex-row md:items-center md:gap-6">
-        <span class="font-pop text-sm font-bold text-slate-400">2026.07</span>
-        <span class="text-[15px] font-bold">LINEスタンプ『きもかわモンスタースタンプ』<a href="https://store.line.me/stickershop/product/17082588/ja" target="_blank" rel="noopener" class="text-fmpink underline">通常版</a>・<a href="https://store.line.me/stickershop/product/17151396/ja" target="_blank" rel="noopener" class="text-fmpink underline">敬語Ver.</a> 好評発売中 🎨</span>
+      <li class="bg-white">
+        <a href="https://unityroom.com/users/i8zv7bmy921wnd5juecp" target="_blank" rel="noopener" class="flex h-full items-center gap-4 p-5 hover:bg-sun">
+          <span class="flex h-14 w-14 shrink-0 items-center justify-center border-2 border-black bg-pink font-dela text-xl text-lime">U</span>
+          <span><span class="block font-black">unityroomの作品一覧</span><span class="text-sm font-medium">ほかのゲームもこちら</span></span>
+        </a>
       </li>
-      <li class="flex flex-col gap-1 py-5 md:flex-row md:items-center md:gap-6">
-        <span class="font-pop text-sm font-bold text-slate-400">2026.07</span>
-        <span class="text-[15px] font-bold">公式SNS <a href="https://x.com/funnymonsterfax" target="_blank" rel="noopener" class="text-fmpink underline">X</a>・<a href="https://www.instagram.com/funnymonsterfax/" target="_blank" rel="noopener" class="text-fmpink underline">Instagram</a> を開設しました！（YouTube / TikTok / Discord は準備中）📣</span>
+      <li class="bg-white">
+        <a href="https://store.line.me/stickershop/product/17082588/ja" target="_blank" rel="noopener" class="flex h-full items-center gap-4 p-5 hover:bg-sun">
+          <img src="https://stickershop.line-scdn.net/stickershop/v1/product/17082588/LINEStorePC/main.png?v=1" alt="" class="h-14 w-14 shrink-0 border-2 border-black bg-white object-cover" />
+          <span><span class="block font-black">LINEスタンプ</span><span class="text-sm font-medium">きもかわモンスタースタンプ</span></span>
+        </a>
       </li>
+    </ul>
+    <p class="mt-4 text-sm font-bold">LINEスタンプは<a href="https://store.line.me/stickershop/product/17151396/ja" target="_blank" rel="noopener" class="underline underline-offset-4">敬語Ver.</a>もあります。</p>
+  </div>
+</section>
+
+<!-- なかまたち -->
+<section id="characters" class="scroll-mt-16 py-20 md:py-28">
+  <div class="mx-auto max-w-6xl px-5 md:px-8">
+    <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+      <div>
+        <h2 class="font-dela text-3xl md:text-5xl">なかまのモンスター</h2>
+        <p class="mt-3 max-w-[34em] text-base font-bold leading-8">見つかっているだけで190体。全部で何体いるのかは、誰も知りません。</p>
+      </div>
+      <a href="monster-zukan.html" class="self-start border-[3px] border-black px-6 py-3 font-black hover:bg-black hover:text-white md:self-auto">図鑑で全員を見る</a>
+    </div>
+  </div>
+  <ul class="mt-10 flex gap-2 overflow-x-auto px-5 pb-4 md:px-8 lg:justify-center" aria-label="なかまのモンスター">
+    <li class="w-28 shrink-0 text-center md:w-32"><img src="images/ファニーモンスター/IMG_1132_ギラマスク.JPG" alt="" class="w-full" loading="lazy" /><p class="text-sm font-black">ギラマスク</p></li>
+    <li class="w-28 shrink-0 text-center md:w-32"><img src="images/ファニーモンスター/IMG_1133_ゴウテン.JPG" alt="" class="w-full" loading="lazy" /><p class="text-sm font-black">ゴウテン</p></li>
+    <li class="w-28 shrink-0 text-center md:w-32"><img src="images/ファニーモンスター/IMG_1134_ハナゴン.JPG" alt="" class="w-full" loading="lazy" /><p class="text-sm font-black">ハナゴン</p></li>
+    <li class="w-28 shrink-0 text-center md:w-32"><img src="images/ファニーモンスター/IMG_1135_オウカン.JPG" alt="" class="w-full" loading="lazy" /><p class="text-sm font-black">オウカン</p></li>
+    <li class="w-28 shrink-0 text-center md:w-32"><img src="images/ファニーモンスター/IMG_1136_ナミダン.JPG" alt="" class="w-full" loading="lazy" /><p class="text-sm font-black">ナミダン</p></li>
+    <li class="w-28 shrink-0 text-center md:w-32"><img src="images/ファニーモンスター/IMG_1137_ピラニカ.JPG" alt="" class="w-full" loading="lazy" /><p class="text-sm font-black">ピラニカ</p></li>
+    <li class="w-28 shrink-0 text-center md:w-32"><img src="images/ファニーモンスター/IMG_1138_ネムリン.JPG" alt="" class="w-full" loading="lazy" /><p class="text-sm font-black">ネムリン</p></li>
+    <li class="w-28 shrink-0 text-center md:w-32"><img src="images/ファニーモンスター/IMG_1143_ゾンワン.JPG" alt="" class="w-full" loading="lazy" /><p class="text-sm font-black">ゾンワン</p></li>
+    <li class="w-28 shrink-0 text-center md:w-32"><img src="images/ファニーモンスター/IMG_1145_ハナゾウ.JPG" alt="" class="w-full" loading="lazy" /><p class="text-sm font-black">ハナゾウ</p></li>
+  </ul>
+</section>
+
+<!-- ファニモンとは：フィロソフィー / ビジョン / ミッション / バリュー -->
+<section id="about" class="scroll-mt-16 border-t-[3px] border-black bg-pink py-20 md:py-28">
+  <div class="mx-auto max-w-6xl px-5 md:px-8">
+    <h2 class="font-dela text-3xl text-white md:text-5xl">ファニモンとは</h2>
+    <p class="mt-6 max-w-[38em] text-base font-bold leading-8 md:text-lg md:leading-9">ファニーモンスターは、子ども心を飼いならさないキャラクターIPブランドです。変で、無垢で、まっすぐで、愛すべき存在たちが、世界を笑いと自由で満たしていきます。</p>
+
+    <dl class="mt-12 border-t-[3px] border-black">
+      <div class="grid gap-3 border-b-[3px] border-black py-8 md:grid-cols-[11rem_1fr] md:gap-8 md:py-10">
+        <dt class="text-lg font-black md:pt-2">フィロソフィー</dt>
+        <dd class="font-dela text-[1.75rem] leading-[1.45] text-lime md:text-[2.5rem] md:leading-[1.35]">心の底にある愛すべきFUNNYを呼び覚ます</dd>
+      </div>
+      <div class="grid gap-3 border-b-[3px] border-black py-8 md:grid-cols-[11rem_1fr] md:gap-8 md:py-10">
+        <dt class="text-lg font-black md:pt-2">ミッション</dt>
+        <dd class="font-dela text-[1.75rem] leading-[1.45] text-lime md:text-[2.5rem] md:leading-[1.35]">世界の人々をFUNNYに溺れさせる</dd>
+      </div>
+      <div class="grid gap-3 border-b-[3px] border-black py-8 md:grid-cols-[11rem_1fr] md:gap-8 md:py-10">
+        <dt class="text-lg font-black md:pt-1">ビジョン</dt>
+        <dd class="max-w-[30em] text-xl font-black leading-[1.7] text-white md:text-2xl md:leading-[1.7]">ファニーモンスターはその無垢なエネルギーを社会に解き放ち、誰もが子供のように純粋に笑い、自分らしくいられる場所を作る。</dd>
+      </div>
+      <div class="grid gap-3 border-b-[3px] border-black py-8 md:grid-cols-[11rem_1fr] md:gap-8 md:py-10">
+        <dt class="text-lg font-black md:pt-1">バリュー</dt>
+        <dd>
+          <ul class="flex flex-wrap gap-3">
+            <li class="bg-white px-4 py-2 text-lg font-black md:text-xl">変を愛する</li>
+            <li class="bg-white px-4 py-2 text-lg font-black md:text-xl">衝動を信じる</li>
+            <li class="bg-white px-4 py-2 text-lg font-black md:text-xl">FUNNYを解き放つ</li>
+            <li class="bg-white px-4 py-2 text-lg font-black md:text-xl">自分らしさを祝福する</li>
+            <li class="bg-white px-4 py-2 text-lg font-black md:text-xl">子ども心を飼いならさない</li>
+          </ul>
+        </dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<!-- おしらせ -->
+<section id="news" class="scroll-mt-16 py-20 md:py-28">
+  <div class="mx-auto grid max-w-6xl gap-8 px-5 md:grid-cols-[14rem_1fr] md:px-8">
+    <h2 class="font-dela text-3xl md:text-5xl">おしらせ</h2>
+    <ul class="divide-y-2 divide-black border-y-[3px] border-black">
+      <li class="grid gap-1 py-5 md:grid-cols-[6rem_1fr] md:gap-6"><span class="font-dela">2026.11</span><span class="font-bold">11/29(日) アルトヴァリエに出店します。東京ビッグサイト 西2ホール <a href="#shop" class="underline decoration-pink decoration-[3px] underline-offset-4">X46</a> です。</span></li>
+      <li class="grid gap-1 py-5 md:grid-cols-[6rem_1fr] md:gap-6"><span class="font-dela">2026.11</span><span class="font-bold">公式ロゴが決まり、このページをリニューアルしました。</span></li>
+      <li class="grid gap-1 py-5 md:grid-cols-[6rem_1fr] md:gap-6"><span class="font-dela">2026.07</span><span class="font-bold">LINEスタンプ「きもかわモンスタースタンプ」<a href="https://store.line.me/stickershop/product/17082588/ja" target="_blank" rel="noopener" class="underline underline-offset-4">通常版</a>・<a href="https://store.line.me/stickershop/product/17151396/ja" target="_blank" rel="noopener" class="underline underline-offset-4">敬語Ver.</a>を発売しました。</span></li>
+      <li class="grid gap-1 py-5 md:grid-cols-[6rem_1fr] md:gap-6"><span class="font-dela">2026.07</span><span class="font-bold">公式 <a href="https://x.com/funnymonsterfax" target="_blank" rel="noopener" class="underline underline-offset-4">X</a>・<a href="https://www.instagram.com/funnymonsterfax/" target="_blank" rel="noopener" class="underline underline-offset-4">Instagram</a> を開設しました。</span></li>
+      <li class="grid gap-1 py-5 md:grid-cols-[6rem_1fr] md:gap-6"><span class="font-dela">2026.07</span><span class="font-bold">FUNNY MONSTER 公式ページを公開しました。</span></li>
     </ul>
   </div>
 </section>
 
-<!-- SNS -->
-<section id="sns" class="mx-auto max-w-5xl scroll-mt-20 px-5 py-16 text-center md:px-8 md:py-24">
-  <p class="font-pop text-sm font-bold text-fmpurple">FOLLOW US</p>
-  <h2 class="mt-1 text-3xl font-black md:text-4xl">SNSで、FUNNYに溺れよう</h2>
-  <p class="mt-4 text-[15px] font-medium text-slate-600">X と Instagram は公開中！その他は準備中です。</p>
-
-  <!-- 開設したら href="#" を各公式ページのURLに差し替えてください -->
-  <div class="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-5">
-    <a href="https://x.com/funnymonsterfax" target="_blank" rel="noopener" class="sticker sticker-hover rounded-2xl bg-white p-5 -rotate-1">
-      <span class="bob block text-3xl">𝕏</span>
-      <p class="mt-2 font-pop text-sm font-bold">X</p>
-      <p class="mt-1 text-[10px] font-black text-fmpink">@funnymonsterfax</p>
-    </a>
-    <a href="https://www.instagram.com/funnymonsterfax/" target="_blank" rel="noopener" class="sticker sticker-hover rounded-2xl bg-white p-5 rotate-1">
-      <span class="bob block text-3xl" style="animation-delay:.2s">📸</span>
-      <p class="mt-2 font-pop text-sm font-bold">Instagram</p>
-      <p class="mt-1 text-[10px] font-black text-fmpink">@funnymonsterfax</p>
-    </a>
-    <a href="#sns" aria-disabled="true" class="sticker sticker-hover rounded-2xl bg-white p-5 -rotate-2">
-      <span class="bob block text-3xl" style="animation-delay:.4s">▶️</span>
-      <p class="mt-2 font-pop text-sm font-bold">YouTube</p>
-      <p class="mt-1 text-[10px] font-black text-fmpink">COMING SOON</p>
-    </a>
-    <a href="#sns" aria-disabled="true" class="sticker sticker-hover rounded-2xl bg-white p-5 rotate-2">
-      <span class="bob block text-3xl" style="animation-delay:.6s">🎵</span>
-      <p class="mt-2 font-pop text-sm font-bold">TikTok</p>
-      <p class="mt-1 text-[10px] font-black text-fmpink">COMING SOON</p>
-    </a>
-    <a href="#sns" aria-disabled="true" class="sticker sticker-hover rounded-2xl bg-white p-5 -rotate-1 col-span-2 sm:col-span-1">
-      <span class="bob block text-3xl" style="animation-delay:.8s">💬</span>
-      <p class="mt-2 font-pop text-sm font-bold">Discord</p>
-      <p class="mt-1 text-[10px] font-black text-fmpink">COMING SOON</p>
-    </a>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact" class="scroll-mt-20 border-t-2 border-fmink bg-fmyellow/30 py-16 md:py-24">
-  <div class="mx-auto max-w-5xl px-5 text-center md:px-8">
-    <p class="font-pop text-sm font-bold text-fmpink">CONTACT</p>
-    <h2 class="mt-1 text-3xl font-black md:text-4xl">おといあわせ</h2>
-    <p class="mx-auto mt-5 max-w-xl text-[15px] font-medium leading-8 text-slate-600">
-      コラボレーション・ライセンスのご相談、メディア取材、その他のお問い合わせはメールでお気軽にどうぞ。
-    </p>
-    <a href="mailto:canisendafax@gmail.com" class="sticker sticker-hover mt-8 inline-block rounded-full bg-fmink px-8 py-3.5 text-sm font-black text-white">canisendafax@gmail.com ✉️</a>
-    <p class="mt-6 text-xs font-bold text-slate-400">FUNNY MONSTER は 劇団FAX のキャラクターIPブランドです。</p>
+<!-- SNS・お問い合わせ -->
+<section id="contact" class="scroll-mt-16 border-t-[3px] border-black">
+  <div class="mx-auto grid max-w-6xl md:grid-cols-2">
+    <div id="sns" class="border-b-[3px] border-black px-5 py-16 md:border-b-0 md:border-r-[3px] md:px-8 md:py-20">
+      <h2 class="font-dela text-3xl md:text-4xl">フォローする</h2>
+      <p class="mt-3 font-bold">新しいモンスターとイベント情報はSNSで。</p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="https://www.instagram.com/funnymonsterfax/" target="_blank" rel="noopener" class="bg-pink px-6 py-3 font-black text-white hover:bg-black">Instagram @funnymonsterfax</a>
+        <a href="https://x.com/funnymonsterfax" target="_blank" rel="noopener" class="bg-black px-6 py-3 font-black text-white hover:bg-pink">X @funnymonsterfax</a>
+      </div>
+    </div>
+    <div class="px-5 py-16 md:px-8 md:py-20">
+      <h2 class="font-dela text-3xl md:text-4xl">お問い合わせ</h2>
+      <p class="mt-3 font-bold leading-8">コラボ・ライセンスのご相談、取材などはメールでどうぞ。</p>
+      <a href="mailto:canisendafax@gmail.com" class="mt-8 inline-block border-[3px] border-black px-6 py-3 font-black hover:bg-lime">canisendafax@gmail.com</a>
+    </div>
   </div>
 </section>
 
 </main>
 
 <!-- Footer -->
-<footer class="border-t-2 border-fmink bg-white">
-  <div class="mx-auto flex max-w-5xl flex-col gap-6 px-5 py-8 text-xs font-bold text-slate-400 md:flex-row md:items-center md:justify-between md:px-8">
-    <a href="funnymonster.html" class="font-pop text-sm font-bold text-fmink">FUnnY MOnSTER</a>
-    <nav class="flex flex-wrap gap-5">
-      <a href="index.html" class="hover:text-sky-600 transition-colors">劇団FAX</a>
-      <a href="monster-zukan.html" class="hover:text-fmpurple transition-colors">図鑑</a>
-      <a href="asobiba.html" class="hover:text-fmpurple transition-colors">あそびば</a>
-      <a href="#about" class="hover:text-fmpink transition-colors">ABOUT</a>
-      <a href="#contact" class="hover:text-fmpink transition-colors">CONTACT</a>
-      <a href="https://x.com/funnymonsterfax" target="_blank" rel="noopener" class="hover:text-fmpink transition-colors">X</a>
-      <a href="https://www.instagram.com/funnymonsterfax/" target="_blank" rel="noopener" class="hover:text-fmpink transition-colors">Instagram</a>
+<footer class="border-t-[3px] border-black bg-black text-white">
+  <div class="mx-auto flex max-w-6xl flex-col gap-6 px-5 py-10 text-sm font-bold md:flex-row md:items-center md:justify-between md:px-8">
+    <nav class="flex flex-wrap gap-x-6 gap-y-2" aria-label="フッターメニュー">
+      <a href="index.html" class="hover:text-lime">劇団FAX</a>
+      <a href="monster-zukan.html" class="hover:text-lime">図鑑</a>
+      <a href="asobiba.html" class="hover:text-lime">あそびば</a>
+      <a href="#shop" class="hover:text-lime">出店情報</a>
+      <a href="#contact" class="hover:text-lime">お問い合わせ</a>
     </nav>
-    <span>&copy; 2026 劇団FAX / FUNNY MONSTER</span>
+    <p class="text-white/70">© 2026 劇団FAX / FUNNY MONSTER</p>
   </div>
 </footer>
 
 <!-- Mobile Nav -->
-<nav class="fixed inset-x-0 bottom-0 z-50 border-t-2 border-fmink bg-white/95 backdrop-blur-md md:hidden">
-  <div class="mx-auto grid max-w-sm grid-cols-5">
-    <a href="index.html" class="flex flex-col items-center gap-1 py-2.5 text-[10px] font-bold text-slate-400"><span class="text-lg">🏠</span>劇団FAX</a>
-    <a href="#characters" class="flex flex-col items-center gap-1 py-2.5 text-[10px] font-bold text-fmpurple"><span class="text-lg">👾</span>キャラ</a>
-    <a href="#projects" class="flex flex-col items-center gap-1 py-2.5 text-[10px] font-bold text-slate-400"><span class="text-lg">🎮</span>あそぶ</a>
-    <a href="#sns" class="flex flex-col items-center gap-1 py-2.5 text-[10px] font-bold text-slate-400"><span class="text-lg">📣</span>SNS</a>
-    <a href="#contact" class="flex flex-col items-center gap-1 py-2.5 text-[10px] font-bold text-fmpink"><span class="text-lg">✉️</span>連絡</a>
+<nav class="fixed inset-x-0 bottom-0 z-50 border-t-[3px] border-black bg-white md:hidden" aria-label="モバイルメニュー">
+  <div class="grid grid-cols-5 text-center text-[11px] font-black">
+    <a href="index.html" class="py-3.5 text-black/50">劇団FAX</a>
+    <a href="#main4" class="py-3.5">キャラ</a>
+    <a href="#shop" class="bg-pink py-3.5 text-white">出店</a>
+    <a href="#games" class="py-3.5">ゲーム</a>
+    <a href="#contact" class="py-3.5">SNS</a>
   </div>
 </nav>
 
